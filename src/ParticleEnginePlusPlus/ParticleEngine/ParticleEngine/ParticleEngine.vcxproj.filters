@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\particle">
+      <UniqueIdentifier>{1c4b6837-fe00-41af-8352-9cd64c36d144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\particle\physics">
+      <UniqueIdentifier>{1db0175c-5aba-4f1d-9b46-63a46a9d2e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\particle\rendering">
+      <UniqueIdentifier>{9be69bf4-f825-47ad-aed2-6bd31350c3d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tools">
+      <UniqueIdentifier>{e323ee75-c0c9-4fb3-ba47-7579ce110ac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\tools\menu">
+      <UniqueIdentifier>{9681d9f1-9cc5-4506-9aab-2a2a16767950}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\particle">
+      <UniqueIdentifier>{8a748ae8-16d6-4d98-b24f-f0fdc30d03de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools">
+      <UniqueIdentifier>{76cded1f-d1a4-4473-bae5-0383a532a617}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\menu">
+      <UniqueIdentifier>{909037a4-5c33-4ec8-8c33-c3c6242a7d46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\particle\physics\materials">
+      <UniqueIdentifier>{e2695efc-5fb7-4bf1-9162-0971d50aba7a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="include\particle\physics\materials\sand.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\physics\materials\smoke.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\physics\materials\water.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\physics\particle_physics.cpp">
+      <Filter>Source Files\particle\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\renderer\particle_renderer.cpp">
+      <Filter>Source Files\particle\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world.cpp">
+      <Filter>Source Files\particle</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tools\button.cpp">
+      <Filter>Source Files\tools\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tools\menu\numbers.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="headers\tools\menu\button.h">
+      <Filter>Header Files\tools\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\tools\tools.h">
+      <Filter>Header Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\particle\particle_physics.h">
+      <Filter>Header Files\particle</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\particle\particle_renderer.h">
+      <Filter>Header Files\particle</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\particle\particle_world.h">
+      <Filter>Header Files\particle</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,1 +1,2 @@
 - Rewrite in C++ (with SFML :) )
+- Add rain

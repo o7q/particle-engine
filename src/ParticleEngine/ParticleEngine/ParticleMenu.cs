@@ -23,8 +23,8 @@ namespace ParticleEngine
         bool stopFiniteSim = false;
 
         const int particleSize = 3;
-        const int rowSize = 480 / particleSize;
-        const int columnSize = 1452 / particleSize;
+        const int rowSize = 480 / particleSize; // 480
+        const int columnSize = 1452 / particleSize; // 1452
 
         ParticleManager particleWorld = new ParticleManager(rowSize, columnSize);
 
