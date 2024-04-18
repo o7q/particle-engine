@@ -1,7 +1,8 @@
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
+#include "tools/tools.h"
 
-void step(ParticleWorld* particleWorld)
+void updateParticles(ParticleWorld* particleWorld)
 {
 	for (int row = particleWorld->rowSize - 1; row >= 0; row--)
 	{
@@ -9,21 +10,40 @@ void step(ParticleWorld* particleWorld)
 		{
 			if (particleWorld->getParticle(row, col).verticalParticleUpdated)
 			{
-				ParticleWorld::ParticleInstance self = particleWorld->getParticle(row, col);
-				self.verticalParticleUpdated = false;
-				particleWorld->setParticle(row, col, self);
+				particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].verticalParticleUpdated = false;
 			}
 
 			switch (particleWorld->getParticle(row, col).material)
 			{
 			case ParticleWorld::Material::Sand:
-				calculateSand(row, col, particleWorld);
+				calculate_sand(row, col, particleWorld);
 				break;
 			case ParticleWorld::Material::Water:
-				calculateWater(row, col, particleWorld);
+				calculate_liquid(row, col, particleWorld);
+				break;
+			case ParticleWorld::Material::Ice:
+				calculate_ice(row, col, particleWorld);
 				break;
 			case ParticleWorld::Material::Smoke:
-				calculateSmoke(row, col, particleWorld);
+				calculate_smoke(row, col, particleWorld);
+				break;
+			case ParticleWorld::Material::Dirt:
+				calculate_dirt(row, col, particleWorld);
+				break;
+			case ParticleWorld::Material::Grass:
+				calculate_grass(row, col, particleWorld);
+				break;
+			case ParticleWorld::Material::Fire:
+				calculate_fire(row, col, particleWorld);
+				break;
+			case ParticleWorld::Material::Gasoline:
+				calculate_liquid(row, col, particleWorld);
+				break;
+			case ParticleWorld::Material::FlammableGas:
+				calculate_smoke(row, col, particleWorld);
+				break;
+			case ParticleWorld::Material::ToxicGas:
+				calculate_smoke(row, col, particleWorld);
 				break;
 			}
 		}

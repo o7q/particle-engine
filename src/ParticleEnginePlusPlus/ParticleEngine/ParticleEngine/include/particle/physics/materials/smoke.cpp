@@ -3,12 +3,11 @@
 #include "particle/particle_physics.h"
 #include "tools/tools.h"
 
-void calculateSmoke(int row, int col, ParticleWorld* particleWorld)
+void calculate_smoke(int row, int col, ParticleWorld* particleWorld)
 {
 	ParticleWorld::ParticleInstance self = particleWorld->getParticle(row, col);
 
 	std::uniform_int_distribution<int> dist(0, 1);
-
 	int randomJitter = dist(particleWorld->gen);
 
 	if (particleWorld->canUp(row))
@@ -33,7 +32,7 @@ void calculateSmoke(int row, int col, ParticleWorld* particleWorld)
 		}
 	}
 
-	if (particleWorld->canLeft(col) > 0 && randomJitter == 0)
+	if (particleWorld->canLeft(col) && randomJitter == 0)
 
 	{
 		if (

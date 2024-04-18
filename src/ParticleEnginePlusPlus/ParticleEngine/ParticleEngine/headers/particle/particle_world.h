@@ -8,9 +8,25 @@ class ParticleWorld {
 public:
 	enum Material {
 		Air,
+
+		Stone,
 		Sand,
+		Sandstone,
+		Dirt,
+		Grass,
+		RedFlower,
+		PinkFlower,
+		YellowFlower,
+		BlueFlower,
+
 		Water,
-		Smoke
+		Gasoline,
+		Fire,
+		Ice,
+
+		Smoke,
+		ToxicGas,
+		FlammableGas
 	};
 
 	enum MaterialType {

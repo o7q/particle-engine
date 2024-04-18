@@ -19,10 +19,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="fire.cpp" />
     <ClCompile Include="include\particle\particle_world.cpp" />
+    <ClCompile Include="include\particle\physics\materials\dirt.cpp" />
+    <ClCompile Include="include\particle\physics\materials\grass.cpp" />
+    <ClCompile Include="include\particle\physics\materials\ice.cpp" />
     <ClCompile Include="include\particle\physics\materials\sand.cpp" />
+    <ClCompile Include="include\particle\physics\materials\simple_gravity.cpp" />
     <ClCompile Include="include\particle\physics\materials\smoke.cpp" />
-    <ClCompile Include="include\particle\physics\materials\water.cpp" />
+    <ClCompile Include="include\particle\physics\materials\liquid.cpp" />
     <ClCompile Include="include\particle\physics\particle_physics.cpp" />
     <ClCompile Include="include\particle\renderer\particle_renderer.cpp" />
     <ClCompile Include="include\tools\button.cpp" />

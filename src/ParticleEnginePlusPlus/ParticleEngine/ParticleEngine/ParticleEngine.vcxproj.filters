@@ -48,14 +48,11 @@
     <ClCompile Include="include\particle\physics\materials\smoke.cpp">
       <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\water.cpp">
+    <ClCompile Include="include\particle\physics\materials\liquid.cpp">
       <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
     <ClCompile Include="include\particle\physics\particle_physics.cpp">
       <Filter>Source Files\particle\physics</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\renderer\particle_renderer.cpp">
-      <Filter>Source Files\particle\rendering</Filter>
     </ClCompile>
     <ClCompile Include="include\particle\particle_world.cpp">
       <Filter>Source Files\particle</Filter>
@@ -68,6 +65,24 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\renderer\particle_renderer.cpp">
+      <Filter>Source Files\particle\rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\physics\materials\dirt.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\physics\materials\grass.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\physics\materials\ice.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\physics\materials\simple_gravity.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="fire.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
