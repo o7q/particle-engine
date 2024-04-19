@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="color.cpp" />
     <ClCompile Include="include\particle\particle_world.cpp" />
     <ClCompile Include="include\particle\physics\materials\dirt.cpp" />
     <ClCompile Include="include\particle\physics\materials\fire.cpp" />
@@ -32,6 +31,7 @@
     <ClCompile Include="include\particle\physics\particle_physics.cpp" />
     <ClCompile Include="include\particle\renderer\particle_renderer.cpp" />
     <ClCompile Include="include\tools\arrays.cpp" />
+    <ClCompile Include="include\tools\color.cpp" />
     <ClCompile Include="include\tools\menu\button.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
