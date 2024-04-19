@@ -36,6 +36,14 @@ void calculate_fire(int row, int col, ParticleWorld* particleWorld)
 			particleWorld->setParticle(row + 1, col, self);
 			particleWorld->resetParticle(row, col);
 		}
+
+		if (particleWorld->getParticle(row + 1, col).material == ParticleWorld::Material::Water)
+		{
+			ParticleWorld::ParticleInstance steam;
+			steam.material = ParticleWorld::Material::Steam;
+			steam.materialType == ParticleWorld::MaterialType::Gas;
+			particleWorld->paintParticles(row, col, 1, steam);
+		}
 	}
 
 	if (particleWorld->canLeft(col))

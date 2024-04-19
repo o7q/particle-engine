@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef PARTICLE_RENDERER
-#define PARTICLE_RENDERER
+#ifndef PARTICLE_RENDERER_H
+#define PARTICLE_RENDERER_H
 
 #include <SFML/Graphics.hpp>
 #include "particle/particle_world.h"

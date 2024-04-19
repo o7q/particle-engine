@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef MENU_BUTTON
-#define MENU_BUTTON
+#ifndef MENU_BUTTON_H
+#define MENU_BUTTON_H
 
 #include <iostream>
 #include <SFML/Graphics.hpp>

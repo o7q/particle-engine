@@ -145,7 +145,7 @@ int main()
 				drawingParticle.materialType = ParticleWorld::MaterialType::Gas;
 			}
 
-			particleWorld->paintParticles(localPos.y / pixelSize, localPos.x / pixelSize, 20, drawingParticle);
+			particleWorld->paintParticles(localPos.y / pixelSize, localPos.x / pixelSize, 5, drawingParticle);
 		}
 
 		updateParticles(particleWorld);

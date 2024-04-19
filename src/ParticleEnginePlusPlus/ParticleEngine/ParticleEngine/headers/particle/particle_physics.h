@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef PHYSICS_MANAGER
-#define PHYSICS_MANAGER
+#ifndef PARTICLE_PHYSICS_H
+#define PARTICLE_PHYSICS_H
 
 #include "particle/particle_world.h"
 

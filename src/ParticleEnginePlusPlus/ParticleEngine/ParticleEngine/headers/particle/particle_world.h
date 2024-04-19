@@ -1,8 +1,8 @@
 #pragma once
 #include <random>
 
-#ifndef PARTICLE_WORLD
-#define PARTICLE_WORLD
+#ifndef PARTICLE_WORLD_H
+#define PARTICLE_WORLD_H
 
 class ParticleWorld {
 public:
@@ -25,6 +25,7 @@ public:
 		Ice,
 
 		Smoke,
+		Steam,
 		ToxicGas,
 		FlammableGas
 	};

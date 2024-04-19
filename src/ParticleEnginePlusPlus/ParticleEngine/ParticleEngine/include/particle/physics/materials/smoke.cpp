@@ -58,12 +58,12 @@ void calculate_smoke(int row, int col, ParticleWorld* particleWorld)
 	}
 
 	particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].intValue++;
-	if (particleWorld->getParticle(row, col).intValue > 100)
+	if (particleWorld->getParticle(row, col).intValue > 150)
 	{
 		particleWorld->resetParticle(row, col);
 	}
 
-	if (particleWorld->getParticle(row, col).intValue % 40 == 0)
+	if (particleWorld->getParticle(row, col).intValue % 60 == 0)
 	{
 		if (particleWorld->getParticle(row, col).brightnessMultiplier > 0.1f)
 		{

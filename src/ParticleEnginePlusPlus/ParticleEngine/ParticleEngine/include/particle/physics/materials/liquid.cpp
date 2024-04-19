@@ -24,7 +24,8 @@ void calculate_liquid(int row, int col, ParticleWorld* particleWorld)
 		if (
 			(particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Air ||
 				particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::MaterialType::Gas ||
-				particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Fire) &&
+				(particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Fire &&
+					particleWorld->getParticle(row, col).material == ParticleWorld::Material::Water)) &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row, col - 1, self);

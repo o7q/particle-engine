@@ -57,12 +57,6 @@
     <ClCompile Include="include\particle\particle_world.cpp">
       <Filter>Source Files\particle</Filter>
     </ClCompile>
-    <ClCompile Include="include\tools\button.cpp">
-      <Filter>Source Files\tools\menu</Filter>
-    </ClCompile>
-    <ClCompile Include="include\tools\menu\numbers.cpp">
-      <Filter>Source Files\tools</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -81,8 +75,14 @@
     <ClCompile Include="include\particle\physics\materials\simple_gravity.cpp">
       <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
-    <ClCompile Include="fire.cpp">
+    <ClCompile Include="include\particle\physics\materials\fire.cpp">
       <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tools\menu\button.cpp">
+      <Filter>Source Files\tools\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tools\arrays.cpp">
+      <Filter>Source Files\tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

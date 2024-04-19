@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="fire.cpp" />
     <ClCompile Include="include\particle\particle_world.cpp" />
     <ClCompile Include="include\particle\physics\materials\dirt.cpp" />
+    <ClCompile Include="include\particle\physics\materials\fire.cpp" />
     <ClCompile Include="include\particle\physics\materials\grass.cpp" />
     <ClCompile Include="include\particle\physics\materials\ice.cpp" />
     <ClCompile Include="include\particle\physics\materials\sand.cpp" />
@@ -30,8 +30,8 @@
     <ClCompile Include="include\particle\physics\materials\liquid.cpp" />
     <ClCompile Include="include\particle\physics\particle_physics.cpp" />
     <ClCompile Include="include\particle\renderer\particle_renderer.cpp" />
-    <ClCompile Include="include\tools\button.cpp" />
-    <ClCompile Include="include\tools\menu\numbers.cpp" />
+    <ClCompile Include="include\tools\arrays.cpp" />
+    <ClCompile Include="include\tools\menu\button.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +55,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -62,6 +63,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -69,6 +71,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>false</WholeProgramOptimization>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -76,6 +79,7 @@
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -115,6 +119,11 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\james\Desktop\GitHub\particle-engine\src\ParticleEnginePlusPlus\ParticleEngine\ParticleEngine\headers;C:\Users\james\Desktop\GitHub\particle-engine\src\ParticleEnginePlusPlus\ParticleEngine\ParticleEngine\include;C:\CppLibs\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +143,7 @@
       <AdditionalIncludeDirectories>C:\Users\james\Desktop\GitHub\particle-engine\src\ParticleEnginePlusPlus\ParticleEngine\ParticleEngine\headers;C:\Users\james\Desktop\GitHub\particle-engine\src\ParticleEnginePlusPlus\ParticleEngine\ParticleEngine\include;C:\CppLibs\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +162,11 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\james\Desktop\GitHub\particle-engine\src\ParticleEnginePlusPlus\ParticleEngine\ParticleEngine\headers;C:\Users\james\Desktop\GitHub\particle-engine\src\ParticleEnginePlusPlus\ParticleEngine\ParticleEngine\include;C:\CppLibs\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <WholeProgramOptimization>false</WholeProgramOptimization>
+      <IntrinsicFunctions>false</IntrinsicFunctions>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -171,6 +186,7 @@
       <AdditionalIncludeDirectories>C:\Users\james\Desktop\GitHub\particle-engine\src\ParticleEnginePlusPlus\ParticleEngine\ParticleEngine\headers;C:\Users\james\Desktop\GitHub\particle-engine\src\ParticleEnginePlusPlus\ParticleEngine\ParticleEngine\include;C:\CppLibs\SFML-2.6.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>Default</LanguageStandard_C>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

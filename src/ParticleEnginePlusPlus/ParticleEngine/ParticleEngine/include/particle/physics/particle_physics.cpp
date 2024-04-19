@@ -18,32 +18,33 @@ void updateParticles(ParticleWorld* particleWorld)
 			case ParticleWorld::Material::Sand:
 				calculate_sand(row, col, particleWorld);
 				break;
-			case ParticleWorld::Material::Water:
-				calculate_liquid(row, col, particleWorld);
-				break;
-			case ParticleWorld::Material::Ice:
-				calculate_ice(row, col, particleWorld);
-				break;
-			case ParticleWorld::Material::Smoke:
-				calculate_smoke(row, col, particleWorld);
-				break;
 			case ParticleWorld::Material::Dirt:
 				calculate_dirt(row, col, particleWorld);
 				break;
 			case ParticleWorld::Material::Grass:
 				calculate_grass(row, col, particleWorld);
 				break;
-			case ParticleWorld::Material::Fire:
-				calculate_fire(row, col, particleWorld);
-				break;
+			case ParticleWorld::Material::Water:
 			case ParticleWorld::Material::Gasoline:
 				calculate_liquid(row, col, particleWorld);
 				break;
-			case ParticleWorld::Material::FlammableGas:
-				calculate_smoke(row, col, particleWorld);
+			case ParticleWorld::Material::Fire:
+				calculate_fire(row, col, particleWorld);
 				break;
+			case ParticleWorld::Material::Ice:
+				calculate_ice(row, col, particleWorld);
+				break;
+			case ParticleWorld::Material::Smoke:
+			case ParticleWorld::Material::Steam:
+			case ParticleWorld::Material::FlammableGas:
 			case ParticleWorld::Material::ToxicGas:
 				calculate_smoke(row, col, particleWorld);
+				break;
+			case ParticleWorld::Material::RedFlower:
+			case ParticleWorld::Material::PinkFlower:
+			case ParticleWorld::Material::YellowFlower:
+			case ParticleWorld::Material::BlueFlower:
+				calculate_simpleGravity(row, col, particleWorld);
 				break;
 			}
 		}

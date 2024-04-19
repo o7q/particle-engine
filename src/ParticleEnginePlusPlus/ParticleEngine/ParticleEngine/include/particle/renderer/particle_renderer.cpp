@@ -16,6 +16,13 @@ void renderParticles(ParticleWorld* particleWorld, sf::RenderWindow& renderWindo
 
 			switch (particleWorld->getParticle(row, col).material)
 			{
+			case ParticleWorld::Material::Stone: {
+				r = 160 * brightnessColor;
+				g = 160 * brightnessColor;
+				b = 160 * brightnessColor;
+				renderCurrent = true;
+				break;
+			}
 			case ParticleWorld::Material::Sand: {
 				r = 245 / wetnessColor * brightnessColor;
 				g = 228 / wetnessColor * brightnessColor;
@@ -23,31 +30,10 @@ void renderParticles(ParticleWorld* particleWorld, sf::RenderWindow& renderWindo
 				renderCurrent = true;
 				break;
 			}
-			case ParticleWorld::Material::Water: {
-				r = 72 * brightnessColor;
-				g = 136 * brightnessColor;
-				b = 240 * brightnessColor;
-				renderCurrent = true;
-				break;
-			}
-			case ParticleWorld::Material::Smoke: {
-				r = 120 * brightnessColor;
-				g = 120 * brightnessColor;
-				b = 120 * brightnessColor;
-				renderCurrent = true;
-				break;
-			}
-			case ParticleWorld::Material::Ice: {
-				r = 120 * brightnessColor;
-				g = 212 * brightnessColor;
-				b = 240 * brightnessColor;
-				renderCurrent = true;
-				break;
-			}
-			case ParticleWorld::Material::Stone: {
-				r = 160 * brightnessColor;
-				g = 160 * brightnessColor;
-				b = 160 * brightnessColor;
+			case ParticleWorld::Material::Sandstone: {
+				r = 189 / wetnessColor * brightnessColor;
+				g = 176 / wetnessColor * brightnessColor;
+				b = 91 / wetnessColor * brightnessColor;
 				renderCurrent = true;
 				break;
 			}
@@ -93,6 +79,20 @@ void renderParticles(ParticleWorld* particleWorld, sf::RenderWindow& renderWindo
 				renderCurrent = true;
 				break;
 			}
+			case ParticleWorld::Material::Water: {
+				r = 72 * brightnessColor;
+				g = 136 * brightnessColor;
+				b = 240 * brightnessColor;
+				renderCurrent = true;
+				break;
+			}
+			case ParticleWorld::Material::Gasoline: {
+				r = 215 * brightnessColor;
+				g = 219 * brightnessColor;
+				b = 77 * brightnessColor;
+				renderCurrent = true;
+				break;
+			}
 			case ParticleWorld::Material::Fire: {
 				std::uniform_int_distribution<int> dist(0, 2);
 				double fireFlicker = dist(particleWorld->gen) / 2.0;
@@ -102,10 +102,24 @@ void renderParticles(ParticleWorld* particleWorld, sf::RenderWindow& renderWindo
 				renderCurrent = true;
 				break;
 			}
-			case ParticleWorld::Material::Gasoline: {
-				r = 215 * brightnessColor;
-				g = 219 * brightnessColor;
-				b = 77 * brightnessColor;
+			case ParticleWorld::Material::Ice: {
+				r = 120 * brightnessColor;
+				g = 212 * brightnessColor;
+				b = 240 * brightnessColor;
+				renderCurrent = true;
+				break;
+			}
+			case ParticleWorld::Material::Smoke: {
+				r = 120 * brightnessColor;
+				g = 120 * brightnessColor;
+				b = 120 * brightnessColor;
+				renderCurrent = true;
+				break;
+			}
+			case ParticleWorld::Material::Steam: {
+				r = 220 * brightnessColor;
+				g = 220 * brightnessColor;
+				b = 220 * brightnessColor;
 				renderCurrent = true;
 				break;
 			}
