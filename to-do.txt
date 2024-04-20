@@ -1,2 +1,5 @@
-- Rewrite in C++ (with SFML :) )
+- Delete buttons when they are no longer needed!!
 - Add rain
+- Add growing seaweed
+- Add explosives
+- Fix solids floating on fire and gasoline
