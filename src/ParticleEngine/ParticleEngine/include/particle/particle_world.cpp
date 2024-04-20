@@ -59,6 +59,11 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 	{
 		for (int colIndex = 0; colIndex < size; colIndex++)
 		{
+			if (!(row < rowSize && col < colSize && row > 0 && col > 0))
+			{
+				continue;
+			}
+
 			int r = rowIndex - size / 2;
 			int c = colIndex - size / 2;
 

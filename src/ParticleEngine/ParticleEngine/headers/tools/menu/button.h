@@ -10,17 +10,16 @@ class Button {
 public:
 	sf::Vector2f position, size;
 	sf::Color color, textColor;
-	std::string text;
+	std::string text, id;
 	int textSize;
 
 	sf::RectangleShape buttonShape;
 	sf::Text buttonText;
 
-	Button(sf::Vector2f, sf::Vector2f, sf::Color, sf::Color, std::string, int, sf::Font&);
+	Button(sf::Vector2f, sf::Vector2f, sf::Color, sf::Color, std::string, int, sf::Font&, std::string);
 
 	bool isMouseHover(int, int);
-	bool isMouseHover_highlight(int, int, sf::RenderWindow&);
-	void highlight(bool, sf::RenderWindow&);
+	void highlight(bool);
 	void draw(sf::RenderWindow&);
 };
 

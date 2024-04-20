@@ -2,9 +2,9 @@
 #include "particle/particle_renderer.h"
 #include "tools/tools.h"
 
-void renderParticles(ParticleWorld* particleWorld, sf::RenderWindow& renderWindow, int pixelSize)
+void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderWindow, int offsetX, int offsetY, int pixelSize)
 {
-	sf::VertexArray quad(sf::Quads, 4);
+	sf::VertexArray quadClump(sf::Quads);
 	for (int row = 0; row < particleWorld->rowSize; row++)
 	{
 		for (int col = 0; col < particleWorld->colSize; col++)
@@ -180,18 +180,30 @@ void renderParticles(ParticleWorld* particleWorld, sf::RenderWindow& renderWindo
 
 			if (renderPixel)
 			{
-				quad[0].position = sf::Vector2f(col * pixelSize, row * pixelSize);
-				quad[1].position = sf::Vector2f(col * pixelSize + pixelSize, row * pixelSize);
-				quad[2].position = sf::Vector2f(col * pixelSize + pixelSize, row * pixelSize + pixelSize);
-				quad[3].position = sf::Vector2f(col * pixelSize, row * pixelSize + pixelSize);
+				sf::Vertex topLeft(
+					sf::Vector2f(col * pixelSize + offsetX, row * pixelSize + offsetY),
+					sf::Color(r, g, b, a)
+				);
+				sf::Vertex topRight(
+					sf::Vector2f(col * pixelSize + pixelSize + offsetX, row * pixelSize + offsetY),
+					sf::Color(r, g, b, a)
+				);
+				sf::Vertex bottomRight(
+					sf::Vector2f(col * pixelSize + pixelSize + offsetX, row * pixelSize + pixelSize + offsetY),
+					sf::Color(r, g, b, a)
+				);
+				sf::Vertex bottomLeft(
+					sf::Vector2f(col * pixelSize + offsetX, row * pixelSize + pixelSize + offsetY),
+					sf::Color(r, g, b, a)
+				);
 
-				quad[0].color = sf::Color(r, g, b, a);
-				quad[1].color = sf::Color(r, g, b, a);
-				quad[2].color = sf::Color(r, g, b, a);
-				quad[3].color = sf::Color(r, g, b, a);
-
-				renderWindow.draw(quad);
+				quadClump.append(topLeft);
+				quadClump.append(topRight);
+				quadClump.append(bottomRight);
+				quadClump.append(bottomLeft);
 			}
 		}
 	}
+
+	renderWindow.draw(quadClump);
 }

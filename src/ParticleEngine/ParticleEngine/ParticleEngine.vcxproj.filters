@@ -40,6 +40,18 @@
     <Filter Include="Source Files\particle\physics\materials">
       <UniqueIdentifier>{e2695efc-5fb7-4bf1-9162-0971d50aba7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\menus">
+      <UniqueIdentifier>{b56db570-f5fb-4c1f-8ee9-db66ef4454f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\menus">
+      <UniqueIdentifier>{1a7d5b5f-b4c2-4fdf-9ce6-c33bc5eba333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menus\sandbox">
+      <UniqueIdentifier>{c1324fb8-fa06-4523-b51a-192bab4ac742}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menus\sandbox\controls">
+      <UniqueIdentifier>{070db78e-dad7-40dc-aa8e-607521cdac46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\particle\physics\materials\sand.cpp">
@@ -87,6 +99,12 @@
     <ClCompile Include="include\tools\color.cpp">
       <Filter>Source Files\tools</Filter>
     </ClCompile>
+    <ClCompile Include="include\menus\sandbox\sandbox.cpp">
+      <Filter>Source Files\menus\sandbox</Filter>
+    </ClCompile>
+    <ClCompile Include="include\menus\sandbox\controls\sandbox_buttons.cpp">
+      <Filter>Source Files\menus\sandbox\controls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\tools\menu\button.h">
@@ -103,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="headers\particle\particle_world.h">
       <Filter>Header Files\particle</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\menus\menus.h">
+      <Filter>Header Files\menus</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
