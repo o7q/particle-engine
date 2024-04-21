@@ -6,20 +6,20 @@ void updateParticleWorld(ParticleWorld* particleWorld)
 {
 	std::uniform_int_distribution<int> dist(0, 1);
 
-	for (int row = particleWorld->rowSize - 1; row >= 0; row--)
+	for (int row = particleWorld->getRowSize() - 1; row >= 0; row--)
 	{
 		int updateDirection = dist(particleWorld->gen);
 
 		if (updateDirection == 0)
 		{
-			for (int col = particleWorld->colSize - 1; col >= 0; col--)
+			for (int col = particleWorld->getColSize() - 1; col >= 0; col--)
 			{
 				updateParticle(particleWorld, row, col);
 			}
 		}
 		else
 		{
-			for (int col = 0; col < particleWorld->colSize; col++)
+			for (int col = 0; col < particleWorld->getColSize(); col++)
 			{
 				updateParticle(particleWorld, row, col);
 			}

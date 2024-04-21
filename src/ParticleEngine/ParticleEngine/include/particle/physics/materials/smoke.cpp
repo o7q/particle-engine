@@ -21,17 +21,17 @@ void calculate_smoke(int row, int col, ParticleWorld* particleWorld)
 			particleWorld->getParticle(row, col).intValue > 1)
 		{
 			particleWorld->setParticle(row - 1, col, self);
-			particleWorld->particles[get1DIndex(row - 1, col, particleWorld->colSize)].intValue = 0;
+			particleWorld->particles[get1DIndex(row - 1, col, particleWorld->getColSize())].intValue = 0;
 			if (particleWorld->getParticle(row - 1, col).brightnessMultiplier > 0.1f)
 			{
 				// deincrement brightness, giving the illusion of dissipation
-				particleWorld->particles[get1DIndex(row - 1, col, particleWorld->colSize)].brightnessMultiplier -= 0.005f;
+				particleWorld->particles[get1DIndex(row - 1, col, particleWorld->getColSize())].brightnessMultiplier -= 0.005f;
 			}
 			particleWorld->resetParticle(row, col);
 		}
 		else
 		{
-			particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].intValue++;
+			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].intValue++;
 		}
 	}
 
@@ -59,7 +59,7 @@ void calculate_smoke(int row, int col, ParticleWorld* particleWorld)
 		}
 	}
 
-	particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].intValue++;
+	particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].intValue++;
 	if (particleWorld->getParticle(row, col).intValue > 150)
 	{
 		// eventually kill the particle if it gets to a certain age
@@ -71,7 +71,7 @@ void calculate_smoke(int row, int col, ParticleWorld* particleWorld)
 		if (particleWorld->getParticle(row, col).brightnessMultiplier > 0.1f)
 		{
 			// slowly darken the particle as it ages
-			particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].brightnessMultiplier -= 0.1f;
+			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].brightnessMultiplier -= 0.1f;
 		}
 	}
 }

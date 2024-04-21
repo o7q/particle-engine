@@ -46,11 +46,32 @@
     <Filter Include="Header Files\menus">
       <UniqueIdentifier>{1a7d5b5f-b4c2-4fdf-9ce6-c33bc5eba333}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\menus\sandbox">
+    <Filter Include="Source Files\menus\sandbox_menu">
       <UniqueIdentifier>{c1324fb8-fa06-4523-b51a-192bab4ac742}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\menus\sandbox\controls">
+    <Filter Include="Source Files\menus\sandbox_menu\controls">
       <UniqueIdentifier>{070db78e-dad7-40dc-aa8e-607521cdac46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menus\main_menu_intro">
+      <UniqueIdentifier>{40a84606-c4e8-4a86-a15e-07bd4e03f4cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menus\main_menu_intro\controls">
+      <UniqueIdentifier>{1112c4a0-6eb3-43da-b176-7e964e59a4d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world">
+      <UniqueIdentifier>{2a1dcd14-146a-4444-8770-5af06902d0f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world">
+      <UniqueIdentifier>{0bcd3be9-91e7-4176-85a2-aa0f8f653c71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\generators">
+      <UniqueIdentifier>{0bd079f6-bbb9-4530-b761-442aad4d40da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\num2d">
+      <UniqueIdentifier>{be7fdbfe-c9b2-4a7c-8bb5-327c4d95c212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\generators\tools">
+      <UniqueIdentifier>{e800e2ae-aad6-4698-8c15-1a38f428e04d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -99,11 +120,35 @@
     <ClCompile Include="include\tools\color.cpp">
       <Filter>Source Files\tools</Filter>
     </ClCompile>
-    <ClCompile Include="include\menus\sandbox\sandbox.cpp">
-      <Filter>Source Files\menus\sandbox</Filter>
+    <ClCompile Include="include\menus\main_menu_intro\main_menu_intro.cpp">
+      <Filter>Source Files\menus\main_menu_intro</Filter>
     </ClCompile>
-    <ClCompile Include="include\menus\sandbox\controls\sandbox_buttons.cpp">
-      <Filter>Source Files\menus\sandbox\controls</Filter>
+    <ClCompile Include="include\menus\main_menu_intro\controls\main_menu_intro_music.cpp">
+      <Filter>Source Files\menus\main_menu_intro\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="include\menus\sandbox\sandbox_menu.cpp">
+      <Filter>Source Files\menus\sandbox_menu</Filter>
+    </ClCompile>
+    <ClCompile Include="include\menus\sandbox\controls\sandbox_menu_buttons.cpp">
+      <Filter>Source Files\menus\sandbox_menu\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="include\world\world_generator.cpp">
+      <Filter>Source Files\world</Filter>
+    </ClCompile>
+    <ClCompile Include="include\world\generators\tools\noise.cpp">
+      <Filter>Source Files\world\generators\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="include\world\generators\ocean.cpp">
+      <Filter>Source Files\world\generators</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tools\num2d\double2d.cpp">
+      <Filter>Source Files\tools\num2d</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tools\num2d\int2d.cpp">
+      <Filter>Source Files\tools\num2d</Filter>
+    </ClCompile>
+    <ClCompile Include="include\world\generators\swamp.cpp">
+      <Filter>Source Files\world\generators</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +169,12 @@
     </ClInclude>
     <ClInclude Include="headers\menus\menus.h">
       <Filter>Header Files\menus</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\world\world_generator.h">
+      <Filter>Header Files\world</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\tools\num2d.h">
+      <Filter>Header Files\tools</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

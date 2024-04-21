@@ -10,7 +10,7 @@ void calculate_fire(int row, int col, ParticleWorld* particleWorld)
 	std::uniform_int_distribution<int> dist(0, 2);
 	int randomBurnout = dist(particleWorld->gen);
 
-	particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].intValue += randomBurnout;
+	particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].intValue += randomBurnout;
 	if (particleWorld->getParticle(row, col).intValue > 500)
 	{
 		particleWorld->resetParticle(row, col);

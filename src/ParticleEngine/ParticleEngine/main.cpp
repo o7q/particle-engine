@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
@@ -22,27 +23,18 @@ const unsigned int colSize = uiSize.x / pixelSize - uiOffset.x;
 
 const unsigned int simSpeed = 3;
 
-const bool useDevPaths = false;
-
 int main()
 {
 	sf::RenderWindow renderWindow(sf::VideoMode(uiSize.x, uiSize.y), windowTitle, sf::Style::None);
 	ParticleWorld* particleWorld = new ParticleWorld(rowSize, colSize);
 
 	sf::Font baseFont;
-	std::string fontPaths[] = {
-		"data\\fonts\\alagard.ttf",
-		"..\\alagard.ttf"
-	};
-
-	std::string baseFontPath = useDevPaths ? "assets\\alagard.ttf" : "data\\fonts\\alagard.ttf";
-
-	if (!baseFont.loadFromFile(baseFontPath))
+	if (!baseFont.loadFromFile("data\\fonts\\alagard.ttf"))
 	{
 		// error
 	}
 
-	Menu currentMenu = Menu::Sandbox;
+	Menu currentMenu = Menu::MainIntro;
 
 	sf::Text titleBarText;
 
@@ -64,10 +56,12 @@ int main()
 		"closeButton"
 	);
 
-	std::vector<Button*> sandbox_buttons = sandbox_getButtons(rowSize, pixelSize, uiOffset.x, uiOffset.y, baseFont);
-	ParticleWorld::ParticleInstance sandbox_drawingParticle;
+	std::vector<Button*> sandboxMenu_buttons = sandboxMenu_getButtons(rowSize, pixelSize, uiOffset.x, uiOffset.y, baseFont);
+	ParticleWorld::ParticleInstance sandbox_drawingParticle = particleWorld->getDefaultInstance();
 	sandbox_drawingParticle.material = ParticleWorld::Material::Sand;
 	sandbox_drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
+
+	std::vector<sf::Music*> mainMenuIntro_music = mainMenuIntro_getMusic();
 
 	renderWindow.setFramerateLimit(0);
 
@@ -76,6 +70,14 @@ int main()
 
 	bool clickedOnTitlebar = false;
 	bool exitProgram = false;
+
+	int menuTransitionCountdown = 0;
+
+	particleWorld->freeze();
+
+	//std::cout << static_cast<int>(particleWorld->getParticle(13, 9).color.r);
+
+	bool menuChange = true;
 
 	while (renderWindow.isOpen())
 	{
@@ -122,6 +124,7 @@ int main()
 					windowInitialGlobalPos.y + globalMousePos.y - mouseInitialGlobalPos.y
 				)
 			);
+			// skip particle processing to improve dragging performance
 			continue;
 		}
 		else
@@ -132,19 +135,50 @@ int main()
 
 		renderWindow.clear();
 
-		for (int i = 0; i < simSpeed; i++)
+		if (menuTransitionCountdown < 1)
 		{
-			updateParticleWorld(particleWorld);
+			switch (currentMenu)
+			{
+			case Menu::MainIntro:
+				currentMenu = mainMenuIntro_run(renderWindow, particleWorld, mainMenuIntro_music, menuChange);
+				if (currentMenu != Menu::MainIntro)
+				{
+					menuChange = true;
+					menuTransitionCountdown = 60;
+				}
+				else
+				{
+					menuChange = false;
+				}
+				break;
+			case Menu::Sandbox:
+				currentMenu = sandboxMenu_run(renderWindow, pixelSize, particleWorld, sandboxMenu_buttons, sandbox_drawingParticle, localMousePos, uiOffset);
+				if (currentMenu != Menu::Sandbox)
+				{
+					menuChange = true;
+					menuTransitionCountdown = 60;
+				}
+				else
+				{
+					menuChange = false;
+				}
+				break;
+			}
+		}
+		else
+		{
+			menuTransitionCountdown--;
+		}
+
+		if (!particleWorld->isFrozen())
+		{
+			for (int i = 0; i < simSpeed; i++)
+			{
+				updateParticleWorld(particleWorld);
+			}
 		}
 
 		renderParticleWorld(particleWorld, renderWindow, uiOffset.x, uiOffset.y, pixelSize);
-
-		switch (currentMenu)
-		{
-		case Menu::Sandbox:
-			currentMenu = sandbox_run(renderWindow, pixelSize, particleWorld, sandbox_buttons, sandbox_drawingParticle, localMousePos, uiOffset);
-			break;
-		}
 
 		titleBarPanel->draw(renderWindow);
 		closeButton->draw(renderWindow);
@@ -152,6 +186,17 @@ int main()
 
 		renderWindow.display();
 	}
+
+	for (Button* button : sandboxMenu_buttons) {
+		delete button;
+	}
+
+	for (sf::Music* music : mainMenuIntro_music) {
+		delete music;
+	}
+
+	delete titleBarPanel;
+	delete closeButton;
 
 	delete particleWorld;
 

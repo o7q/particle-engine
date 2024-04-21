@@ -19,7 +19,7 @@ void calculate_grass(int row, int col, ParticleWorld* particleWorld)
 		if (particleWorld->getParticle(row - 1, col).materialType == ParticleWorld::MaterialType::Liquid &&
 			particleWorld->getParticle(row, col).wetnessMultiplier <= 1.0f)
 		{
-			particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].wetnessMultiplier += 0.1f;
+			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.1f;
 		}
 
 		if (particleWorld->getParticle(row - 1, col).material == ParticleWorld::Material::Air &&
@@ -51,7 +51,7 @@ void calculate_grass(int row, int col, ParticleWorld* particleWorld)
 			// grow the flower
 			if (growFlower)
 			{
-				particleWorld->particles[get1DIndex(row - 1, col, particleWorld->colSize)].material = flowerToGrow;
+				particleWorld->particles[get1DIndex(row - 1, col, particleWorld->getColSize())].material = flowerToGrow;
 			}
 		}
 	}
@@ -62,7 +62,7 @@ void calculate_grass(int row, int col, ParticleWorld* particleWorld)
 		if (particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::MaterialType::Liquid &&
 			particleWorld->getParticle(row, col).wetnessMultiplier <= 0.5f)
 		{
-			particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].wetnessMultiplier += 0.05f;
+			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.05f;
 		}
 	}
 
@@ -72,7 +72,7 @@ void calculate_grass(int row, int col, ParticleWorld* particleWorld)
 		if (particleWorld->getParticle(row, col + 1).materialType == ParticleWorld::MaterialType::Liquid &&
 			particleWorld->getParticle(row, col).wetnessMultiplier <= 0.5f)
 		{
-			particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].wetnessMultiplier += 0.05f;
+			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.05f;
 		}
 	}
 

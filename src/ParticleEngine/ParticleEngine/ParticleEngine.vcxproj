@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\menus\sandbox\controls\sandbox_buttons.cpp" />
-    <ClCompile Include="include\menus\sandbox\sandbox.cpp" />
+    <ClCompile Include="include\menus\main_menu_intro\controls\main_menu_intro_music.cpp" />
+    <ClCompile Include="include\menus\main_menu_intro\main_menu_intro.cpp" />
+    <ClCompile Include="include\menus\sandbox\controls\sandbox_menu_buttons.cpp" />
+    <ClCompile Include="include\menus\sandbox\sandbox_menu.cpp" />
     <ClCompile Include="include\particle\particle_world.cpp" />
     <ClCompile Include="include\particle\physics\materials\dirt.cpp" />
     <ClCompile Include="include\particle\physics\materials\fire.cpp" />
@@ -35,6 +37,12 @@
     <ClCompile Include="include\tools\arrays.cpp" />
     <ClCompile Include="include\tools\color.cpp" />
     <ClCompile Include="include\tools\menu\button.cpp" />
+    <ClCompile Include="include\tools\num2d\double2d.cpp" />
+    <ClCompile Include="include\tools\num2d\int2d.cpp" />
+    <ClCompile Include="include\world\generators\ocean.cpp" />
+    <ClCompile Include="include\world\generators\swamp.cpp" />
+    <ClCompile Include="include\world\generators\tools\noise.cpp" />
+    <ClCompile Include="include\world\world_generator.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -43,7 +51,9 @@
     <ClInclude Include="headers\particle\particle_renderer.h" />
     <ClInclude Include="headers\particle\particle_world.h" />
     <ClInclude Include="headers\tools\menu\button.h" />
+    <ClInclude Include="headers\tools\num2d.h" />
     <ClInclude Include="headers\tools\tools.h" />
+    <ClInclude Include="headers\world\world_generator.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
@@ -193,12 +203,12 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\CppLibs\SFML-2.6.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-graphics.lib;sfml-window.lib;sfml-system.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/ENTRY:"mainCRTStartup" %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>

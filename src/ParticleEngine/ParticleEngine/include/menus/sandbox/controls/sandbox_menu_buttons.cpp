@@ -3,7 +3,7 @@
 
 #include "tools/menu/button.h"
 
-std::vector<Button*> sandbox_getButtons(int rowSize, int pixelSize, int offsetX, int offsetY, sf::Font& font)
+std::vector<Button*> sandboxMenu_getButtons(int rowSize, int pixelSize, int offsetX, int offsetY, sf::Font& font)
 {
 	std::vector<Button*> sandbox_buttons;
 
@@ -68,6 +68,12 @@ std::vector<Button*> sandbox_getButtons(int rowSize, int pixelSize, int offsetX,
 		"airButton"
 	);
 
+	Button* pauseButton = new Button(
+		sf::Vector2f(400, rowSize * pixelSize + offsetY), sf::Vector2f(120, 25), sf::Color(0, 0, 0),
+		sf::Color(240, 100, 50), "Pause Simulation", 15, font,
+		"pauseButton"
+	);
+
 	sandbox_buttons.push_back(stoneButton);
 	sandbox_buttons.push_back(sandButton);
 	sandbox_buttons.push_back(dirtButton);
@@ -80,6 +86,7 @@ std::vector<Button*> sandbox_getButtons(int rowSize, int pixelSize, int offsetX,
 	sandbox_buttons.push_back(toxicGasButton);
 	sandbox_buttons.push_back(flammableGasButton);
 	sandbox_buttons.push_back(airButton);
+	sandbox_buttons.push_back(pauseButton);
 
 	return sandbox_buttons;
 }

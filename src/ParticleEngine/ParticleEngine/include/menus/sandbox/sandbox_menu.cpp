@@ -6,7 +6,7 @@
 #include "tools/menu/button.h"
 #include "menus/menus.h"
 
-Menu sandbox_run(sf::RenderWindow& renderWindow, int pixelSize, ParticleWorld* particleWorld, std::vector<Button*> sandboxButtons, ParticleWorld::ParticleInstance& drawingParticle, sf::Vector2i localMousePos, sf::Vector2u uiOffset)
+Menu sandboxMenu_run(sf::RenderWindow& renderWindow, int pixelSize, ParticleWorld* particleWorld, std::vector<Button*> sandboxButtons, ParticleWorld::ParticleInstance& drawingParticle, sf::Vector2i localMousePos, sf::Vector2u uiOffset)
 {
 	std::string hoveredButtonId = "";
 	for (int i = 0; i < sandboxButtons.size(); i++)
@@ -83,6 +83,17 @@ Menu sandbox_run(sf::RenderWindow& renderWindow, int pixelSize, ParticleWorld* p
 		{
 			drawingParticle.material = ParticleWorld::Material::Air;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Gas;
+		}
+		else if (hoveredButtonId == "pauseButton")
+		{
+			if (particleWorld->isFrozen())
+			{
+				particleWorld->unfreeze();
+			}
+			else
+			{
+				particleWorld->freeze();
+			}
 		}
 
 		particleWorld->paintParticles((localMousePos.y - uiOffset.y) / pixelSize, (localMousePos.x - uiOffset.x) / pixelSize, 5, drawingParticle);

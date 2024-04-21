@@ -3,10 +3,7 @@
 
 #include "particle/particle_world.h"
 #include "tools/tools.h"
-
-unsigned int rowSize;
-unsigned int colSize;
-ParticleWorld::ParticleInstance* particles;
+#include <SFML/Graphics.hpp>
 
 // configure Mersenne Twister pseudo-random number generator
 std::random_device rd;
@@ -32,23 +29,43 @@ ParticleWorld::~ParticleWorld() {
 	delete[] particles;
 }
 
-void ParticleWorld::setParticle(int row, int col, ParticleWorld::ParticleInstance particleInstance) {
-	*(particles + get1DIndex(row, col, colSize)) = particleInstance;
+void ParticleWorld::freeze()
+{
+	frozen = true;
 }
 
-ParticleWorld::ParticleInstance ParticleWorld::getParticle(int row, int col) {
+void ParticleWorld::unfreeze()
+{
+	frozen = false;
+}
+
+bool ParticleWorld::isFrozen()
+{
+	return frozen;
+}
+
+int ParticleWorld::getRowSize()
+{
+	return rowSize;
+}
+
+int ParticleWorld::getColSize()
+{
+	return colSize;
+}
+
+ParticleWorld::ParticleInstance ParticleWorld::getParticle(int row, int col)
+{
 	return *(particles + get1DIndex(row, col, colSize));
 }
 
+void ParticleWorld::setParticle(int row, int col, ParticleWorld::ParticleInstance particleInstance)
+{
+	*(particles + get1DIndex(row, col, colSize)) = particleInstance;
+}
+
 void ParticleWorld::resetParticle(int row, int col) {
-	ParticleWorld::ParticleInstance temp;
-	temp.material = ParticleWorld::Material::Air;
-	temp.materialType = ParticleWorld::MaterialType::Gas;
-	temp.wetnessMultiplier = 1.0f;
-	temp.brightnessMultiplier = 1.0f;
-	temp.intValue = 0;
-	temp.physicsFreezeTime = 0;
-	setParticle(row, col, temp);
+	setParticle(row, col, getDefaultInstance());
 }
 
 void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::ParticleInstance particleInstance)
@@ -79,6 +96,42 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 			setParticle(r2, c2, particleInstance);
 		}
 	}
+}
+
+void ParticleWorld::imageToParticles(int row, int col, sf::Image& image, ParticleWorld::ParticleInstance particleInstance, bool useImageColors)
+{
+	sf::Vector2u imageSize = image.getSize();
+	for (int rowIndex = 0; rowIndex < imageSize.y; rowIndex++)
+	{
+		for (int colIndex = 0; colIndex < imageSize.x; colIndex++)
+		{
+			sf::Color pixelColor = image.getPixel(colIndex, rowIndex);
+
+			if (static_cast<int>(pixelColor.a) != 0)
+			{
+				if (useImageColors)
+				{
+					particleInstance.color = pixelColor;
+					particleInstance.overrideColor = true;
+				}
+				setParticle(rowIndex + row, colIndex + col, particleInstance);
+			}
+		}
+	}
+}
+
+ParticleWorld::ParticleInstance ParticleWorld::getDefaultInstance()
+{
+	ParticleWorld::ParticleInstance defaultInstance;
+	defaultInstance.material = ParticleWorld::Material::Air;
+	defaultInstance.materialType = ParticleWorld::MaterialType::Gas;
+	defaultInstance.color = sf::Color(0, 0, 0);
+	defaultInstance.overrideColor = false;
+	defaultInstance.wetnessMultiplier = 1.0f;
+	defaultInstance.brightnessMultiplier = 1.0f;
+	defaultInstance.intValue = 0;
+	defaultInstance.physicsFreezeTime = 0;
+	return defaultInstance;
 }
 
 bool ParticleWorld::canLeft(int col)

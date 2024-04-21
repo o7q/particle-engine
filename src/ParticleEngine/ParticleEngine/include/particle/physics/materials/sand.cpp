@@ -15,7 +15,7 @@ void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 		if (particleWorld->getParticle(row - 1, col).materialType == ParticleWorld::MaterialType::Liquid &&
 			particleWorld->getParticle(row, col).wetnessMultiplier <= 2.0f)
 		{
-			particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].wetnessMultiplier += 0.1f;
+			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.1f;
 		}
 	}
 
@@ -25,7 +25,7 @@ void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 		if (particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::MaterialType::Liquid &&
 			particleWorld->getParticle(row, col).wetnessMultiplier <= 1.5f)
 		{
-			particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].wetnessMultiplier += 0.05f;
+			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.05f;
 		}
 	}
 
@@ -35,7 +35,7 @@ void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 		if (particleWorld->getParticle(row, col + 1).materialType == ParticleWorld::MaterialType::Liquid &&
 			particleWorld->getParticle(row, col).wetnessMultiplier <= 1.5f)
 		{
-			particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].wetnessMultiplier += 0.05f;
+			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.05f;
 		}
 	}
 

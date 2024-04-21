@@ -17,7 +17,7 @@ void calculate_liquid(int row, int col, ParticleWorld* particleWorld)
 			particleWorld->getParticle(row - 1, col).material == ParticleWorld::Material::Water)
 		{
 			particleWorld->setParticle(row - 1, col, self);
-			particleWorld->particles[get1DIndex(row, col, particleWorld->colSize)].material = ParticleWorld::Material::Water;
+			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].material = ParticleWorld::Material::Water;
 		}
 	}
 
@@ -73,7 +73,7 @@ void calculate_liquid(int row, int col, ParticleWorld* particleWorld)
 		if (
 			(particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Air ||
 				particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::MaterialType::Gas ||
-				particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Fire) && self.physicsFreezeTime < particleWorld->colSize &&
+				particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Fire) && self.physicsFreezeTime < particleWorld->getColSize() &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row, col - 1, self);
@@ -87,7 +87,7 @@ void calculate_liquid(int row, int col, ParticleWorld* particleWorld)
 		if (
 			(particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Air ||
 				particleWorld->getParticle(row, col + 1).materialType == ParticleWorld::MaterialType::Gas ||
-				particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Fire) && self.physicsFreezeTime < particleWorld->colSize &&
+				particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Fire) && self.physicsFreezeTime < particleWorld->getColSize() &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row, col + 1, self);
