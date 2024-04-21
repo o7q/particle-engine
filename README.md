@@ -6,3 +6,5 @@
 ---
 
 <img src="assets/images/showcase.gif">
+
+*^ This is the old C# version. I will make a showcase for the C++ rewrite soon.*
