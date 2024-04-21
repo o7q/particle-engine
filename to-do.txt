@@ -1,5 +1,6 @@
-- Delete buttons when they are no longer needed!!
+- Delete buttons when they are no longer needed!! (+ other stuff)
 - Add rain
 - Add growing seaweed
 - Add explosives
 - Fix solids floating on fire and gasoline
+- Organize scripts better because it makes me want to explode atm
