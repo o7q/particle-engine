@@ -3,6 +3,9 @@
 #include "tools/num2d.h"
 #include "tools/tools.h"
 
+#include <iostream>
+#include <algorithm>
+
 Int2D::Int2D(int rowSize, int colSize)
 {
 	arr = new int[rowSize * colSize];

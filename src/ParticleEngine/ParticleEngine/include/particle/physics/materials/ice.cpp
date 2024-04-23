@@ -29,7 +29,7 @@ void calculate_ice(int row, int col, ParticleWorld* particleWorld)
 	if (particleWorld->canLeft(col))
 	{
 		// if in contact with steam, increment melt chance by 20 (left)
-		if (particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::Material::Steam)
+		if (particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Steam)
 		{
 			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].intValue += 20;
 		}
@@ -41,7 +41,7 @@ void calculate_ice(int row, int col, ParticleWorld* particleWorld)
 		}
 
 		// if in contact with a liquid, increment melt chance by 2 (left)
-		if (particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::Material::Water)
+		if (particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Water)
 		{
 			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].intValue += 2;
 		}
@@ -56,7 +56,7 @@ void calculate_ice(int row, int col, ParticleWorld* particleWorld)
 	if (particleWorld->canRight(col))
 	{
 		// if in contact with steam, increment melt chance by 20 (right)
-		if (particleWorld->getParticle(row, col + 1).materialType == ParticleWorld::Material::Steam)
+		if (particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Steam)
 		{
 			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].intValue += 20;
 		}

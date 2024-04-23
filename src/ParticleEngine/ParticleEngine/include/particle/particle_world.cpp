@@ -1,9 +1,10 @@
 #include <iostream>
 #include <random>
 
+#include <SFML/Graphics.hpp>
+
 #include "particle/particle_world.h"
 #include "tools/tools.h"
-#include <SFML/Graphics.hpp>
 
 // configure Mersenne Twister pseudo-random number generator
 std::random_device rd;
@@ -16,9 +17,9 @@ ParticleWorld::ParticleWorld(int rowSize, int colSize)
 	this->colSize = colSize;
 	particles = new ParticleInstance[rowSize * colSize];
 
-	for (int row = 0; row < rowSize; row++)
+	for (int row = 0; row < rowSize; ++row)
 	{
-		for (int col = 0; col < colSize; col++)
+		for (int col = 0; col < colSize; ++col)
 		{
 			resetParticle(row, col);
 		}
@@ -64,7 +65,8 @@ void ParticleWorld::setParticle(int row, int col, ParticleWorld::ParticleInstanc
 	*(particles + get1DIndex(row, col, colSize)) = particleInstance;
 }
 
-void ParticleWorld::resetParticle(int row, int col) {
+void ParticleWorld::resetParticle(int row, int col)
+{
 	setParticle(row, col, getDefaultInstance());
 }
 
@@ -72,9 +74,9 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 {
 	std::uniform_int_distribution<int> dist(9, 10);
 
-	for (int rowIndex = 0; rowIndex < size; rowIndex++)
+	for (int rowIndex = 0; rowIndex < size; ++rowIndex)
 	{
-		for (int colIndex = 0; colIndex < size; colIndex++)
+		for (int colIndex = 0; colIndex < size; ++colIndex)
 		{
 			if (!(row < rowSize && col < colSize && row > 0 && col > 0))
 			{
@@ -101,9 +103,9 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 void ParticleWorld::imageToParticles(int row, int col, sf::Image& image, ParticleWorld::ParticleInstance particleInstance, bool useImageColors)
 {
 	sf::Vector2u imageSize = image.getSize();
-	for (int rowIndex = 0; rowIndex < imageSize.y; rowIndex++)
+	for (unsigned int rowIndex = 0; rowIndex < imageSize.y; ++rowIndex)
 	{
-		for (int colIndex = 0; colIndex < imageSize.x; colIndex++)
+		for (unsigned int colIndex = 0; colIndex < imageSize.x; ++colIndex)
 		{
 			sf::Color pixelColor = image.getPixel(colIndex, rowIndex);
 
@@ -125,6 +127,7 @@ ParticleWorld::ParticleInstance ParticleWorld::getDefaultInstance()
 	ParticleWorld::ParticleInstance defaultInstance;
 	defaultInstance.material = ParticleWorld::Material::Air;
 	defaultInstance.materialType = ParticleWorld::MaterialType::Gas;
+	defaultInstance.physicsType = ParticleWorld::PhysicsType::Smoke;
 	defaultInstance.color = sf::Color(0, 0, 0);
 	defaultInstance.overrideColor = false;
 	defaultInstance.wetnessMultiplier = 1.0f;

@@ -13,7 +13,7 @@ void calculate_simpleGravity(int row, int col, ParticleWorld* particleWorld)
 		// apply downwards gravity
 		if (
 			(particleWorld->getParticle(row + 1, col).materialType == ParticleWorld::MaterialType::Gas ||
-				particleWorld->getParticle(row + 1, col).material == ParticleWorld::Material::Water) &&
+				particleWorld->getParticle(row + 1, col).materialType == ParticleWorld::MaterialType::Liquid) &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row + 1, col, self);

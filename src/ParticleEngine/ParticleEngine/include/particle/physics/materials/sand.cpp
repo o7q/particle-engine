@@ -3,6 +3,7 @@
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
 #include "tools/tools.h"
+#include "particle/particle_sounds.h"
 
 void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 {
@@ -44,7 +45,7 @@ void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 		// apply gravity (down)
 		if (
 			(particleWorld->getParticle(row + 1, col).materialType == ParticleWorld::MaterialType::Gas ||
-				(particleWorld->getParticle(row + 1, col).material == ParticleWorld::Material::Water) &&
+				(particleWorld->getParticle(row + 1, col).materialType == ParticleWorld::MaterialType::Liquid) &&
 				particleWorld->getParticle(row, col).material == self.material))
 		{
 			particleWorld->setParticle(row + 1, col, self);
@@ -61,6 +62,7 @@ void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 			particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Air &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
+			SoundEngine::playSound(SoundEngine::SoundType::WaterDrip);
 			particleWorld->setParticle(row + 1, col - 1, self);
 			particleWorld->resetParticle(row, col);
 		}
@@ -75,6 +77,7 @@ void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 			particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Air &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
+			SoundEngine::playSound(SoundEngine::SoundType::WaterDrip);
 			particleWorld->setParticle(row + 1, col + 1, self);
 			particleWorld->resetParticle(row, col);
 		}

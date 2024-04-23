@@ -3,9 +3,9 @@
 
 #include <SFML/Audio.hpp>
 
-std::vector<sf::Music*> mainMenuIntro_getMusic()
+std::vector<sf::Music*> mainMenu_getMusic()
 {
-	std::vector<sf::Music*> mainMenuIntro_music;
+	std::vector<sf::Music*> mainMenu_music;
 
 	sf::Music* ambient_wind = new sf::Music();
 	if (!ambient_wind->openFromFile("data\\sounds\\ambient\\ambient_wind.ogg"))
@@ -21,8 +21,8 @@ std::vector<sf::Music*> mainMenuIntro_getMusic()
 	}
 	ambient_swamp->setLoop(true);
 
-	mainMenuIntro_music.push_back(ambient_wind);
-	mainMenuIntro_music.push_back(ambient_swamp);
+	mainMenu_music.push_back(ambient_wind);
+	mainMenu_music.push_back(ambient_swamp);
 
-	return mainMenuIntro_music;
+	return mainMenu_music;
 }

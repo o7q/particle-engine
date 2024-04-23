@@ -13,57 +13,57 @@ std::vector<Button*> sandboxMenu_getButtons(int rowSize, int pixelSize, int offs
 		"stoneButton"
 	);
 	Button* sandButton = new Button(
-		sf::Vector2f(stoneButton->position.x + stoneButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(245, 228, 118),
+		sf::Vector2f(stoneButton->getPos().x + stoneButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(245, 228, 118),
 		sf::Color(0, 0, 0), "", 0, font,
 		"sandButton"
 	);
 	Button* dirtButton = new Button(
-		sf::Vector2f(sandButton->position.x + sandButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(77, 54, 15),
+		sf::Vector2f(sandButton->getPos().x + sandButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(77, 54, 15),
 		sf::Color(0, 0, 0), "", 0, font,
 		"dirtButton"
 	);
 	Button* grassButton = new Button(
-		sf::Vector2f(dirtButton->position.x + dirtButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(60, 110, 33),
+		sf::Vector2f(dirtButton->getPos().x + dirtButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(60, 110, 33),
 		sf::Color(0, 0, 0), "", 0, font,
 		"grassButton"
 	);
 	Button* waterButton = new Button(
-		sf::Vector2f(grassButton->position.x + grassButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(72, 136, 240),
+		sf::Vector2f(grassButton->getPos().x + grassButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(72, 136, 240),
 		sf::Color(0, 0, 0), "", 0, font,
 		"waterButton"
 	);
 	Button* iceButton = new Button(
-		sf::Vector2f(waterButton->position.x + waterButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(120, 212, 240),
+		sf::Vector2f(waterButton->getPos().x + waterButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(120, 212, 240),
 		sf::Color(0, 0, 0), "", 0, font,
 		"iceButton"
 	);
 	Button* fireButton = new Button(
-		sf::Vector2f(iceButton->position.x + iceButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(255, 191, 0),
+		sf::Vector2f(iceButton->getPos().x + iceButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(255, 191, 0),
 		sf::Color(0, 0, 0), "", 0, font,
 		"fireButton"
 	);
 	Button* gasolineButton = new Button(
-		sf::Vector2f(fireButton->position.x + fireButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(215, 219, 77),
+		sf::Vector2f(fireButton->getPos().x + fireButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(215, 219, 77),
 		sf::Color(0, 0, 0), "", 0, font,
 		"gasolineButton"
 	);
 	Button* smokeButton = new Button(
-		sf::Vector2f(gasolineButton->position.x + gasolineButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(120, 120, 120),
+		sf::Vector2f(gasolineButton->getPos().x + gasolineButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(120, 120, 120),
 		sf::Color(0, 0, 0), "", 0, font,
 		"smokeButton"
 	);
 	Button* toxicGasButton = new Button(
-		sf::Vector2f(smokeButton->position.x + smokeButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(81, 97, 47),
+		sf::Vector2f(smokeButton->getPos().x + smokeButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(81, 97, 47),
 		sf::Color(0, 0, 0), "", 0, font,
 		"toxicGasButton"
 	);
 	Button* flammableGasButton = new Button(
-		sf::Vector2f(toxicGasButton->position.x + toxicGasButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(156, 133, 81),
+		sf::Vector2f(toxicGasButton->getPos().x + toxicGasButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(156, 133, 81),
 		sf::Color(0, 0, 0), "", 0, font,
 		"flammableGasButton"
 	);
 	Button* airButton = new Button(
-		sf::Vector2f(flammableGasButton->position.x + flammableGasButton->size.x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(255, 255, 255),
+		sf::Vector2f(flammableGasButton->getPos().x + flammableGasButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(255, 255, 255),
 		sf::Color(0, 0, 0), "", 0, font,
 		"airButton"
 	);

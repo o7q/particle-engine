@@ -5,9 +5,9 @@
 void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderWindow, int offsetX, int offsetY, int pixelSize)
 {
 	sf::VertexArray quadClump(sf::Quads);
-	for (int row = 0; row < particleWorld->getRowSize(); row++)
+	for (int row = 0; row < particleWorld->getRowSize(); ++row)
 	{
-		for (int col = 0; col < particleWorld->getColSize(); col++)
+		for (int col = 0; col < particleWorld->getColSize(); ++col)
 		{
 			ParticleWorld::ParticleInstance currentParticle = particleWorld->getParticle(row, col);
 
@@ -23,91 +23,109 @@ void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderW
 			switch (particleWorld->getParticle(row, col).material)
 			{
 			case ParticleWorld::Material::Stone: {
-				pixelColor.r = 160 * brightnessColor;
-				pixelColor.g = 160 * brightnessColor;
-				pixelColor.b = 160 * brightnessColor;
+				pixelColor.r = static_cast<sf::Uint8>(160 * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(160 * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(160 * brightnessColor);
 				pixelColor.a = 255;
 
 				renderPixel = true;
 				break;
 			}
 			case ParticleWorld::Material::Sand: {
-				pixelColor.r = 245 / wetnessColor * brightnessColor;
-				pixelColor.g = 228 / wetnessColor * brightnessColor;
-				pixelColor.b = 118 / wetnessColor * brightnessColor;
+				pixelColor.r = static_cast<sf::Uint8>(245 / wetnessColor * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(228 / wetnessColor * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(118 / wetnessColor * brightnessColor);
 				pixelColor.a = 255;
 
 				renderPixel = true;
 				break;
 			}
 			case ParticleWorld::Material::Sandstone: {
-				pixelColor.r = 189 / wetnessColor * brightnessColor;
-				pixelColor.g = 176 / wetnessColor * brightnessColor;
-				pixelColor.b = 91 / wetnessColor * brightnessColor;
+				pixelColor.r = static_cast<sf::Uint8>(189 / wetnessColor * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(176 / wetnessColor * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(91 / wetnessColor * brightnessColor);
 				pixelColor.a = 255;
 
 				renderPixel = true;
 				break;
 			}
 			case ParticleWorld::Material::Dirt: {
-				pixelColor.r = 77 / wetnessColor * brightnessColor;
-				pixelColor.g = 54 / wetnessColor * brightnessColor;
-				pixelColor.b = 15 / wetnessColor * brightnessColor;
+				pixelColor.r = static_cast<sf::Uint8>(77 / wetnessColor * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(54 / wetnessColor * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(15 / wetnessColor * brightnessColor);
+				pixelColor.a = 255;
+
+				renderPixel = true;
+				break;
+			}
+			case ParticleWorld::Material::DarkDirt: {
+				pixelColor.r = static_cast<sf::Uint8>(38 / wetnessColor * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(27 / wetnessColor * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(7 / wetnessColor * brightnessColor);
 				pixelColor.a = 255;
 
 				renderPixel = true;
 				break;
 			}
 			case ParticleWorld::Material::Grass: {
-				pixelColor.r = 60 * brightnessColor;
-				pixelColor.g = 110 * brightnessColor;
-				pixelColor.b = 33 * brightnessColor;
+				pixelColor.r = static_cast<sf::Uint8>(60 * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(110 * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(33 * brightnessColor);
 				pixelColor.a = 255;
 
 				renderPixel = true;
 				break;
 			}
 			case ParticleWorld::Material::RedFlower: {
-				pixelColor.r = 255 * brightnessColor;
-				pixelColor.g = 59 * brightnessColor;
-				pixelColor.b = 59 * brightnessColor;
+				pixelColor.r = static_cast<sf::Uint8>(255 * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(59 * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(59 * brightnessColor);
 				pixelColor.a = 255;
 
 				renderPixel = true;
 				break;
 			}
 			case ParticleWorld::Material::PinkFlower: {
-				pixelColor.r = 246 * brightnessColor;
-				pixelColor.g = 122 * brightnessColor;
-				pixelColor.b = 255 * brightnessColor;
+				pixelColor.r = static_cast<sf::Uint8>(246 * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(122 * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(255 * brightnessColor);
 				pixelColor.a = 255;
 
 				renderPixel = true;
 				break;
 			}
 			case ParticleWorld::Material::YellowFlower: {
-				pixelColor.r = 255 * brightnessColor;
-				pixelColor.g = 222 * brightnessColor;
-				pixelColor.b = 92 * brightnessColor;
+				pixelColor.r = static_cast<sf::Uint8>(255 * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(222 * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(92 * brightnessColor);
 				pixelColor.a = 255;
 
 				renderPixel = true;
 				break;
 			}
 			case ParticleWorld::Material::BlueFlower: {
-				pixelColor.r = 84 * brightnessColor;
-				pixelColor.g = 178 * brightnessColor;
-				pixelColor.b = 255 * brightnessColor;
+				pixelColor.r = static_cast<sf::Uint8>(84 * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(178 * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(255 * brightnessColor);
 				pixelColor.a = 255;
 
 				renderPixel = true;
 				break;
 			}
 			case ParticleWorld::Material::Water: {
-				pixelColor.r = 34;
-				pixelColor.g = 152 * (brightnessColor == 1 ? 1 : 0.99);
-				pixelColor.b = 218 * (brightnessColor == 1 ? 1 : 0.99);
-				pixelColor.a = 200 * (brightnessColor == 1 ? 1 : 0.99);
+				pixelColor.r = static_cast<sf::Uint8>(34 * (brightnessColor == 1 ? 1 : 0.99));
+				pixelColor.g = static_cast<sf::Uint8>(152 * (brightnessColor == 1 ? 1 : 0.99));
+				pixelColor.b = static_cast<sf::Uint8>(218 * (brightnessColor == 1 ? 1 : 0.99));
+				pixelColor.a = 200;
+
+				renderPixel = true;
+				break;
+			}
+			case ParticleWorld::Material::SwampWater: {
+				pixelColor.r = static_cast<sf::Uint8>(85 * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(92 * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(69 * brightnessColor);
+				pixelColor.a = 220;
 
 				renderPixel = true;
 				break;
@@ -116,7 +134,7 @@ void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderW
 				pixelColor.r = 215;
 				pixelColor.g = 219;
 				pixelColor.b = 77;
-				pixelColor.a = 230 * brightnessColor;
+				pixelColor.a = static_cast<sf::Uint8>(230 * brightnessColor);
 
 				renderPixel = true;
 				break;
@@ -125,17 +143,17 @@ void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderW
 				std::uniform_int_distribution<int> dist(0, 2);
 				double fireFlicker = dist(particleWorld->gen) / 2.0;
 				pixelColor.r = 255;
-				pixelColor.g = 191 * fireFlicker;
+				pixelColor.g = static_cast<sf::Uint8>(191 * fireFlicker);
 				pixelColor.b = 0;
-				pixelColor.a = 255 * fireFlicker;
+				pixelColor.a = static_cast<sf::Uint8>(255 * fireFlicker);
 
 				renderPixel = true;
 				break;
 			}
 			case ParticleWorld::Material::Ice: {
-				pixelColor.r = 120 * brightnessColor;
-				pixelColor.g = 212 * brightnessColor;
-				pixelColor.b = 240 * brightnessColor;
+				pixelColor.r = static_cast<sf::Uint8>(120 * brightnessColor);
+				pixelColor.g = static_cast<sf::Uint8>(212 * brightnessColor);
+				pixelColor.b = static_cast<sf::Uint8>(240 * brightnessColor);
 				pixelColor.a = 240;
 
 				renderPixel = true;
@@ -145,7 +163,7 @@ void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderW
 				pixelColor.r = 120;
 				pixelColor.g = 120;
 				pixelColor.b = 120;
-				pixelColor.a = 240 * brightnessColor;
+				pixelColor.a = static_cast<sf::Uint8>(240 * brightnessColor);
 
 				renderPixel = true;
 				break;
@@ -154,7 +172,7 @@ void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderW
 				pixelColor.r = 220;
 				pixelColor.g = 220;
 				pixelColor.b = 220;
-				pixelColor.a = 220 * brightnessColor;
+				pixelColor.a = static_cast<sf::Uint8>(220 * brightnessColor);
 
 				renderPixel = true;
 				break;
@@ -163,7 +181,7 @@ void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderW
 				pixelColor.r = 81;
 				pixelColor.g = 97;
 				pixelColor.b = 47;
-				pixelColor.a = 235 * brightnessColor;
+				pixelColor.a = static_cast<sf::Uint8>(235 * brightnessColor);
 
 				renderPixel = true;
 				break;
@@ -172,7 +190,7 @@ void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderW
 				pixelColor.r = 156;
 				pixelColor.g = 133;
 				pixelColor.b = 81;
-				pixelColor.a = 235 * brightnessColor;
+				pixelColor.a = static_cast<sf::Uint8>(235 * brightnessColor);
 
 				renderPixel = true;
 				break;

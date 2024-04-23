@@ -3,14 +3,6 @@
 #include "tools/menu/button.h"
 #include "tools/tools.h"
 
-sf::Vector2f position, size;
-sf::Color color, textColor;
-std::string text, id;
-int textSize;
-
-sf::RectangleShape buttonShape;
-sf::Text buttonText;
-
 Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Color color, sf::Color textColor, std::string text, int textSize, sf::Font& font, std::string id)
 {
 	this->position = position;
@@ -20,6 +12,7 @@ Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Color color, sf::Co
 	this->text = text;
 	this->textSize = textSize;
 	this->id = id;
+	this->canClick = false;
 
 	buttonShape.setPosition(position);
 	buttonShape.setSize(size);
@@ -66,4 +59,41 @@ void Button::draw(sf::RenderWindow& renderWindow)
 {
 	renderWindow.draw(buttonShape);
 	renderWindow.draw(buttonText);
+}
+
+sf::Vector2f Button::getPos()
+{
+	return position;
+}
+sf::Vector2f Button::getSize()
+{
+	return size;
+}
+
+std::string Button::getId()
+{
+	return id;
+}
+
+std::string Button::handleClick(int mouseX, int mouseY)
+{
+	highlight(isMouseHover(mouseX, mouseY));
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !isMouseHover(mouseX, mouseY))
+	{
+		canClick = false;
+	}
+	
+	if (!sf::Mouse::isButtonPressed(sf::Mouse::Left) && !canClick)
+	{
+		canClick = true;
+	}
+	
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && canClick && isMouseHover(mouseX, mouseY))
+	{
+		canClick = false;
+		return id;
+	}
+
+	return "";
 }

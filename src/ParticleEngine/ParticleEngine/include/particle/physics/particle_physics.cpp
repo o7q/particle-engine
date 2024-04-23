@@ -6,20 +6,20 @@ void updateParticleWorld(ParticleWorld* particleWorld)
 {
 	std::uniform_int_distribution<int> dist(0, 1);
 
-	for (int row = particleWorld->getRowSize() - 1; row >= 0; row--)
+	for (int row = particleWorld->getRowSize() - 1; row >= 0; --row)
 	{
 		int updateDirection = dist(particleWorld->gen);
 
 		if (updateDirection == 0)
 		{
-			for (int col = particleWorld->getColSize() - 1; col >= 0; col--)
+			for (int col = particleWorld->getColSize() - 1; col >= 0; --col)
 			{
 				updateParticle(particleWorld, row, col);
 			}
 		}
 		else
 		{
-			for (int col = 0; col < particleWorld->getColSize(); col++)
+			for (int col = 0; col < particleWorld->getColSize(); ++col)
 			{
 				updateParticle(particleWorld, row, col);
 			}
@@ -29,38 +29,31 @@ void updateParticleWorld(ParticleWorld* particleWorld)
 
 void updateParticle(ParticleWorld* particleWorld, int row, int col)
 {
-	switch (particleWorld->getParticle(row, col).material)
+	switch (particleWorld->getParticle(row, col).physicsType)
 	{
-	case ParticleWorld::Material::Sand:
+	case ParticleWorld::PhysicsType::Sand:
 		calculate_sand(row, col, particleWorld);
 		break;
-	case ParticleWorld::Material::Dirt:
-		calculate_dirt(row, col, particleWorld);
-		break;
-	case ParticleWorld::Material::Grass:
-		calculate_grass(row, col, particleWorld);
-		break;
-	case ParticleWorld::Material::Water:
-	case ParticleWorld::Material::Gasoline:
+	case ParticleWorld::PhysicsType::Water:
 		calculate_liquid(row, col, particleWorld);
 		break;
-	case ParticleWorld::Material::Fire:
-		calculate_fire(row, col, particleWorld);
-		break;
-	case ParticleWorld::Material::Ice:
-		calculate_ice(row, col, particleWorld);
-		break;
-	case ParticleWorld::Material::Smoke:
-	case ParticleWorld::Material::Steam:
-	case ParticleWorld::Material::FlammableGas:
-	case ParticleWorld::Material::ToxicGas:
+	case ParticleWorld::PhysicsType::Smoke:
 		calculate_smoke(row, col, particleWorld);
 		break;
-	case ParticleWorld::Material::RedFlower:
-	case ParticleWorld::Material::PinkFlower:
-	case ParticleWorld::Material::YellowFlower:
-	case ParticleWorld::Material::BlueFlower:
+	case ParticleWorld::PhysicsType::Ice:
+		calculate_ice(row, col, particleWorld);
+		break;
+	case ParticleWorld::PhysicsType::SimpleGravity:
 		calculate_simpleGravity(row, col, particleWorld);
+		break;
+	case ParticleWorld::PhysicsType::Dirt:
+		calculate_dirt(row, col, particleWorld);
+		break;
+	case ParticleWorld::PhysicsType::Grass:
+		calculate_grass(row, col, particleWorld);
+		break;
+	case ParticleWorld::PhysicsType::Fire:
+		calculate_fire(row, col, particleWorld);
 		break;
 	}
 }

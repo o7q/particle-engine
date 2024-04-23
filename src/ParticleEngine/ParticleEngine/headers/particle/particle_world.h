@@ -13,13 +13,14 @@ private:
 	int colSize;
 
 public:
-	enum Material {
+	enum class Material {
 		Air,
 
 		Stone,
 		Sand,
 		Sandstone,
 		Dirt,
+		DarkDirt,
 		Grass,
 		RedFlower,
 		PinkFlower,
@@ -27,6 +28,7 @@ public:
 		BlueFlower,
 
 		Water,
+		SwampWater,
 		Gasoline,
 		Fire,
 		Ice,
@@ -37,7 +39,19 @@ public:
 		FlammableGas
 	};
 
-	enum MaterialType {
+	enum class PhysicsType {
+		Sand,
+		Water,
+		Smoke,
+		Ice,
+		SimpleGravity,
+		Dirt,
+		Grass,
+		Fire,
+		NoGravity
+	};
+
+	enum class MaterialType {
 		Solid,
 		Liquid,
 		Gas
@@ -46,6 +60,7 @@ public:
 	struct ParticleInstance {
 		Material material;
 		MaterialType materialType;
+		PhysicsType physicsType;
 		sf::Color color;
 		bool overrideColor;
 		float wetnessMultiplier;

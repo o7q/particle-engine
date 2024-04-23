@@ -52,12 +52,6 @@
     <Filter Include="Source Files\menus\sandbox_menu\controls">
       <UniqueIdentifier>{070db78e-dad7-40dc-aa8e-607521cdac46}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\menus\main_menu_intro">
-      <UniqueIdentifier>{40a84606-c4e8-4a86-a15e-07bd4e03f4cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\menus\main_menu_intro\controls">
-      <UniqueIdentifier>{1112c4a0-6eb3-43da-b176-7e964e59a4d4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\world">
       <UniqueIdentifier>{2a1dcd14-146a-4444-8770-5af06902d0f3}</UniqueIdentifier>
     </Filter>
@@ -73,6 +67,15 @@
     <Filter Include="Source Files\world\generators\tools">
       <UniqueIdentifier>{e800e2ae-aad6-4698-8c15-1a38f428e04d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\menus\main_menu">
+      <UniqueIdentifier>{40a84606-c4e8-4a86-a15e-07bd4e03f4cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menus\main_menu\controls">
+      <UniqueIdentifier>{1112c4a0-6eb3-43da-b176-7e964e59a4d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\particle\sounds">
+      <UniqueIdentifier>{ab113409-04bf-42e4-a7d5-5041b1c6102c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\particle\physics\materials\sand.cpp">
@@ -81,7 +84,7 @@
     <ClCompile Include="include\particle\physics\materials\smoke.cpp">
       <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\liquid.cpp">
+    <ClCompile Include="include\particle\physics\materials\water.cpp">
       <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
     <ClCompile Include="include\particle\physics\particle_physics.cpp">
@@ -117,14 +120,11 @@
     <ClCompile Include="include\tools\arrays.cpp">
       <Filter>Source Files\tools</Filter>
     </ClCompile>
-    <ClCompile Include="include\tools\color.cpp">
-      <Filter>Source Files\tools</Filter>
+    <ClCompile Include="include\menus\main_menu_intro\main_menu.cpp">
+      <Filter>Source Files\menus\main_menu</Filter>
     </ClCompile>
-    <ClCompile Include="include\menus\main_menu_intro\main_menu_intro.cpp">
-      <Filter>Source Files\menus\main_menu_intro</Filter>
-    </ClCompile>
-    <ClCompile Include="include\menus\main_menu_intro\controls\main_menu_intro_music.cpp">
-      <Filter>Source Files\menus\main_menu_intro\controls</Filter>
+    <ClCompile Include="include\menus\main_menu_intro\controls\main_menu_music.cpp">
+      <Filter>Source Files\menus\main_menu\controls</Filter>
     </ClCompile>
     <ClCompile Include="include\menus\sandbox\sandbox_menu.cpp">
       <Filter>Source Files\menus\sandbox_menu</Filter>
@@ -149,6 +149,18 @@
     </ClCompile>
     <ClCompile Include="include\world\generators\swamp.cpp">
       <Filter>Source Files\world\generators</Filter>
+    </ClCompile>
+    <ClCompile Include="include\world\generators\tools\kernel.cpp">
+      <Filter>Source Files\world\generators\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="include\world\generators\tools\quantize.cpp">
+      <Filter>Source Files\world\generators\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tools\color.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\sounds\particle_sounds.cpp">
+      <Filter>Source Files\particle\sounds</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="headers\tools\num2d.h">
       <Filter>Header Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\particle\particle_sounds.h">
+      <Filter>Header Files\particle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

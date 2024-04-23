@@ -9,6 +9,8 @@
 #include "headers/tools/menu/button.h"
 #include "menus/menus.h"
 
+#include "particle/particle_sounds.h"
+
 const std::string version = "v1.0.0";
 const std::string windowTitle = "particle engine " + version;
 
@@ -34,7 +36,9 @@ int main()
 		// error
 	}
 
-	Menu currentMenu = Menu::MainIntro;
+	// SoundEngine::init();
+
+	Menu currentMenu = Menu::Main;
 
 	sf::Text titleBarText;
 
@@ -61,7 +65,7 @@ int main()
 	sandbox_drawingParticle.material = ParticleWorld::Material::Sand;
 	sandbox_drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
 
-	std::vector<sf::Music*> mainMenuIntro_music = mainMenuIntro_getMusic();
+	std::vector<sf::Music*> mainMenu_music = mainMenu_getMusic();
 
 	renderWindow.setFramerateLimit(0);
 
@@ -75,10 +79,10 @@ int main()
 
 	particleWorld->freeze();
 
-	//std::cout << static_cast<int>(particleWorld->getParticle(13, 9).color.r);
-
 	bool menuChange = true;
+	bool windowInFocus = true;
 
+	std::string hoveredButtonId = "";
 	while (renderWindow.isOpen())
 	{
 		sf::Event event;
@@ -88,16 +92,24 @@ int main()
 			{
 				renderWindow.close();
 			}
+			else if (event.type == sf::Event::GainedFocus)
+			{
+				windowInFocus = true;
+			}
+			else if (event.type == sf::Event::LostFocus)
+			{
+				windowInFocus = false;
+			}
 		}
 
 		sf::Vector2i localMousePos = sf::Mouse::getPosition(renderWindow);
 		sf::Vector2i globalMousePos = sf::Mouse::getPosition();
+		sf::Vector2i windowGlobalPosition = renderWindow.getPosition();
+
 		bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 
-		bool closeButtonHovered = closeButton->isMouseHover(localMousePos.x, localMousePos.y);
-		closeButton->highlight(closeButtonHovered);
-
-		sf::Vector2i windowGlobalPosition = renderWindow.getPosition();
+		// handle close button
+		hoveredButtonId = closeButton->handleClick(localMousePos.x, localMousePos.y);
 
 		if (mouseDown && !titleBarPanel->isMouseHover(localMousePos.x, localMousePos.y))
 		{
@@ -106,7 +118,7 @@ int main()
 
 		if (mouseDown)
 		{
-			if (closeButtonHovered)
+			if (hoveredButtonId != "")
 			{
 				exitProgram = true;
 			}
@@ -139,12 +151,12 @@ int main()
 		{
 			switch (currentMenu)
 			{
-			case Menu::MainIntro:
-				currentMenu = mainMenuIntro_run(renderWindow, particleWorld, mainMenuIntro_music, menuChange);
-				if (currentMenu != Menu::MainIntro)
+			case Menu::Main:
+				currentMenu = mainMenu_run(renderWindow, particleWorld, mainMenu_music, menuChange);
+				if (currentMenu != Menu::Main)
 				{
 					menuChange = true;
-					menuTransitionCountdown = 60;
+					menuTransitionCountdown = 0;
 				}
 				else
 				{
@@ -156,7 +168,7 @@ int main()
 				if (currentMenu != Menu::Sandbox)
 				{
 					menuChange = true;
-					menuTransitionCountdown = 60;
+					menuTransitionCountdown = 0;
 				}
 				else
 				{
@@ -172,7 +184,7 @@ int main()
 
 		if (!particleWorld->isFrozen())
 		{
-			for (int i = 0; i < simSpeed; i++)
+			for (int i = 0; i < simSpeed; ++i)
 			{
 				updateParticleWorld(particleWorld);
 			}
@@ -191,7 +203,7 @@ int main()
 		delete button;
 	}
 
-	for (sf::Music* music : mainMenuIntro_music) {
+	for (sf::Music* music : mainMenu_music) {
 		delete music;
 	}
 

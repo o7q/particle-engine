@@ -7,7 +7,7 @@
 #include "menus/menus.h"
 #include "world/world_generator.h"
 
-Menu mainMenuIntro_run(sf::RenderWindow& renderWindow, ParticleWorld* particleWorld, std::vector<sf::Music*> mainMenuIntro_music, bool doOnce)
+Menu mainMenu_run(sf::RenderWindow& renderWindow, ParticleWorld* particleWorld, std::vector<sf::Music*> mainMenu_music, bool doOnce)
 {
 	if (doOnce)
 	{
@@ -36,13 +36,15 @@ Menu mainMenuIntro_run(sf::RenderWindow& renderWindow, ParticleWorld* particleWo
 			generateWorld(particleWorld, WorldType::Ocean);
 			mainMenuParticle.material = ParticleWorld::Material::Fire;
 			mainMenuParticle.materialType = ParticleWorld::MaterialType::Liquid;
-			mainMenuIntro_music[0]->play();
+			mainMenuParticle.physicsType = ParticleWorld::PhysicsType::Fire;
+			mainMenu_music[0]->play();
 			break;
 		case 1: // 1 = swamp
 			generateWorld(particleWorld, WorldType::Swamp);
-			mainMenuParticle.material = ParticleWorld::Material::Water;
-			mainMenuParticle.materialType = ParticleWorld::MaterialType::Liquid;
-			mainMenuIntro_music[1]->play();
+			mainMenuParticle.material = ParticleWorld::Material::FlammableGas;
+			mainMenuParticle.materialType = ParticleWorld::MaterialType::Gas;
+			mainMenuParticle.physicsType = ParticleWorld::PhysicsType::Smoke;
+			mainMenu_music[1]->play();
 			break;
 		}
 
@@ -63,12 +65,12 @@ Menu mainMenuIntro_run(sf::RenderWindow& renderWindow, ParticleWorld* particleWo
 	if (anyKeyPressed)
 	{
 		particleWorld->unfreeze();
-		for (int i = 0; i < mainMenuIntro_music.size(); i++)
+		for (int i = 0; i < mainMenu_music.size(); ++i)
 		{
-			mainMenuIntro_music[i]->stop();
+			mainMenu_music[i]->stop();
 		}
 		return Menu::Sandbox;
 	}
 
-	return Menu::MainIntro;
+	return Menu::Main;
 }

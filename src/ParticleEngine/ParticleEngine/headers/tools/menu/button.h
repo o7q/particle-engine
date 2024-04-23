@@ -7,12 +7,14 @@
 #include <SFML/Graphics.hpp>
 
 class Button {
-public:
+private:
 	sf::Vector2f position, size;
 	sf::Color color, textColor;
 	std::string text, id;
 	int textSize;
+	bool canClick;
 
+public:
 	sf::RectangleShape buttonShape;
 	sf::Text buttonText;
 
@@ -21,6 +23,12 @@ public:
 	bool isMouseHover(int, int);
 	void highlight(bool);
 	void draw(sf::RenderWindow&);
+
+	sf::Vector2f getPos();
+	sf::Vector2f getSize();
+	std::string getId();
+
+	std::string handleClick(int, int);
 };
 
 #endif

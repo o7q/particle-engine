@@ -16,9 +16,15 @@ void generateWorld(ParticleWorld*, WorldType);
 void generateOcean(ParticleWorld*);
 void generateSwamp(ParticleWorld*);
 
-Int2D* generateNoiseBase(int, int, Double2D*);
+// noise
+Int2D* generateNoiseBase(int, int, Double2D*, int, int);
 int* generateGroundLayer(int, int, int, int, int, double*, int);
+
+// kernel
 double* generate1DKernel(int, double);
 Double2D* generate2DKernel(int, int, double);
+
+// quantize
+int quantizeValue(int, int*, int);
 
 #endif
