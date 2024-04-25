@@ -52,13 +52,13 @@ std::vector<Button*> sandboxMenu_getButtons(int rowSize, int pixelSize, int offs
 		sf::Color(0, 0, 0), "", 0, font,
 		"smokeButton"
 	);
-	Button* toxicGasButton = new Button(
+	Button* acidGasButton = new Button(
 		sf::Vector2f(smokeButton->getPos().x + smokeButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(81, 97, 47),
 		sf::Color(0, 0, 0), "", 0, font,
-		"toxicGasButton"
+		"acidGasButton"
 	);
 	Button* flammableGasButton = new Button(
-		sf::Vector2f(toxicGasButton->getPos().x + toxicGasButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(156, 133, 81),
+		sf::Vector2f(acidGasButton->getPos().x + acidGasButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(156, 133, 81),
 		sf::Color(0, 0, 0), "", 0, font,
 		"flammableGasButton"
 	);
@@ -66,6 +66,11 @@ std::vector<Button*> sandboxMenu_getButtons(int rowSize, int pixelSize, int offs
 		sf::Vector2f(flammableGasButton->getPos().x + flammableGasButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(255, 255, 255),
 		sf::Color(0, 0, 0), "", 0, font,
 		"airButton"
+	);
+	Button* acidButton = new Button(
+		sf::Vector2f(airButton->getPos().x + airButton->getSize().x, rowSize * pixelSize + offsetY), sf::Vector2f(25, 25), sf::Color(225, 255, 125),
+		sf::Color(0, 0, 0), "", 0, font,
+		"acidButton"
 	);
 
 	Button* pauseButton = new Button(
@@ -83,10 +88,11 @@ std::vector<Button*> sandboxMenu_getButtons(int rowSize, int pixelSize, int offs
 	sandbox_buttons.push_back(fireButton);
 	sandbox_buttons.push_back(gasolineButton);
 	sandbox_buttons.push_back(smokeButton);
-	sandbox_buttons.push_back(toxicGasButton);
+	sandbox_buttons.push_back(acidGasButton);
 	sandbox_buttons.push_back(flammableGasButton);
 	sandbox_buttons.push_back(airButton);
 	sandbox_buttons.push_back(pauseButton);
+	sandbox_buttons.push_back(acidButton);
 
 	return sandbox_buttons;
 }

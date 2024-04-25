@@ -3,8 +3,6 @@
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
 #include "particle/particle_renderer.h"
-#include "tools/menu/button.h"
-#include "menus/menus.h"
 #include "world/world_generator.h"
 
 Menu mainMenu_run(sf::RenderWindow& renderWindow, ParticleWorld* particleWorld, std::vector<sf::Music*> mainMenu_music, bool doOnce)
@@ -22,34 +20,35 @@ Menu mainMenu_run(sf::RenderWindow& renderWindow, ParticleWorld* particleWorld, 
 			// error
 		}
 
-		std::uniform_int_distribution<int> dist(1, 1);
+		std::uniform_int_distribution<int> dist(0, 1);
 		std::random_device rd;
 		std::mt19937 gen(rd());
 
 		int random = dist(gen);
 
-		ParticleWorld::ParticleInstance mainMenuParticle = particleWorld->getDefaultInstance();
+		ParticleWorld::ParticleInstance titleParticle;
+		ParticleWorld::ParticleInstance subTitleParticle;
 
 		switch (random)
 		{
 		case 0: // 0 = ocean
 			generateWorld(particleWorld, WorldType::Ocean);
-			mainMenuParticle.material = ParticleWorld::Material::Fire;
-			mainMenuParticle.materialType = ParticleWorld::MaterialType::Liquid;
-			mainMenuParticle.physicsType = ParticleWorld::PhysicsType::Fire;
+			titleParticle.material = ParticleWorld::Material::Fire;
+			titleParticle.materialType = ParticleWorld::MaterialType::Liquid;
+			titleParticle.physicsType = ParticleWorld::PhysicsType::Fire;
 			mainMenu_music[0]->play();
 			break;
 		case 1: // 1 = swamp
 			generateWorld(particleWorld, WorldType::Swamp);
-			mainMenuParticle.material = ParticleWorld::Material::FlammableGas;
-			mainMenuParticle.materialType = ParticleWorld::MaterialType::Gas;
-			mainMenuParticle.physicsType = ParticleWorld::PhysicsType::Smoke;
+			titleParticle.material = ParticleWorld::Material::FlammableGas;
+			titleParticle.materialType = ParticleWorld::MaterialType::Gas;
+			titleParticle.physicsType = ParticleWorld::PhysicsType::NoGravity;
 			mainMenu_music[1]->play();
 			break;
 		}
 
-		particleWorld->imageToParticles(particleWorld->getRowSize() / 2 - titleImage.getSize().y * 2, particleWorld->getColSize() / 2 - titleImage.getSize().x / 2, titleImage, mainMenuParticle, true);
-		particleWorld->imageToParticles(particleWorld->getRowSize() / 2, particleWorld->getColSize() / 2 - titleImage_pressAnyKey.getSize().x / 2, titleImage_pressAnyKey, mainMenuParticle, true);
+		particleWorld->imageToParticles(particleWorld->getRowSize() / 2 - titleImage.getSize().y * 2, particleWorld->getColSize() / 2 - titleImage.getSize().x / 2, titleImage, titleParticle, true);
+		particleWorld->imageToParticles(particleWorld->getRowSize() / 2, particleWorld->getColSize() / 2 - titleImage_pressAnyKey.getSize().x / 2, titleImage_pressAnyKey, titleParticle, true);
 	}
 
 	bool anyKeyPressed = false;

@@ -133,12 +133,11 @@ void generateSwamp(ParticleWorld* particleWorld)
 	int quantizedValueMap[] = { 255, 200, 240, 3, 69, 0 };
 
 	std::uniform_int_distribution<int> colorPatternDist(9, 10);
-
-	ParticleWorld::ParticleInstance temp = particleWorld->getDefaultInstance();
 	for (int row = 0; row < rowSize; ++row)
 	{
 		for (int col = 0; col < colSize; ++col)
 		{
+			ParticleWorld::ParticleInstance temp;
 			int closestIndex = quantizeValue(convolutedWorld->get(row, col), quantizedValueMap, 7);
 
 			switch (quantizedValueMap[closestIndex])
@@ -147,6 +146,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 				temp.material = ParticleWorld::Material::SwampWater;
 				temp.materialType = ParticleWorld::MaterialType::Liquid;
 				temp.physicsType = ParticleWorld::PhysicsType::Water;
+				temp.createsSteam = true;
 				break;
 			case 200:
 				temp.material = ParticleWorld::Material::Grass;
@@ -185,7 +185,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 		// error
 	}
 
-	ParticleWorld::ParticleInstance temp2 = particleWorld->getDefaultInstance();
+	ParticleWorld::ParticleInstance temp2;
 	temp2.material = ParticleWorld::Material::Grass;
 	temp2.materialType = ParticleWorld::MaterialType::Solid;
 	temp2.physicsType = ParticleWorld::PhysicsType::NoGravity;
@@ -193,7 +193,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 	{
 		std::uniform_int_distribution<int> genChance(0, 10);
 
-		if (genChance(gen) == 0)
+		if (genChance(gen) == 0 && particleWorld->getParticle(layer1_convolutedGroundHeights[i] - 1, i).materialType != ParticleWorld::MaterialType::Liquid)
 		{
 			particleWorld->imageToParticles(layer1_convolutedGroundHeights[i] - bushImage.getSize().y, i, bushImage, temp2, true);
 		}

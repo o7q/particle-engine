@@ -16,7 +16,6 @@ void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderW
 			bool overrideColor = currentParticle.overrideColor;
 
 			bool renderPixel = overrideColor ? true : false;
-			//int r = 0, g = 0, b = 0, a = 0;
 
 			sf::Color pixelColor(0, 0, 0, 0);
 
@@ -177,7 +176,7 @@ void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderW
 				renderPixel = true;
 				break;
 			}
-			case ParticleWorld::Material::ToxicGas: {
+			case ParticleWorld::Material::AcidGas: {
 				pixelColor.r = 81;
 				pixelColor.g = 97;
 				pixelColor.b = 47;
@@ -191,6 +190,15 @@ void renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderW
 				pixelColor.g = 133;
 				pixelColor.b = 81;
 				pixelColor.a = static_cast<sf::Uint8>(235 * brightnessColor);
+
+				renderPixel = true;
+				break;
+			}
+			case ParticleWorld::Material::Acid: {
+				pixelColor.r = static_cast<sf::Uint8>(225 * (brightnessColor == 1 ? 1 : 0.99));
+				pixelColor.g = static_cast<sf::Uint8>(255 * (brightnessColor == 1 ? 1 : 0.99));
+				pixelColor.b = static_cast<sf::Uint8>(125 * (brightnessColor == 1 ? 1 : 0.99));
+				pixelColor.a = 200;
 
 				renderPixel = true;
 				break;

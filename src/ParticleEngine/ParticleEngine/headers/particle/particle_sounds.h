@@ -5,16 +5,18 @@
 
 #include <iostream>
 #include <random>
+#include <chrono>
+#include <unordered_map>
+
 #include "SFML/Audio.hpp"
 
 class SoundEngine {
-private:
-	static std::vector<sf::SoundBuffer> waterSounds;
-	static std::vector<sf::Sound> sounds;
-
 public:
 	enum class SoundType {
-		WaterDrip
+		LiquidDrip,
+		Bubble,
+		Sizzle,
+		Fire
 	};
 
 	static sf::Sound sound;
@@ -22,8 +24,21 @@ public:
 	static std::mt19937 gen;
 
 	static void init();
-	static void playSound(SoundType soundType);
+	static void playSound(SoundType soundType, int, int);
 	static void purgeSounds();
+	static int getVoiceCount();
+
+private:
+	static void configureSound(sf::Sound&, sf::SoundBuffer&, sf::Vector3f, int);
+
+	static std::vector<sf::Sound> globalSounds;
+	static std::unordered_map<SoundType, std::chrono::steady_clock::time_point> lastPlayedTime;
+	static std::chrono::milliseconds minInterval;
+
+	static std::vector<sf::SoundBuffer> liquidDripSounds;
+	static std::vector<sf::SoundBuffer> bubbleSounds;
+	static std::vector<sf::SoundBuffer> sizzleSounds;
+	static std::vector<sf::SoundBuffer> fireSounds;
 };
 
 #endif

@@ -14,6 +14,8 @@ enum WorldType {
 void generateWorld(ParticleWorld*, WorldType);
 
 void generateOcean(ParticleWorld*);
+std::vector<sf::Image> ocean_getObjects();
+
 void generateSwamp(ParticleWorld*);
 
 // noise

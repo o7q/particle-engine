@@ -64,9 +64,6 @@
     <Filter Include="Source Files\tools\num2d">
       <UniqueIdentifier>{be7fdbfe-c9b2-4a7c-8bb5-327c4d95c212}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\world\generators\tools">
-      <UniqueIdentifier>{e800e2ae-aad6-4698-8c15-1a38f428e04d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\menus\main_menu">
       <UniqueIdentifier>{40a84606-c4e8-4a86-a15e-07bd4e03f4cc}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,15 @@
     </Filter>
     <Filter Include="Source Files\particle\sounds">
       <UniqueIdentifier>{ab113409-04bf-42e4-a7d5-5041b1c6102c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\generators\swamp">
+      <UniqueIdentifier>{825eeb5d-f5f8-47f3-8b61-5bc83eca39b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\generators\ocean">
+      <UniqueIdentifier>{581b7b72-2a46-42b7-8f13-154327b2a2b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\tools">
+      <UniqueIdentifier>{e800e2ae-aad6-4698-8c15-1a38f428e04d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,10 +142,7 @@
       <Filter>Source Files\world</Filter>
     </ClCompile>
     <ClCompile Include="include\world\generators\tools\noise.cpp">
-      <Filter>Source Files\world\generators\tools</Filter>
-    </ClCompile>
-    <ClCompile Include="include\world\generators\ocean.cpp">
-      <Filter>Source Files\world\generators</Filter>
+      <Filter>Source Files\world\tools</Filter>
     </ClCompile>
     <ClCompile Include="include\tools\num2d\double2d.cpp">
       <Filter>Source Files\tools\num2d</Filter>
@@ -147,20 +150,32 @@
     <ClCompile Include="include\tools\num2d\int2d.cpp">
       <Filter>Source Files\tools\num2d</Filter>
     </ClCompile>
-    <ClCompile Include="include\world\generators\swamp.cpp">
-      <Filter>Source Files\world\generators</Filter>
-    </ClCompile>
     <ClCompile Include="include\world\generators\tools\kernel.cpp">
-      <Filter>Source Files\world\generators\tools</Filter>
+      <Filter>Source Files\world\tools</Filter>
     </ClCompile>
     <ClCompile Include="include\world\generators\tools\quantize.cpp">
-      <Filter>Source Files\world\generators\tools</Filter>
+      <Filter>Source Files\world\tools</Filter>
     </ClCompile>
     <ClCompile Include="include\tools\color.cpp">
       <Filter>Source Files\tools</Filter>
     </ClCompile>
     <ClCompile Include="include\particle\sounds\particle_sounds.cpp">
       <Filter>Source Files\particle\sounds</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\physics\materials\acid.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\physics\materials\acid_smoke.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\world\generators\swamp.cpp">
+      <Filter>Source Files\world\generators\swamp</Filter>
+    </ClCompile>
+    <ClCompile Include="include\world\generators\ocean.cpp">
+      <Filter>Source Files\world\generators\ocean</Filter>
+    </ClCompile>
+    <ClCompile Include="ocean_objects.cpp">
+      <Filter>Source Files\world\generators\ocean</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

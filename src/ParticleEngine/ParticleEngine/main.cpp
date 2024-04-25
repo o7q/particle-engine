@@ -23,7 +23,7 @@ const unsigned int pixelSize = 2;
 const unsigned int rowSize = 300;
 const unsigned int colSize = uiSize.x / pixelSize - uiOffset.x;
 
-const unsigned int simSpeed = 3;
+const unsigned int simSpeed = 5;
 
 int main()
 {
@@ -36,9 +36,15 @@ int main()
 		// error
 	}
 
-	// SoundEngine::init();
-
+	SoundEngine::init();
 	Menu currentMenu = Menu::Main;
+
+	ParticleWorld::ParticleInstance test;
+	test.material = ParticleWorld::Material::Water;
+	test.materialType = ParticleWorld::MaterialType::Liquid;
+	test.physicsType = ParticleWorld::PhysicsType::Water;
+	particleWorld->setParticle(10, 10, test);
+	particleWorld->setParticle(9, 10, test);
 
 	sf::Text titleBarText;
 
@@ -61,13 +67,13 @@ int main()
 	);
 
 	std::vector<Button*> sandboxMenu_buttons = sandboxMenu_getButtons(rowSize, pixelSize, uiOffset.x, uiOffset.y, baseFont);
-	ParticleWorld::ParticleInstance sandbox_drawingParticle = particleWorld->getDefaultInstance();
+	ParticleWorld::ParticleInstance sandbox_drawingParticle;
 	sandbox_drawingParticle.material = ParticleWorld::Material::Sand;
 	sandbox_drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
 
 	std::vector<sf::Music*> mainMenu_music = mainMenu_getMusic();
 
-	renderWindow.setFramerateLimit(0);
+	renderWindow.setFramerateLimit(60);
 
 	sf::Vector2i mouseInitialGlobalPos(0, 0);
 	sf::Vector2i windowInitialGlobalPos(0, 0);

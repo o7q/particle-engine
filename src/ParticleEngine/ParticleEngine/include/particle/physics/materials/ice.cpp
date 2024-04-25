@@ -95,6 +95,8 @@ void calculate_ice(int row, int col, ParticleWorld* particleWorld)
 		particleWorld->resetParticle(row, col);
 		particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].material = ParticleWorld::Material::Water;
 		particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].materialType = ParticleWorld::MaterialType::Liquid;
+		particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].physicsType = ParticleWorld::PhysicsType::Water;
+		particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].createsSteam = true;
 	}
 	else
 	{

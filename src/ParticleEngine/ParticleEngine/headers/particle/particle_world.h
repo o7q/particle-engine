@@ -32,10 +32,11 @@ public:
 		Gasoline,
 		Fire,
 		Ice,
+		Acid,
 
 		Smoke,
 		Steam,
-		ToxicGas,
+		AcidGas,
 		FlammableGas
 	};
 
@@ -43,6 +44,8 @@ public:
 		Sand,
 		Water,
 		Smoke,
+		Acid,
+		AcidSmoke,
 		Ice,
 		SimpleGravity,
 		Dirt,
@@ -58,19 +61,24 @@ public:
 	};
 
 	struct ParticleInstance {
-		Material material;
-		MaterialType materialType;
-		PhysicsType physicsType;
-		sf::Color color;
-		bool overrideColor;
-		float wetnessMultiplier;
-		float brightnessMultiplier;
-		int intValue;
-		int physicsFreezeTime;
+		Material material = Material::Air;
+		MaterialType materialType = MaterialType::Gas;
+		PhysicsType physicsType = PhysicsType::NoGravity;
+		bool flammable = false;
+		bool createsSteam = false;
+		sf::Color color = sf::Color(0, 0, 0);
+		bool overrideColor = false;
+		float wetnessMultiplier = 1.0f;
+		float brightnessMultiplier = 1.0f;
+
+		int intValue = 0;
+		int physicsFreezeTime = 0;
+		int lastY = 0;
+		bool isFalling = false;
 	};
 
-	std::random_device rd;
-	std::mt19937 gen;
+	static std::random_device rd;
+	static std::mt19937 gen;
 
 	ParticleInstance* particles;
 
@@ -87,13 +95,13 @@ public:
 	ParticleInstance getParticle(int, int);
 	void setParticle(int, int, ParticleInstance);
 
+	ParticleInstance getDefaultInstance();
+
 	void resetParticle(int, int);
 
 	void paintParticles(int, int, int, ParticleInstance);
 
 	void imageToParticles(int, int, sf::Image&, ParticleWorld::ParticleInstance, bool);
-
-	ParticleInstance getDefaultInstance();
 
 	bool canLeft(int);
 	bool canRight(int);

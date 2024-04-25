@@ -9,6 +9,7 @@ void calculate_liquid(int row, int col, ParticleWorld* particleWorld)
 {
 	// define self, this value is used whenever a pixel moves, it acts as a copy of all the settings for the current pixel
 	ParticleWorld::ParticleInstance self = particleWorld->getParticle(row, col);
+	int lastY = self.lastY;
 
 	if (particleWorld->canUp(row))
 	{
@@ -30,16 +31,25 @@ void calculate_liquid(int row, int col, ParticleWorld* particleWorld)
 	{
 		// apply gravity (down)
 		if (
-			(particleWorld->getParticle(row + 1, col).material == ParticleWorld::Material::Air ||
+			(/*particleWorld->getParticle(row + 1, col).material == ParticleWorld::Material::Air ||*/
 				particleWorld->getParticle(row + 1, col).materialType == ParticleWorld::MaterialType::Gas ||
 				particleWorld->getParticle(row + 1, col).material == ParticleWorld::Material::Fire) &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			self.physicsFreezeTime = 0;
 			fell = true;
+			self.lastY = row + 1;
+			self.isFalling = true;
 			particleWorld->setParticle(row + 1, col, self);
 			particleWorld->resetParticle(row, col);
 		}
+	}
+
+	if (std::abs(lastY - self.lastY) == 0 && self.isFalling)
+	{
+		particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].isFalling = false;
+		self.isFalling = false;
+		SoundEngine::playSound(SoundEngine::SoundType::LiquidDrip, col, particleWorld->getColSize());
 	}
 
 	// if the water didn't fall, increment the physicsFreezeTime
@@ -51,8 +61,7 @@ void calculate_liquid(int row, int col, ParticleWorld* particleWorld)
 	if (particleWorld->canDown(row) && particleWorld->canLeft(col))
 	{
 		// if the water is able to fall (left) next time, reset physicsFreezeTime
-		if (particleWorld->getParticle(row + 1, col - 1).materialType == ParticleWorld::MaterialType::Gas ||
-			particleWorld->getParticle(row + 1, col - 1).material == ParticleWorld::Material::Air)
+		if (particleWorld->getParticle(row + 1, col - 1).materialType == ParticleWorld::MaterialType::Gas)
 		{
 			self.physicsFreezeTime = 0;
 		}
@@ -61,8 +70,7 @@ void calculate_liquid(int row, int col, ParticleWorld* particleWorld)
 	if (particleWorld->canDown(row) && particleWorld->canRight(col))
 	{
 		// if the water is able to fall (right) next time, reset physicsFreezeTime
-		if (particleWorld->getParticle(row + 1, col + 1).materialType == ParticleWorld::MaterialType::Gas ||
-			particleWorld->getParticle(row + 1, col + 1).material == ParticleWorld::Material::Air)
+		if (particleWorld->getParticle(row + 1, col + 1).materialType == ParticleWorld::MaterialType::Gas)
 		{
 			self.physicsFreezeTime = 0;
 		}
@@ -72,9 +80,9 @@ void calculate_liquid(int row, int col, ParticleWorld* particleWorld)
 	{
 		// apply gravity (left)
 		if (
-			(particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Air ||
-				particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::MaterialType::Gas ||
-				particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Fire) && self.physicsFreezeTime < particleWorld->getColSize() &&
+			(particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::MaterialType::Gas ||
+				particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Fire) &&
+			self.physicsFreezeTime < particleWorld->getColSize() &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row, col - 1, self);
@@ -86,9 +94,9 @@ void calculate_liquid(int row, int col, ParticleWorld* particleWorld)
 	{
 		// apply gravity (right)
 		if (
-			(particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Air ||
-				particleWorld->getParticle(row, col + 1).materialType == ParticleWorld::MaterialType::Gas ||
-				particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Fire) && self.physicsFreezeTime < particleWorld->getColSize() &&
+			(particleWorld->getParticle(row, col + 1).materialType == ParticleWorld::MaterialType::Gas ||
+				particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Fire) &&
+			self.physicsFreezeTime < particleWorld->getColSize() &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row, col + 1, self);

@@ -24,6 +24,8 @@
     <ClCompile Include="include\menus\sandbox\controls\sandbox_menu_buttons.cpp" />
     <ClCompile Include="include\menus\sandbox\sandbox_menu.cpp" />
     <ClCompile Include="include\particle\particle_world.cpp" />
+    <ClCompile Include="include\particle\physics\materials\acid.cpp" />
+    <ClCompile Include="include\particle\physics\materials\acid_smoke.cpp" />
     <ClCompile Include="include\particle\physics\materials\dirt.cpp" />
     <ClCompile Include="include\particle\physics\materials\fire.cpp" />
     <ClCompile Include="include\particle\physics\materials\grass.cpp" />
@@ -47,6 +49,7 @@
     <ClCompile Include="include\world\generators\tools\quantize.cpp" />
     <ClCompile Include="include\world\world_generator.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ocean_objects.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\menus\menus.h" />

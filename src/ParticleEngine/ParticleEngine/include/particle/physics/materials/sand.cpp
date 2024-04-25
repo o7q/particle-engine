@@ -59,10 +59,9 @@ void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 		if (
 			(particleWorld->getParticle(row + 1, col - 1).materialType == ParticleWorld::MaterialType::Liquid ||
 				particleWorld->getParticle(row + 1, col - 1).materialType == ParticleWorld::MaterialType::Gas) &&
-			particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Air &&
+			particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::MaterialType::Gas &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
-			SoundEngine::playSound(SoundEngine::SoundType::WaterDrip);
 			particleWorld->setParticle(row + 1, col - 1, self);
 			particleWorld->resetParticle(row, col);
 		}
@@ -74,10 +73,9 @@ void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 		if (
 			(particleWorld->getParticle(row + 1, col + 1).materialType == ParticleWorld::MaterialType::Liquid ||
 				particleWorld->getParticle(row + 1, col + 1).materialType == ParticleWorld::MaterialType::Gas) &&
-			particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Air &&
+			particleWorld->getParticle(row, col + 1).materialType == ParticleWorld::MaterialType::Gas &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
-			SoundEngine::playSound(SoundEngine::SoundType::WaterDrip);
 			particleWorld->setParticle(row + 1, col + 1, self);
 			particleWorld->resetParticle(row, col);
 		}

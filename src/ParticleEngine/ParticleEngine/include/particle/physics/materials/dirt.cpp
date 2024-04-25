@@ -32,6 +32,7 @@ void calculate_dirt(int row, int col, ParticleWorld* particleWorld)
 		if (particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::MaterialType::Liquid &&
 			particleWorld->getParticle(row, col).wetnessMultiplier <= 0.5f)
 		{
+			std::cout << "dirt wet: " << particleWorld->getParticle(row, col).wetnessMultiplier << std::endl;
 			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.05f;
 		}
 	}
@@ -42,6 +43,7 @@ void calculate_dirt(int row, int col, ParticleWorld* particleWorld)
 		if (particleWorld->getParticle(row, col + 1).materialType == ParticleWorld::MaterialType::Liquid &&
 			particleWorld->getParticle(row, col).wetnessMultiplier <= 0.5f)
 		{
+			std::cout << "dirt wet: " << particleWorld->getParticle(row, col).wetnessMultiplier << std::endl;
 			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.05f;
 		}
 	}
@@ -65,7 +67,7 @@ void calculate_dirt(int row, int col, ParticleWorld* particleWorld)
 		if (
 			(particleWorld->getParticle(row + 1, col - 1).materialType == ParticleWorld::MaterialType::Liquid ||
 				particleWorld->getParticle(row + 1, col - 1).materialType == ParticleWorld::MaterialType::Gas) &&
-			particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Air &&
+			particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::MaterialType::Gas &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 
@@ -80,7 +82,7 @@ void calculate_dirt(int row, int col, ParticleWorld* particleWorld)
 		if (
 			(particleWorld->getParticle(row + 1, col + 1).materialType == ParticleWorld::MaterialType::Liquid ||
 				particleWorld->getParticle(row + 1, col + 1).materialType == ParticleWorld::MaterialType::Gas) &&
-			particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Air &&
+			particleWorld->getParticle(row, col + 1).materialType == ParticleWorld::MaterialType::Gas &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 

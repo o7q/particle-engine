@@ -2,5 +2,4 @@
 - Add rain
 - Add growing seaweed
 - Add explosives
-- Fix solids floating on fire and gasoline
 - Organize scripts better because it makes me want to explode atm

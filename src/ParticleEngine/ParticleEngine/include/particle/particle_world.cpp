@@ -7,8 +7,8 @@
 #include "tools/tools.h"
 
 // configure Mersenne Twister pseudo-random number generator
-std::random_device rd;
-std::mt19937 gen(rd());
+std::random_device ParticleWorld::rd;
+std::mt19937 ParticleWorld::gen(ParticleWorld::rd());
 //
 
 ParticleWorld::ParticleWorld(int rowSize, int colSize)
@@ -70,6 +70,12 @@ void ParticleWorld::resetParticle(int row, int col)
 	setParticle(row, col, getDefaultInstance());
 }
 
+ParticleWorld::ParticleInstance ParticleWorld::getDefaultInstance()
+{
+	ParticleInstance temp;
+	return temp;
+}
+
 void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::ParticleInstance particleInstance)
 {
 	std::uniform_int_distribution<int> dist(9, 10);
@@ -120,21 +126,6 @@ void ParticleWorld::imageToParticles(int row, int col, sf::Image& image, Particl
 			}
 		}
 	}
-}
-
-ParticleWorld::ParticleInstance ParticleWorld::getDefaultInstance()
-{
-	ParticleWorld::ParticleInstance defaultInstance;
-	defaultInstance.material = ParticleWorld::Material::Air;
-	defaultInstance.materialType = ParticleWorld::MaterialType::Gas;
-	defaultInstance.physicsType = ParticleWorld::PhysicsType::Smoke;
-	defaultInstance.color = sf::Color(0, 0, 0);
-	defaultInstance.overrideColor = false;
-	defaultInstance.wetnessMultiplier = 1.0f;
-	defaultInstance.brightnessMultiplier = 1.0f;
-	defaultInstance.intValue = 0;
-	defaultInstance.physicsFreezeTime = 0;
-	return defaultInstance;
 }
 
 bool ParticleWorld::canLeft(int col)

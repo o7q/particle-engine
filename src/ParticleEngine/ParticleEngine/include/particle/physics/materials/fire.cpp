@@ -3,6 +3,7 @@
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
 #include "tools/tools.h"
+#include "particle/particle_sounds.h"
 
 void calculate_fire(int row, int col, ParticleWorld* particleWorld)
 {
@@ -24,11 +25,11 @@ void calculate_fire(int row, int col, ParticleWorld* particleWorld)
 	{
 		// ignite flammable materials (up)
 		if (
-			(particleWorld->getParticle(row - 1, col).material == ParticleWorld::Material::FlammableGas ||
-				particleWorld->getParticle(row - 1, col).material == ParticleWorld::Material::Gasoline) &&
+			particleWorld->getParticle(row - 1, col).flammable == true &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row - 1, col, self);
+			SoundEngine::playSound(SoundEngine::SoundType::Fire, col, particleWorld->getColSize());
 		}
 	}
 
@@ -36,17 +37,16 @@ void calculate_fire(int row, int col, ParticleWorld* particleWorld)
 	{
 		// ignite flammable down
 		if (
-			(particleWorld->getParticle(row + 1, col).material == ParticleWorld::Material::FlammableGas ||
-				particleWorld->getParticle(row + 1, col).material == ParticleWorld::Material::Gasoline) &&
+			particleWorld->getParticle(row + 1, col).flammable == true &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row + 1, col, self);
+			SoundEngine::playSound(SoundEngine::SoundType::Fire, col, particleWorld->getColSize());
 		}
 
 		// apply gravity (down
 		if (
-			(particleWorld->getParticle(row + 1, col).material == ParticleWorld::Material::Air ||
-				particleWorld->getParticle(row + 1, col).materialType == ParticleWorld::MaterialType::Gas) &&
+			particleWorld->getParticle(row + 1, col).materialType == ParticleWorld::MaterialType::Gas &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row + 1, col, self);
@@ -54,12 +54,14 @@ void calculate_fire(int row, int col, ParticleWorld* particleWorld)
 		}
 
 		// create steam if in contact with water
-		if (particleWorld->getParticle(row + 1, col).material == ParticleWorld::Material::Water)
+		if (particleWorld->getParticle(row + 1, col).createsSteam == true)
 		{
 			ParticleWorld::ParticleInstance steam;
 			steam.material = ParticleWorld::Material::Steam;
 			steam.materialType = ParticleWorld::MaterialType::Gas;
+			steam.physicsType = ParticleWorld::PhysicsType::Smoke;
 			particleWorld->paintParticles(row - 1, col, 5, steam);
+			SoundEngine::playSound(SoundEngine::SoundType::Sizzle, col, particleWorld->getColSize());
 		}
 	}
 
@@ -67,11 +69,11 @@ void calculate_fire(int row, int col, ParticleWorld* particleWorld)
 	{
 		// ignite flammable (left)
 		if (
-			(particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::FlammableGas ||
-				particleWorld->getParticle(row, col - 1).material == ParticleWorld::Material::Gasoline) &&
+			particleWorld->getParticle(row, col - 1).flammable == true &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row, col - 1, self);
+			SoundEngine::playSound(SoundEngine::SoundType::Fire, col, particleWorld->getColSize());
 		}
 
 		// apply gravity (left)
@@ -89,11 +91,11 @@ void calculate_fire(int row, int col, ParticleWorld* particleWorld)
 	{
 		// ignite flammable (right)
 		if (
-			(particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::FlammableGas ||
-				particleWorld->getParticle(row, col + 1).material == ParticleWorld::Material::Gasoline) &&
+			particleWorld->getParticle(row, col + 1).flammable == true &&
 			particleWorld->getParticle(row, col).material == self.material)
 		{
 			particleWorld->setParticle(row, col + 1, self);
+			SoundEngine::playSound(SoundEngine::SoundType::Fire, col, particleWorld->getColSize());
 		}
 
 		// apply gravity (right)

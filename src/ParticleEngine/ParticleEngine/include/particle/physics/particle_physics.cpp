@@ -34,6 +34,12 @@ void updateParticle(ParticleWorld* particleWorld, int row, int col)
 	case ParticleWorld::PhysicsType::Sand:
 		calculate_sand(row, col, particleWorld);
 		break;
+	case ParticleWorld::PhysicsType::Acid:
+		calculate_acid(row, col, particleWorld);
+		break;
+	case ParticleWorld::PhysicsType::AcidSmoke:
+		calculate_acidSmoke(row, col, particleWorld);
+		break;
 	case ParticleWorld::PhysicsType::Water:
 		calculate_liquid(row, col, particleWorld);
 		break;

@@ -10,8 +10,8 @@ void calculate_smoke(int row, int col, ParticleWorld* particleWorld)
 	ParticleWorld::ParticleInstance self = particleWorld->getParticle(row, col);
 
 	// define distribution for randomJitter, randomJitter is used to add randomness to unstable materials, such as: gas
-	std::uniform_int_distribution<int> dist(0, 1);
-	int randomJitter = dist(particleWorld->gen);
+	std::uniform_int_distribution<int> randomJitterDist(0, 1);
+	int randomJitter = randomJitterDist(particleWorld->gen);
 
 	if (particleWorld->canUp(row))
 	{
