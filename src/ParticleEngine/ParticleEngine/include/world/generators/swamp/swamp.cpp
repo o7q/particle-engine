@@ -19,7 +19,9 @@ void generateSwamp(ParticleWorld* particleWorld)
 	int layer3_groundHeightKernelSize = 40;
 	double* layer3_groundHeightsKernel = generate1DKernel(layer3_groundHeightKernelSize, 0.05);
 
-	int* layer3_convolutedGroundHeights = generateGroundLayer(rowSize, colSize, 200, rowSize, -220, layer3_groundHeightsKernel, layer3_groundHeightKernelSize);
+	// 1.575f is derived from 315/200 (315 is the height of pixelSize 2, 200 is what the height value should be for pixelSize 2, doing this division guarentees no invalid numbers are generated)
+	// -1.40625f is derived from 315/-224 (same applies for this, but instead its for topOffset)
+	int* layer3_convolutedGroundHeights = generateGroundLayer(rowSize, colSize, rowSize / 1.575f, rowSize, rowSize / -1.40625f, layer3_groundHeightsKernel, layer3_groundHeightKernelSize);
 
 	for (int col = 0; col < colSize; ++col)
 	{
@@ -37,7 +39,9 @@ void generateSwamp(ParticleWorld* particleWorld)
 	int layer2_groundHeightKernelSize = 40;
 	double* layer2_groundHeightsKernel = generate1DKernel(layer2_groundHeightKernelSize, 0.05);
 
-	int* layer2_convolutedGroundHeights = generateGroundLayer(rowSize, colSize, 200, rowSize, -300, layer2_groundHeightsKernel, layer2_groundHeightKernelSize);
+	// 1.575f is derived from 315/200 (guarentees swamp level does not generate invalid values, read above comments for context)
+	// -1.05f is derived from 315/-300 (guarentees swamp level does not generate invalid values, read above comments for context)
+	int* layer2_convolutedGroundHeights = generateGroundLayer(rowSize, colSize, rowSize / 1.575f, rowSize, rowSize / -1.05, layer2_groundHeightsKernel, layer2_groundHeightKernelSize);
 
 	for (int col = 0; col < colSize; ++col)
 	{
@@ -55,13 +59,16 @@ void generateSwamp(ParticleWorld* particleWorld)
 	int layer1_groundHeightKernelSize = 40;
 	double* layer1_groundHeightsKernel = generate1DKernel(layer1_groundHeightKernelSize, 0.05);
 
-	int* layer1_convolutedGroundHeights = generateGroundLayer(rowSize, colSize, 200, rowSize, -320, layer1_groundHeightsKernel, layer1_groundHeightKernelSize);
+	// 1.575f is derived from 315/200 (guarentees swamp level does not generate invalid values, read above comments for context)
+	// -0.984375f is derived from 315/-320 (guarentees swamp level does not generate invalid values, read above comments for context)
+	int* layer1_convolutedGroundHeights = generateGroundLayer(rowSize, colSize, rowSize / 1.575f, rowSize, rowSize / -0.984375f, layer1_groundHeightsKernel, layer1_groundHeightKernelSize);
 
 	for (int col = 0; col < colSize; ++col)
 	{
 		for (int row = 0; row < layer1_convolutedGroundHeights[col]; ++row)
 		{
-			if (row < 170)
+			// 1.875f is derived from 315/168 (guarentees water level does not generate invalid values, read above comments for context)
+			if (row < rowSize / 1.875f)
 			{
 				layer1_convolutedWorld->set(row, col, 0);
 			}
@@ -75,6 +82,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 
 	Int2D* convolutedWorld = new Int2D(rowSize, colSize);
 
+	// cut each ground layer
 	for (int row = 0; row < rowSize; ++row)
 	{
 		for (int col = 0; col < colSize; ++col)
@@ -84,6 +92,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 		}
 	}
 
+	// cut each ground layer
 	for (int row = 0; row < rowSize; ++row)
 	{
 		for (int col = 0; col < colSize; ++col)
@@ -96,6 +105,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 		}
 	}
 
+	// cut each ground layer
 	for (int row = 0; row < rowSize; ++row)
 	{
 		for (int col = 0; col < colSize; ++col)
@@ -108,31 +118,12 @@ void generateSwamp(ParticleWorld* particleWorld)
 		}
 	}
 
-	//std::uniform_int_distribution<int> asd(9, 100);
-	//for (int i = 0; i < 10; i++)
-	//{
-	//	int test = asd(gen);
-	//	particleWorld->imageToParticles(asd, col, sf::Image & image, ParticleWorld::ParticleInstance particleInstance, bool useImageColors);
-	//}
-
-	// debug draw
-	//for (int row = 0; row < rowSize; ++row)
-	//{
-	//	for (int col = 0; col < colSize; ++col)
-	//	{
-	//		int rand = convolutedWorld->get(row, col);
-	//		ParticleWorld::ParticleInstance temp = particleWorld->getDefaultInstance();
-	//		temp.material = ParticleWorld::Material::Stone;
-	//		temp.materialType = ParticleWorld::MaterialType::Solid;
-	//		temp.color = sf::Color(rand, rand, rand);
-	//		temp.overrideColor = true;
-	//		particleWorld->setParticle(row, col, temp);
-	//	}
-	//}
-
+	// values for quantized map, each value corresponds to a material
 	int quantizedValueMap[] = { 255, 200, 240, 3, 69, 0 };
 
+	// random dist for brightness
 	std::uniform_int_distribution<int> colorPatternDist(9, 10);
+
 	for (int row = 0; row < rowSize; ++row)
 	{
 		for (int col = 0; col < colSize; ++col)
@@ -180,7 +171,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 	}
 
 	sf::Image bushImage;
-	if (!bushImage.loadFromFile("data\\objects\\foliage\\swamp_tree.png"))
+	if (!bushImage.loadFromFile("data\\objects\\foliage\\swamp_tree\\swamp_tree1.png"))
 	{
 		// error
 	}

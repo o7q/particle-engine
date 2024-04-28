@@ -5,7 +5,7 @@
 #include "particle/particle_renderer.h"
 #include "particle/particle_sounds.h"
 
-Menu sandboxMenu_run(sf::RenderWindow& renderWindow, int pixelSize, ParticleWorld* particleWorld, std::vector<Button*> sandboxButtons, ParticleWorld::ParticleInstance& drawingParticle, sf::Vector2i localMousePos, sf::Vector2u uiOffset)
+Menu sandboxMenu_run(sf::RenderWindow& renderWindow, int pixelSize, ParticleWorld* particleWorld, std::vector<Button*> sandboxButtons, ParticleWorld::ParticleInstance& drawingParticle, sf::Vector2i localMousePos, sf::Vector2i uiOffset, int titleBarHeight)
 {
 	std::string hoveredButtonId = "";
 
@@ -129,6 +129,14 @@ Menu sandboxMenu_run(sf::RenderWindow& renderWindow, int pixelSize, ParticleWorl
 			drawingParticle.flammable = true;
 			drawingParticle.createsSteam = false;
 		}
+		else if (hoveredButtonId == "dynamiteButton")
+		{
+			drawingParticle.material = ParticleWorld::Material::Dynamite;
+			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
+			drawingParticle.physicsType = ParticleWorld::PhysicsType::Explosive;
+			drawingParticle.flammable = false;
+			drawingParticle.createsSteam = false;
+			}
 		else if (hoveredButtonId == "pauseButton")
 		{
 			SoundEngine::purgeSounds();
@@ -142,7 +150,7 @@ Menu sandboxMenu_run(sf::RenderWindow& renderWindow, int pixelSize, ParticleWorl
 			}
 		}
 
-		particleWorld->paintParticles((localMousePos.y - uiOffset.y) / pixelSize, (localMousePos.x - uiOffset.x) / pixelSize, 10, drawingParticle);
+		particleWorld->paintParticles((localMousePos.y - uiOffset.y - titleBarHeight) / pixelSize, (localMousePos.x - uiOffset.x) / pixelSize, 6, drawingParticle, ParticleWorld::Shape::Circle);
 	}
 
 	return Menu::Sandbox;

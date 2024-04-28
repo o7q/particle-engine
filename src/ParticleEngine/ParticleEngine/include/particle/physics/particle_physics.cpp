@@ -61,5 +61,8 @@ void updateParticle(ParticleWorld* particleWorld, int row, int col)
 	case ParticleWorld::PhysicsType::Fire:
 		calculate_fire(row, col, particleWorld);
 		break;
+	case ParticleWorld::PhysicsType::Explosive:
+		calculate_explosive(row, col, particleWorld);
+		break;
 	}
 }

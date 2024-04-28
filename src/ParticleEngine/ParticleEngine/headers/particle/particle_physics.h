@@ -18,5 +18,6 @@ void calculate_simpleGravity(int, int, ParticleWorld*);
 void calculate_dirt(int, int, ParticleWorld*);
 void calculate_grass(int, int, ParticleWorld*);
 void calculate_fire(int, int, ParticleWorld*);
+void calculate_explosive(int, int, ParticleWorld*);
 
 #endif

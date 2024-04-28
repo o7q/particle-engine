@@ -6,6 +6,6 @@
 #include <SFML/Graphics.hpp>
 #include "particle/particle_world.h"
 
-void renderParticleWorld(ParticleWorld*, sf::RenderWindow&, int, int, int);
+int renderParticleWorld(ParticleWorld*, sf::RenderWindow&, sf::VertexArray&, sf::Vector2i, int, int);
 
 #endif

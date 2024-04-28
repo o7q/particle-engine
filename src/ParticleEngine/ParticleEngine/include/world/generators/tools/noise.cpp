@@ -5,9 +5,11 @@
 
 Int2D* generateNoiseBase(int rowSize, int colSize, Double2D* kernel, int minBrightness, int maxBrightness)
 {
+	// random number gen
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
+	// random height value (0 - 255 because it will be used as a color)
 	std::uniform_int_distribution<int> dist(0, 255);
 
 	Int2D* noisyWorld = new Int2D(rowSize, colSize);
@@ -57,12 +59,14 @@ Int2D* generateNoiseBase(int rowSize, int colSize, Double2D* kernel, int minBrig
 
 int* generateGroundLayer(int rowSize, int colSize, int noisyCutStartMin, int noisyCutEndMax, int topOffset, double* kernel, int kernelSize)
 {
+	// random number gen
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
 	int* groundHeights = new int[colSize];
 	int* convolutedGroundHeights = new int[colSize];
 
+	// create range for ground heights
 	std::uniform_int_distribution<int> groundHeightRange(noisyCutStartMin, noisyCutEndMax);
 	for (int col = 0; col < colSize; ++col)
 	{

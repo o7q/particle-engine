@@ -7,10 +7,6 @@
 #include <SFML/Graphics.hpp>
 
 class ParticleWorld {
-private:
-	bool frozen = false;
-	int rowSize;
-	int colSize;
 
 public:
 	enum class Material {
@@ -37,7 +33,8 @@ public:
 		Smoke,
 		Steam,
 		AcidGas,
-		FlammableGas
+		FlammableGas,
+		Dynamite
 	};
 
 	enum class PhysicsType {
@@ -51,7 +48,8 @@ public:
 		Dirt,
 		Grass,
 		Fire,
-		NoGravity
+		NoGravity,
+		Explosive
 	};
 
 	enum class MaterialType {
@@ -59,6 +57,14 @@ public:
 		Liquid,
 		Gas
 	};
+
+	enum class Shape {
+		Square,
+		Circle
+	};
+
+
+	std::vector<sf::Image> explosionPatterns;
 
 	struct ParticleInstance {
 		Material material = Material::Air;
@@ -77,10 +83,10 @@ public:
 		bool isFalling = false;
 	};
 
+	ParticleInstance* particles;
+
 	static std::random_device rd;
 	static std::mt19937 gen;
-
-	ParticleInstance* particles;
 
 	ParticleWorld(int, int);
 	~ParticleWorld();
@@ -95,18 +101,27 @@ public:
 	ParticleInstance getParticle(int, int);
 	void setParticle(int, int, ParticleInstance);
 
+	void setShakeCountdown(int);
+	int getShakeCountdown();
+
 	ParticleInstance getDefaultInstance();
 
 	void resetParticle(int, int);
 
-	void paintParticles(int, int, int, ParticleInstance);
+	void paintParticles(int, int, int, ParticleInstance, Shape);
 
-	void imageToParticles(int, int, sf::Image&, ParticleWorld::ParticleInstance, bool);
+	void imageToParticles(int, int, sf::Image&, ParticleInstance, bool);
 
 	bool canLeft(int);
 	bool canRight(int);
 	bool canUp(int);
 	bool canDown(int);
+
+private:
+	bool frozen = false;
+	int rowSize;
+	int colSize;
+	int shakeCountdown;
 };
 
 #endif

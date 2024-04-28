@@ -6,6 +6,7 @@
 
 void generateOcean(ParticleWorld* particleWorld)
 {
+	// random number gen
 	std::random_device rd;
 	std::mt19937 gen(rd());
 
@@ -19,13 +20,16 @@ void generateOcean(ParticleWorld* particleWorld)
 	int layer1_groundHeightKernelSize = 10;
 	double* layer1_groundHeightsKernel = generate1DKernel(layer1_groundHeightKernelSize, 0.05);
 
-	int* layer1_convolutedGroundHeights = generateGroundLayer(rowSize, colSize, 200, rowSize, 100, layer1_groundHeightsKernel, layer1_groundHeightKernelSize);
+	// 1.575f is derived from 315/200 (315 is the height of pixelSize 2, 200 is what the height value should be for pixelSize 2, doing this division guarentees no invalid numbers are generated)
+	// 3.15f is derived from 315/100 (same applies for this, but instead its for topOffset)
+	int* layer1_convolutedGroundHeights = generateGroundLayer(rowSize, colSize, rowSize / 1.575f, rowSize, rowSize / 3.15f, layer1_groundHeightsKernel, layer1_groundHeightKernelSize);
 
 	for (int col = 0; col < colSize; ++col)
 	{
 		for (int row = 0; row < layer1_convolutedGroundHeights[col]; ++row)
 		{
-			if (row < 120)
+			// 2.625f is derived from 315/120 (guarentees ocean level does not generate invalid values, read above comments for context)
+			if (row < rowSize / 2.625f)
 			{
 				layer1_convolutedWorld->set(row, col, 0);
 			}
@@ -37,10 +41,12 @@ void generateOcean(ParticleWorld* particleWorld)
 	}
 	//
 
+	// values for quantized map, each value corresponds to a material
 	int quantizedValueMap[] = { 255, 165, 155, 143, 127, 0 };
 
 	std::vector<sf::Image> ocean_objects = ocean_getObjects();
 
+	// random dist for brightness
 	std::uniform_int_distribution<int> colorPatternDist(9, 10);
 
 	for (int row = 0; row < rowSize; ++row)
@@ -84,10 +90,11 @@ void generateOcean(ParticleWorld* particleWorld)
 		}
 	}
 
-	ParticleWorld::ParticleInstance temp2;
-	temp2.material = ParticleWorld::Material::Grass;
-	temp2.materialType = ParticleWorld::MaterialType::Solid;
-	temp2.physicsType = ParticleWorld::PhysicsType::NoGravity;
+	// place random seaweed
+	ParticleWorld::ParticleInstance seaweedMaterial;
+	seaweedMaterial.material = ParticleWorld::Material::Grass;
+	seaweedMaterial.materialType = ParticleWorld::MaterialType::Solid;
+	seaweedMaterial.physicsType = ParticleWorld::PhysicsType::SimpleGravity;
 	for (int i = 0; i < colSize; i++)
 	{
 		std::uniform_int_distribution<int> genChance(0, 1);
@@ -96,7 +103,7 @@ void generateOcean(ParticleWorld* particleWorld)
 		{
 			std::uniform_int_distribution<int> randweed(0, ocean_objects.size() - 1);
 			sf::Image randimage(ocean_objects[randweed(gen)]);
-			particleWorld->imageToParticles(layer1_convolutedGroundHeights[i] - randimage.getSize().y, i, randimage, temp2, true);
+			particleWorld->imageToParticles(layer1_convolutedGroundHeights[i] - randimage.getSize().y, i, randimage, seaweedMaterial, true);
 		}
 	}
 

@@ -11,6 +11,8 @@ std::vector<sf::SoundBuffer> SoundEngine::liquidDripSounds;
 std::vector<sf::SoundBuffer> SoundEngine::bubbleSounds;
 std::vector<sf::SoundBuffer> SoundEngine::sizzleSounds;
 std::vector<sf::SoundBuffer> SoundEngine::fireSounds;
+std::vector<sf::SoundBuffer> SoundEngine::menuImpactSounds;
+std::vector<sf::SoundBuffer> SoundEngine::dynamiteSounds;
 
 std::vector<sf::Sound> SoundEngine::globalSounds;
 
@@ -85,6 +87,37 @@ void SoundEngine::init()
 		}
 		fireSounds.push_back(temp);
 	}
+
+	const std::string menuImpactSoundPaths[] = {
+		"data\\sounds\\menu_impact\\menu_impact1.ogg",
+		"data\\sounds\\menu_impact\\menu_impact2.ogg",
+		"data\\sounds\\menu_impact\\menu_impact3.ogg",
+		"data\\sounds\\menu_impact\\menu_impact4.ogg",
+		"data\\sounds\\menu_impact\\menu_impact5.ogg",
+		"data\\sounds\\menu_impact\\menu_impact6.ogg",
+		"data\\sounds\\menu_impact\\menu_impact7.ogg"
+	};
+	for (int i = 0; i < 7; i++)
+	{
+		if (!temp.loadFromFile(menuImpactSoundPaths[i]))
+		{
+			// error
+		}
+		menuImpactSounds.push_back(temp);
+	}
+
+	const std::string dynamiteSoundPaths[] = {
+		"data\\sounds\\dynamite\\dynamite1.ogg",
+		"data\\sounds\\dynamite\\dynamite2.ogg"
+	};
+	for (int i = 0; i < 2; i++)
+	{
+		if (!temp.loadFromFile(dynamiteSoundPaths[i]))
+		{
+			// error
+		}
+		dynamiteSounds.push_back(temp);
+	}
 }
 
 void SoundEngine::playSound(SoundType soundType, int col, int colSize)
@@ -144,6 +177,30 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 			std::uniform_int_distribution<int> randomFirePitch(80, 100);
 			sf::Sound sound;
 			configureSound(sound, fireSounds[randomFire(gen)], sf::Vector3f(location, 0.f, 1.f), randomFirePitch(gen));
+			globalSounds.push_back(sound);
+			globalSounds.back().play();
+			lastPlayedTime[soundType] = now;
+		}
+		break;
+	case SoundType::MenuImpact:
+		if (!menuImpactSounds.empty())
+		{
+			std::uniform_int_distribution<int> randomMenuImpact(0, menuImpactSounds.size() - 1);
+			std::uniform_int_distribution<int> randomMenuImpactPitch(80, 100);
+			sf::Sound sound;
+			configureSound(sound, menuImpactSounds[randomMenuImpact(gen)], sf::Vector3f(location, 0.f, 1.f), randomMenuImpactPitch(gen));
+			globalSounds.push_back(sound);
+			globalSounds.back().play();
+			lastPlayedTime[soundType] = now;
+		}
+		break;
+	case SoundType::Dynamite:
+		if (!dynamiteSounds.empty())
+		{
+			std::uniform_int_distribution<int> randomDynamite(0, dynamiteSounds.size() - 1);
+			std::uniform_int_distribution<int> randomDynamitePitch(80, 100);
+			sf::Sound sound;
+			configureSound(sound, dynamiteSounds[randomDynamite(gen)], sf::Vector3f(location, 0.f, 1.f), randomDynamitePitch(gen));
 			globalSounds.push_back(sound);
 			globalSounds.back().play();
 			lastPlayedTime[soundType] = now;

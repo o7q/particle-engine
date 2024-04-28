@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="explosive.cpp" />
     <ClCompile Include="include\menus\main_menu_intro\controls\main_menu_music.cpp" />
     <ClCompile Include="include\menus\main_menu_intro\main_menu.cpp" />
     <ClCompile Include="include\menus\sandbox\controls\sandbox_menu_buttons.cpp" />
     <ClCompile Include="include\menus\sandbox\sandbox_menu.cpp" />
-    <ClCompile Include="include\particle\particle_world.cpp" />
+    <ClCompile Include="include\particle\particle_world\particle_world.cpp" />
+    <ClCompile Include="include\particle\particle_world\tools\bounds.cpp" />
     <ClCompile Include="include\particle\physics\materials\acid.cpp" />
     <ClCompile Include="include\particle\physics\materials\acid_smoke.cpp" />
     <ClCompile Include="include\particle\physics\materials\dirt.cpp" />
@@ -42,14 +44,14 @@
     <ClCompile Include="include\tools\menu\button.cpp" />
     <ClCompile Include="include\tools\num2d\double2d.cpp" />
     <ClCompile Include="include\tools\num2d\int2d.cpp" />
-    <ClCompile Include="include\world\generators\ocean.cpp" />
-    <ClCompile Include="include\world\generators\swamp.cpp" />
+    <ClCompile Include="include\world\generators\ocean\ocean.cpp" />
+    <ClCompile Include="include\world\generators\ocean\ocean_objects.cpp" />
+    <ClCompile Include="include\world\generators\swamp\swamp.cpp" />
     <ClCompile Include="include\world\generators\tools\kernel.cpp" />
     <ClCompile Include="include\world\generators\tools\noise.cpp" />
     <ClCompile Include="include\world\generators\tools\quantize.cpp" />
     <ClCompile Include="include\world\world_generator.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="ocean_objects.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\menus\menus.h" />

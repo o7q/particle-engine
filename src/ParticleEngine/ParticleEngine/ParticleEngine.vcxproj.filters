@@ -82,6 +82,12 @@
     <Filter Include="Source Files\world\tools">
       <UniqueIdentifier>{e800e2ae-aad6-4698-8c15-1a38f428e04d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\particle\particle_world">
+      <UniqueIdentifier>{54e78f44-24e0-4d13-b1c2-daaee7f08e7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\particle\particle_world\tools">
+      <UniqueIdentifier>{6cd5fb25-35ba-40da-b56f-a150c24abbde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\particle\physics\materials\sand.cpp">
@@ -95,9 +101,6 @@
     </ClCompile>
     <ClCompile Include="include\particle\physics\particle_physics.cpp">
       <Filter>Source Files\particle\physics</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\particle_world.cpp">
-      <Filter>Source Files\particle</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
@@ -168,14 +171,23 @@
     <ClCompile Include="include\particle\physics\materials\acid_smoke.cpp">
       <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
-    <ClCompile Include="include\world\generators\swamp.cpp">
+    <ClCompile Include="include\world\generators\swamp\swamp.cpp">
       <Filter>Source Files\world\generators\swamp</Filter>
     </ClCompile>
-    <ClCompile Include="include\world\generators\ocean.cpp">
+    <ClCompile Include="include\particle\particle_world\tools\bounds.cpp">
+      <Filter>Source Files\particle\particle_world\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="include\world\generators\ocean\ocean_objects.cpp">
       <Filter>Source Files\world\generators\ocean</Filter>
     </ClCompile>
-    <ClCompile Include="ocean_objects.cpp">
+    <ClCompile Include="include\world\generators\ocean\ocean.cpp">
       <Filter>Source Files\world\generators\ocean</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\particle_world.cpp">
+      <Filter>Source Files\particle\particle_world</Filter>
+    </ClCompile>
+    <ClCompile Include="explosive.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

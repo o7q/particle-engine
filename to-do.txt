@@ -1,5 +1,4 @@
 - Delete buttons when they are no longer needed!! (+ other stuff)
 - Add rain
 - Add growing seaweed
-- Add explosives
-- Organize scripts better because it makes me want to explode atm
+- Fix swamp object generator

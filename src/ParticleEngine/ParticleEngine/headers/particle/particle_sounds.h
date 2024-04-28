@@ -16,7 +16,9 @@ public:
 		LiquidDrip,
 		Bubble,
 		Sizzle,
-		Fire
+		Fire,
+		MenuImpact,
+		Dynamite
 	};
 
 	static sf::Sound sound;
@@ -39,6 +41,8 @@ private:
 	static std::vector<sf::SoundBuffer> bubbleSounds;
 	static std::vector<sf::SoundBuffer> sizzleSounds;
 	static std::vector<sf::SoundBuffer> fireSounds;
+	static std::vector<sf::SoundBuffer> menuImpactSounds;
+	static std::vector<sf::SoundBuffer> dynamiteSounds;
 };
 
 #endif

@@ -3,6 +3,7 @@
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
 #include "particle/particle_renderer.h"
+#include "particle/particle_sounds.h"
 #include "world/world_generator.h"
 
 Menu mainMenu_run(sf::RenderWindow& renderWindow, ParticleWorld* particleWorld, std::vector<sf::Music*> mainMenu_music, bool doOnce)
@@ -40,15 +41,15 @@ Menu mainMenu_run(sf::RenderWindow& renderWindow, ParticleWorld* particleWorld, 
 			break;
 		case 1: // 1 = swamp
 			generateWorld(particleWorld, WorldType::Swamp);
-			titleParticle.material = ParticleWorld::Material::FlammableGas;
-			titleParticle.materialType = ParticleWorld::MaterialType::Gas;
-			titleParticle.physicsType = ParticleWorld::PhysicsType::NoGravity;
+			titleParticle.material = ParticleWorld::Material::Fire;
+			titleParticle.materialType = ParticleWorld::MaterialType::Liquid;
+			titleParticle.physicsType = ParticleWorld::PhysicsType::Fire;
 			mainMenu_music[1]->play();
 			break;
 		}
 
-		particleWorld->imageToParticles(particleWorld->getRowSize() / 2 - titleImage.getSize().y * 2, particleWorld->getColSize() / 2 - titleImage.getSize().x / 2, titleImage, titleParticle, true);
-		particleWorld->imageToParticles(particleWorld->getRowSize() / 2, particleWorld->getColSize() / 2 - titleImage_pressAnyKey.getSize().x / 2, titleImage_pressAnyKey, titleParticle, true);
+		particleWorld->imageToParticles(particleWorld->getRowSize() / 2 - particleWorld->getRowSize() / 4, particleWorld->getColSize() / 2, titleImage, titleParticle, true);
+		particleWorld->imageToParticles(particleWorld->getRowSize() / 2, particleWorld->getColSize() / 2, titleImage_pressAnyKey, titleParticle, true);
 	}
 
 	bool anyKeyPressed = false;
@@ -68,6 +69,7 @@ Menu mainMenu_run(sf::RenderWindow& renderWindow, ParticleWorld* particleWorld, 
 		{
 			mainMenu_music[i]->stop();
 		}
+
 		return Menu::Sandbox;
 	}
 

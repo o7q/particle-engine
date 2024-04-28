@@ -2,14 +2,18 @@
 
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
-#include "tools/tools.h"
 #include "particle/particle_sounds.h"
+
+#include "tools/tools.h"
 
 void calculate_acid(int row, int col, ParticleWorld* particleWorld)
 {
 	// define self, this value is used whenever a pixel moves, it acts as a copy of all the settings for the current pixel
-	ParticleWorld::ParticleInstance self = particleWorld->getParticle(row, col);
-	int lastY = self.lastY;
+	// selfInital SHOULD NOT CHANGE
+	const ParticleWorld::ParticleInstance selfInitial = particleWorld->getParticle(row, col);
+	ParticleWorld::ParticleInstance self = selfInitial;
+
+	int lastY = selfInitial.lastY;
 
 	if (particleWorld->canUp(row))
 	{
@@ -60,7 +64,7 @@ void calculate_acid(int row, int col, ParticleWorld* particleWorld)
 			fell = true;
 			self.lastY = row + 1;
 			self.isFalling = true;
-			particleWorld->paintParticles(row - 3, col, 2, acidSmoke);
+			particleWorld->paintParticles(row - 3, col, 2, acidSmoke, ParticleWorld::Shape::Square);
 			particleWorld->setParticle(row + 1, col, self);
 			particleWorld->resetParticle(row, col);
 
@@ -116,7 +120,7 @@ void calculate_acid(int row, int col, ParticleWorld* particleWorld)
 			particleWorld->getParticle(row, col - 1).material != self.material
 			)
 		{
-			particleWorld->paintParticles(row - 3, col, 2, acidSmoke);
+			particleWorld->paintParticles(row - 3, col, 2, acidSmoke, ParticleWorld::Shape::Square);
 			particleWorld->setParticle(row, col - 1, self);
 			particleWorld->resetParticle(row, col);
 		}
@@ -139,7 +143,7 @@ void calculate_acid(int row, int col, ParticleWorld* particleWorld)
 			particleWorld->getParticle(row, col + 1).material != self.material
 			)
 		{
-			particleWorld->paintParticles(row - 3, col, 2, acidSmoke);
+			particleWorld->paintParticles(row - 3, col, 2, acidSmoke, ParticleWorld::Shape::Square);
 			particleWorld->setParticle(row, col + 1, self);
 			particleWorld->resetParticle(row, col);
 		}

@@ -2,21 +2,24 @@
 
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
-#include "tools/tools.h"
 #include "particle/particle_sounds.h"
+
+#include "tools/tools.h"
 
 void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 {
 	// define self, this value is used whenever a pixel moves, it acts as a copy of all the settings for the current pixel
-	ParticleWorld::ParticleInstance self = particleWorld->getParticle(row, col);
+	// selfInital SHOULD NOT CHANGE
+	const ParticleWorld::ParticleInstance selfInitial = particleWorld->getParticle(row, col);
+	ParticleWorld::ParticleInstance self = selfInitial;
 
 	if (particleWorld->canUp(row))
 	{
 		// increment wetness if a liquid is present (up = more wet)
 		if (particleWorld->getParticle(row - 1, col).materialType == ParticleWorld::MaterialType::Liquid &&
-			particleWorld->getParticle(row, col).wetnessMultiplier <= 2.0f)
+			self.wetnessMultiplier <= 2.0f)
 		{
-			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.1f;
+			self.wetnessMultiplier += 0.1f;
 		}
 	}
 
@@ -24,9 +27,9 @@ void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 	{
 		// increment wetness if a liquid is present (left)
 		if (particleWorld->getParticle(row, col - 1).materialType == ParticleWorld::MaterialType::Liquid &&
-			particleWorld->getParticle(row, col).wetnessMultiplier <= 1.5f)
+			self.wetnessMultiplier <= 1.5f)
 		{
-			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.05f;
+			self.wetnessMultiplier += 0.05f;
 		}
 	}
 
@@ -34,9 +37,9 @@ void calculate_sand(int row, int col, ParticleWorld* particleWorld)
 	{
 		// increment wetness if a liquid is present (right)
 		if (particleWorld->getParticle(row, col + 1).materialType == ParticleWorld::MaterialType::Liquid &&
-			particleWorld->getParticle(row, col).wetnessMultiplier <= 1.5f)
+			self.wetnessMultiplier <= 1.5f)
 		{
-			particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].wetnessMultiplier += 0.05f;
+			self.wetnessMultiplier += 0.05f;
 		}
 	}
 
