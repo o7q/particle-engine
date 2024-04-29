@@ -1,7 +1,9 @@
 #include <iostream>
 
 #include "world/world_generator.h"
+
 #include "particle/particle_world.h"
+
 #include "tools/num2d.h"
 
 void generateSwamp(ParticleWorld* particleWorld)

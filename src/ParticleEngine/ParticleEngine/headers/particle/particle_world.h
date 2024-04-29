@@ -34,7 +34,8 @@ public:
 		Steam,
 		AcidGas,
 		FlammableGas,
-		Dynamite
+		Dynamite,
+		Nuke
 	};
 
 	enum class PhysicsType {
@@ -49,7 +50,8 @@ public:
 		Grass,
 		Fire,
 		NoGravity,
-		Explosive
+		Explosive,
+		Nuke
 	};
 
 	enum class MaterialType {
@@ -65,6 +67,8 @@ public:
 
 
 	std::vector<sf::Image> explosionPatterns;
+	std::vector<sf::Image> nukeExplosionPatterns;
+	std::vector<sf::Image> nukeMushroomCloudPatterns;
 
 	struct ParticleInstance {
 		Material material = Material::Air;
@@ -81,6 +85,12 @@ public:
 		int physicsFreezeTime = 0;
 		int lastY = 0;
 		bool isFalling = false;
+	};
+
+	struct DrawingParticle {
+		ParticleInstance particleInstance;
+		std::string toolMode = "draw";
+		int brushSize = 5;
 	};
 
 	ParticleInstance* particles;

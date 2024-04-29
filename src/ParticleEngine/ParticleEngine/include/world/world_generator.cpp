@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "particle/particle_world.h"
+
 #include "world/world_generator.h"
 
 void generateWorld(ParticleWorld* particleWorld, WorldType worldType)

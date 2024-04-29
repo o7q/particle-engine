@@ -88,6 +88,9 @@
     <Filter Include="Source Files\particle\particle_world\tools">
       <UniqueIdentifier>{6cd5fb25-35ba-40da-b56f-a150c24abbde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\init">
+      <UniqueIdentifier>{aaa26297-4d50-4dc8-865f-0b37faba5396}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="include\particle\physics\materials\sand.cpp">
@@ -138,9 +141,6 @@
     <ClCompile Include="include\menus\sandbox\sandbox_menu.cpp">
       <Filter>Source Files\menus\sandbox_menu</Filter>
     </ClCompile>
-    <ClCompile Include="include\menus\sandbox\controls\sandbox_menu_buttons.cpp">
-      <Filter>Source Files\menus\sandbox_menu\controls</Filter>
-    </ClCompile>
     <ClCompile Include="include\world\world_generator.cpp">
       <Filter>Source Files\world</Filter>
     </ClCompile>
@@ -186,8 +186,20 @@
     <ClCompile Include="include\particle\particle_world\particle_world.cpp">
       <Filter>Source Files\particle\particle_world</Filter>
     </ClCompile>
-    <ClCompile Include="explosive.cpp">
+    <ClCompile Include="include\particle\physics\materials\explosive.cpp">
       <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\physics\materials\nuke.cpp">
+      <Filter>Source Files\particle\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\init\text.cpp">
+      <Filter>Source Files\init</Filter>
+    </ClCompile>
+    <ClCompile Include="include\menus\sandbox\controls\sandbox_menu_buttons.cpp">
+      <Filter>Source Files\menus\sandbox_menu\controls</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\tools\image.cpp">
+      <Filter>Source Files\particle\particle_world\tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="headers\particle\particle_sounds.h">
       <Filter>Header Files\particle</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\init.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

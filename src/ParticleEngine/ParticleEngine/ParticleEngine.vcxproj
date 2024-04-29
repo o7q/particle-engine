@@ -19,19 +19,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="explosive.cpp" />
+    <ClCompile Include="include\init\text.cpp" />
     <ClCompile Include="include\menus\main_menu_intro\controls\main_menu_music.cpp" />
     <ClCompile Include="include\menus\main_menu_intro\main_menu.cpp" />
     <ClCompile Include="include\menus\sandbox\controls\sandbox_menu_buttons.cpp" />
     <ClCompile Include="include\menus\sandbox\sandbox_menu.cpp" />
     <ClCompile Include="include\particle\particle_world\particle_world.cpp" />
     <ClCompile Include="include\particle\particle_world\tools\bounds.cpp" />
+    <ClCompile Include="include\particle\particle_world\tools\image.cpp" />
     <ClCompile Include="include\particle\physics\materials\acid.cpp" />
     <ClCompile Include="include\particle\physics\materials\acid_smoke.cpp" />
     <ClCompile Include="include\particle\physics\materials\dirt.cpp" />
+    <ClCompile Include="include\particle\physics\materials\explosive.cpp" />
     <ClCompile Include="include\particle\physics\materials\fire.cpp" />
     <ClCompile Include="include\particle\physics\materials\grass.cpp" />
     <ClCompile Include="include\particle\physics\materials\ice.cpp" />
+    <ClCompile Include="include\particle\physics\materials\nuke.cpp" />
     <ClCompile Include="include\particle\physics\materials\sand.cpp" />
     <ClCompile Include="include\particle\physics\materials\simple_gravity.cpp" />
     <ClCompile Include="include\particle\physics\materials\smoke.cpp" />
@@ -54,6 +57,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\init.h" />
     <ClInclude Include="headers\menus\menus.h" />
     <ClInclude Include="headers\particle\particle_physics.h" />
     <ClInclude Include="headers\particle\particle_renderer.h" />

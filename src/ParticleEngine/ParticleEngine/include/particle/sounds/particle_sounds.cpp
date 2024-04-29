@@ -3,7 +3,7 @@
 #include <random>
 #include <unordered_map>
 
-#include "SFML/Audio.hpp"
+#include <SFML/Audio.hpp>
 
 #include "particle/particle_sounds.h"
 
@@ -12,7 +12,8 @@ std::vector<sf::SoundBuffer> SoundEngine::bubbleSounds;
 std::vector<sf::SoundBuffer> SoundEngine::sizzleSounds;
 std::vector<sf::SoundBuffer> SoundEngine::fireSounds;
 std::vector<sf::SoundBuffer> SoundEngine::menuImpactSounds;
-std::vector<sf::SoundBuffer> SoundEngine::dynamiteSounds;
+std::vector<sf::SoundBuffer> SoundEngine::dynamiteExplosionSounds;
+std::vector<sf::SoundBuffer> SoundEngine::nukeExplosionSounds;
 
 std::vector<sf::Sound> SoundEngine::globalSounds;
 
@@ -116,7 +117,20 @@ void SoundEngine::init()
 		{
 			// error
 		}
-		dynamiteSounds.push_back(temp);
+		dynamiteExplosionSounds.push_back(temp);
+	}
+
+	const std::string nukeSoundPaths[] = {
+	"data\\sounds\\nuke\\nuke1.ogg",
+	"data\\sounds\\nuke\\nuke2.ogg"
+	};
+	for (int i = 0; i < 2; i++)
+	{
+		if (!temp.loadFromFile(nukeSoundPaths[i]))
+		{
+			// error
+		}
+		nukeExplosionSounds.push_back(temp);
 	}
 }
 
@@ -188,19 +202,31 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 			std::uniform_int_distribution<int> randomMenuImpact(0, menuImpactSounds.size() - 1);
 			std::uniform_int_distribution<int> randomMenuImpactPitch(80, 100);
 			sf::Sound sound;
-			configureSound(sound, menuImpactSounds[randomMenuImpact(gen)], sf::Vector3f(location, 0.f, 1.f), randomMenuImpactPitch(gen));
+			configureSound(sound, menuImpactSounds[randomMenuImpact(gen)], sf::Vector3f(0.f, 0.f, 0.f), randomMenuImpactPitch(gen));
 			globalSounds.push_back(sound);
 			globalSounds.back().play();
 			lastPlayedTime[soundType] = now;
 		}
 		break;
-	case SoundType::Dynamite:
-		if (!dynamiteSounds.empty())
+	case SoundType::DynamiteExplosion:
+		if (!dynamiteExplosionSounds.empty())
 		{
-			std::uniform_int_distribution<int> randomDynamite(0, dynamiteSounds.size() - 1);
-			std::uniform_int_distribution<int> randomDynamitePitch(80, 100);
+			std::uniform_int_distribution<int> randomDynamiteExplosion(0, dynamiteExplosionSounds.size() - 1);
+			std::uniform_int_distribution<int> randomDynamiteExplosionPitch(80, 100);
 			sf::Sound sound;
-			configureSound(sound, dynamiteSounds[randomDynamite(gen)], sf::Vector3f(location, 0.f, 1.f), randomDynamitePitch(gen));
+			configureSound(sound, dynamiteExplosionSounds[randomDynamiteExplosion(gen)], sf::Vector3f(location, 0.f, 1.f), randomDynamiteExplosionPitch(gen));
+			globalSounds.push_back(sound);
+			globalSounds.back().play();
+			lastPlayedTime[soundType] = now;
+		}
+		break;
+	case SoundType::NukeExplosion:
+		if (!nukeExplosionSounds.empty())
+		{
+			std::uniform_int_distribution<int> randomNukeExplosion(0, nukeExplosionSounds.size() - 1);
+			std::uniform_int_distribution<int> randomNukeExplosionPitch(80, 100);
+			sf::Sound sound;
+			configureSound(sound, nukeExplosionSounds[randomNukeExplosion(gen)], sf::Vector3f(0.f, 0.f, 1.f), randomNukeExplosionPitch(gen));
 			globalSounds.push_back(sound);
 			globalSounds.back().play();
 			lastPlayedTime[soundType] = now;
@@ -210,7 +236,6 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 
 	if (globalSounds.size() >= 256)
 	{
-		std::cout << "Purging sounds (" << globalSounds.size() << ")" << std::endl;
 		purgeSounds();
 	}
 }
@@ -224,6 +249,8 @@ void SoundEngine::configureSound(sf::Sound& sound, sf::SoundBuffer& soundBuffer,
 
 void SoundEngine::purgeSounds()
 {
+	std::cout << "Purging sounds (" << globalSounds.size() << ")" << std::endl;
+
 	// remove sounds that have finished playing
 	globalSounds.erase(std::remove_if(globalSounds.begin(), globalSounds.end(),
 		[](const sf::Sound& s) { return s.getStatus() == sf::Sound::Stopped; }),

@@ -1,5 +1,6 @@
 #include "particle/particle_world.h"
 #include "particle/particle_renderer.h"
+
 #include "tools/tools.h"
 
 int renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderWindow, sf::VertexArray& quadClump, sf::Vector2i uiOffset, int titlebarHeight, int pixelSize)
@@ -210,6 +211,15 @@ int renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderWi
 					pixelColor.r = static_cast<sf::Uint8>(110 * brightnessColor2);
 					pixelColor.g = static_cast<sf::Uint8>(33 * brightnessColor2);
 					pixelColor.b = static_cast<sf::Uint8>(29 * brightnessColor2);
+					pixelColor.a = 255;
+
+					particleCount++;
+					break;
+				}
+				case ParticleWorld::Material::Nuke: {
+					pixelColor.r = static_cast<sf::Uint8>(63 * brightnessColor2);
+					pixelColor.g = static_cast<sf::Uint8>(107 * brightnessColor2);
+					pixelColor.b = static_cast<sf::Uint8>(49 * brightnessColor2);
 					pixelColor.a = 255;
 
 					particleCount++;

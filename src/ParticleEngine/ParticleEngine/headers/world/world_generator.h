@@ -4,6 +4,7 @@
 #define WORLD_GENERATOR_H
 
 #include "particle/particle_world.h"
+
 #include "tools/num2d.h"
 
 enum WorldType {

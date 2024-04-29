@@ -1,17 +1,30 @@
-#include "menus/menus.h"
-#include "tools/menu/button.h"
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
 #include "particle/particle_renderer.h"
 #include "particle/particle_sounds.h"
 
-Menu sandboxMenu_run(sf::RenderWindow& renderWindow, int pixelSize, ParticleWorld* particleWorld, std::vector<Button*> sandboxButtons, ParticleWorld::ParticleInstance& drawingParticle, sf::Vector2i localMousePos, sf::Vector2i uiOffset, int titleBarHeight)
+#include "tools/menu/button.h"
+
+#include "menus/menus.h"
+
+Menu sandboxMenu_run(
+	sf::RenderWindow& renderWindow,
+	int pixelSize,
+	ParticleWorld* particleWorld,
+	std::vector<Button*> sandboxButtons,
+	ParticleWorld::DrawingParticle& drawingParticle,
+	sf::Vector2i localMousePos,
+	sf::Vector2i uiOffset,
+	int titleBarHeight,
+	std::unordered_set<std::string>& unlockedButtons
+)
 {
 	std::string hoveredButtonId = "";
 
 	for (int i = 0; i < sandboxButtons.size(); ++i)
 	{
 		hoveredButtonId = sandboxButtons[i]->handleClick(localMousePos.x, localMousePos.y);
+
 		if (hoveredButtonId != "")
 		{
 			break;
@@ -20,123 +33,213 @@ Menu sandboxMenu_run(sf::RenderWindow& renderWindow, int pixelSize, ParticleWorl
 
 	for (int i = 0; i < sandboxButtons.size(); ++i)
 	{
+		for (std::string buttonId : unlockedButtons)
+		{
+			if (sandboxButtons[i]->getId() == buttonId || true)
+			{
+				sandboxButtons[i]->enable();
+				break;
+			}
+			else if (sandboxButtons[i]->getType() != "ui")
+			{
+				sandboxButtons[i]->disable();
+			}
+		}
+
 		sandboxButtons[i]->draw(renderWindow);
 	}
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
+		if (drawingParticle.toolMode == "inspect")
+			switch (
+				particleWorld->getParticle(
+					(localMousePos.y - uiOffset.y - titleBarHeight) / pixelSize,
+					(localMousePos.x - uiOffset.x) / pixelSize).material
+				)
+			{
+			case ParticleWorld::Material::Stone:
+				unlockedButtons.insert("stoneButton");
+				break;
+			case ParticleWorld::Material::Sand:
+				unlockedButtons.insert("sandButton");
+				break;
+			case ParticleWorld::Material::Dirt:
+				unlockedButtons.insert("dirtButton");
+				break;
+			case ParticleWorld::Material::Grass:
+				unlockedButtons.insert("grassButton");
+				break;
+			case ParticleWorld::Material::Water:
+				unlockedButtons.insert("waterButton");
+				break;
+			case ParticleWorld::Material::Ice:
+				unlockedButtons.insert("iceButton");
+				break;
+			case ParticleWorld::Material::Fire:
+				unlockedButtons.insert("fireButton");
+				break;
+			case ParticleWorld::Material::Gasoline:
+				unlockedButtons.insert("gasolineButton");
+				break;
+			case ParticleWorld::Material::Smoke:
+				unlockedButtons.insert("smokeButton");
+				break;
+			case ParticleWorld::Material::AcidGas:
+				unlockedButtons.insert("acidGasButton");
+				break;
+			case ParticleWorld::Material::FlammableGas:
+				unlockedButtons.insert("flammableGasButton");
+				break;
+			case ParticleWorld::Material::Air:
+				unlockedButtons.insert("airButton");
+				break;
+			case ParticleWorld::Material::Acid:
+				unlockedButtons.insert("acidButton");
+				break;
+			case ParticleWorld::Material::Dynamite:
+				unlockedButtons.insert("dynamiteButton");
+				break;
+			case ParticleWorld::Material::Nuke:
+				unlockedButtons.insert("nukeButton");
+				break;
+			}
+
 		if (hoveredButtonId == "stoneButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Stone;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::NoGravity;
-			drawingParticle.flammable = false;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Stone;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Solid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::NoGravity;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "sandButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Sand;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Sand;
-			drawingParticle.flammable = false;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Sand;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Solid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Sand;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "dirtButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Dirt;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Dirt;
-			drawingParticle.flammable = false;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Dirt;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Solid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Dirt;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "grassButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Grass;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Grass;
-			drawingParticle.flammable = false;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Grass;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Solid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Grass;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "waterButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Water;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Liquid;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Water;
-			drawingParticle.flammable = false;
-			drawingParticle.createsSteam = true;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Water;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Liquid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Water;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = true;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "iceButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Ice;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Ice;
-			drawingParticle.flammable = false;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Ice;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Solid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Ice;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "fireButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Fire;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Liquid;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Fire;
-			drawingParticle.flammable = false;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Fire;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Liquid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Fire;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "gasolineButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Gasoline;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Liquid;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Water;
-			drawingParticle.flammable = true;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Gasoline;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Liquid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Water;
+			drawingParticle.particleInstance.flammable = true;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "smokeButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Smoke;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Gas;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Smoke;
-			drawingParticle.flammable = false;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Smoke;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Gas;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Smoke;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "acidGasButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::AcidGas;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Gas;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::AcidSmoke;
-			drawingParticle.flammable = true;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::AcidGas;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Gas;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::AcidSmoke;
+			drawingParticle.particleInstance.flammable = true;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "flammableGasButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::FlammableGas;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Gas;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Smoke;
-			drawingParticle.flammable = true;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::FlammableGas;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Gas;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Smoke;
+			drawingParticle.particleInstance.flammable = true;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "airButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Air;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Gas;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::NoGravity;
-			drawingParticle.flammable = false;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Air;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Gas;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::NoGravity;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "acidButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Acid;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Liquid;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Acid;
-			drawingParticle.flammable = true;
-			drawingParticle.createsSteam = false;
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Acid;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Liquid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Acid;
+			drawingParticle.particleInstance.flammable = true;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
 		}
 		else if (hoveredButtonId == "dynamiteButton")
 		{
-			drawingParticle.material = ParticleWorld::Material::Dynamite;
-			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
-			drawingParticle.physicsType = ParticleWorld::PhysicsType::Explosive;
-			drawingParticle.flammable = false;
-			drawingParticle.createsSteam = false;
-			}
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Dynamite;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Solid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Explosive;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
+		}
+		else if (hoveredButtonId == "nukeButton")
+		{
+			drawingParticle.particleInstance.material = ParticleWorld::Material::Nuke;
+			drawingParticle.particleInstance.materialType = ParticleWorld::MaterialType::Solid;
+			drawingParticle.particleInstance.physicsType = ParticleWorld::PhysicsType::Nuke;
+			drawingParticle.particleInstance.flammable = false;
+			drawingParticle.particleInstance.createsSteam = false;
+			drawingParticle.toolMode = "draw";
+		}
 		else if (hoveredButtonId == "pauseButton")
 		{
 			SoundEngine::purgeSounds();
@@ -149,8 +252,15 @@ Menu sandboxMenu_run(sf::RenderWindow& renderWindow, int pixelSize, ParticleWorl
 				particleWorld->freeze();
 			}
 		}
+		else if (hoveredButtonId == "inspectButton")
+		{
+			drawingParticle.toolMode = "inspect";
+		}
 
-		particleWorld->paintParticles((localMousePos.y - uiOffset.y - titleBarHeight) / pixelSize, (localMousePos.x - uiOffset.x) / pixelSize, 6, drawingParticle, ParticleWorld::Shape::Circle);
+		if (drawingParticle.toolMode == "draw")
+		{
+			particleWorld->paintParticles((localMousePos.y - uiOffset.y - titleBarHeight) / pixelSize, (localMousePos.x - uiOffset.x) / pixelSize, 6, drawingParticle.particleInstance, ParticleWorld::Shape::Circle);
+		}
 	}
 
 	return Menu::Sandbox;

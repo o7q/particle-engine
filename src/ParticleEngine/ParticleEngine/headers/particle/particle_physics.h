@@ -19,5 +19,6 @@ void calculate_dirt(int, int, ParticleWorld*);
 void calculate_grass(int, int, ParticleWorld*);
 void calculate_fire(int, int, ParticleWorld*);
 void calculate_explosive(int, int, ParticleWorld*);
+void calculate_nuke(int, int, ParticleWorld*);
 
 #endif

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
-#include "SFML/Graphics.hpp"
+
+#include <SFML/Graphics.hpp>
+
 #include "world/world_generator.h"
 
 std::vector<sf::Image> ocean_getObjects()

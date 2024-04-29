@@ -55,9 +55,16 @@ void calculate_explosive(int row, int col, ParticleWorld* particleWorld)
 		}
 	}
 
-	std::uniform_int_distribution<int> explosionChanceDist(0, 100);
+	std::uniform_int_distribution<int> explosionChanceDist(0, 50);
 	if (explode && explosionChanceDist(particleWorld->gen) == 0)
 	{
+		ParticleWorld::ParticleInstance smokeExplosion;
+		smokeExplosion.material = ParticleWorld::Material::Smoke;
+		smokeExplosion.materialType = ParticleWorld::MaterialType::Gas;
+		smokeExplosion.physicsType = ParticleWorld::PhysicsType::Smoke;
+
+		particleWorld->paintParticles(row - 10, col, 10, smokeExplosion, ParticleWorld::Shape::Circle);
+
 		ParticleWorld::ParticleInstance fireExplosion;
 		fireExplosion.material = ParticleWorld::Material::Fire;
 		fireExplosion.materialType = ParticleWorld::MaterialType::Liquid;
@@ -65,9 +72,10 @@ void calculate_explosive(int row, int col, ParticleWorld* particleWorld)
 
 		std::uniform_int_distribution<int> explosionPatternDist(0, 12);
 
-		particleWorld->imageToParticles(row - 10, col - 10, particleWorld->explosionPatterns[explosionPatternDist(particleWorld->gen)], fireExplosion, false);
+		particleWorld->imageToParticles(row, col, particleWorld->explosionPatterns[explosionPatternDist(particleWorld->gen)], fireExplosion, false);
 
-		SoundEngine::playSound(SoundEngine::SoundType::Dynamite, row, col);
+
+		SoundEngine::playSound(SoundEngine::SoundType::DynamiteExplosion, col, particleWorld->getColSize());
 		particleWorld->setShakeCountdown(10);
 	}
 

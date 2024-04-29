@@ -8,7 +8,7 @@
 #include <chrono>
 #include <unordered_map>
 
-#include "SFML/Audio.hpp"
+#include <SFML/Audio.hpp>
 
 class SoundEngine {
 public:
@@ -18,7 +18,8 @@ public:
 		Sizzle,
 		Fire,
 		MenuImpact,
-		Dynamite
+		DynamiteExplosion,
+		NukeExplosion
 	};
 
 	static sf::Sound sound;
@@ -42,7 +43,8 @@ private:
 	static std::vector<sf::SoundBuffer> sizzleSounds;
 	static std::vector<sf::SoundBuffer> fireSounds;
 	static std::vector<sf::SoundBuffer> menuImpactSounds;
-	static std::vector<sf::SoundBuffer> dynamiteSounds;
+	static std::vector<sf::SoundBuffer> dynamiteExplosionSounds;
+	static std::vector<sf::SoundBuffer> nukeExplosionSounds;
 };
 
 #endif

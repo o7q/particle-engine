@@ -3,7 +3,7 @@
 #include "tools/menu/button.h"
 #include "tools/tools.h"
 
-Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Color color, sf::Color textColor, std::string text, int textSize, sf::Font& font, std::string id)
+Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Color color, sf::Color textColor, std::string text, int textSize, sf::Font& font, std::string id, std::string type)
 {
 	this->position = position;
 	this->size = size;
@@ -12,7 +12,10 @@ Button::Button(sf::Vector2f position, sf::Vector2f size, sf::Color color, sf::Co
 	this->text = text;
 	this->textSize = textSize;
 	this->id = id;
+	this->type = type;
+
 	this->canClick = false;
+	this->enabled = true;
 
 	buttonShape.setPosition(position);
 	buttonShape.setSize(size);
@@ -36,6 +39,15 @@ void Button::highlight(bool highlight)
 {
 	int r = color.r, g = color.g, b = color.b;
 	int r_text = textColor.r, g_text = textColor.g, b_text = textColor.b;
+
+	if (!enabled)
+	{
+		int grayscale = (r + g + b) / 30;
+		buttonShape.setFillColor(sf::Color(grayscale, grayscale, grayscale));
+		buttonText.setFillColor(sf::Color(grayscale, grayscale, grayscale));
+		return;
+	}
+
 	if (highlight)
 	{
 		r = verify256Range(r * 1.75);
@@ -61,6 +73,21 @@ void Button::draw(sf::RenderWindow& renderWindow)
 	renderWindow.draw(buttonText);
 }
 
+void Button::enable()
+{
+	enabled = true;
+}
+
+void Button::disable()
+{
+	enabled = false;
+}
+
+bool Button::isEnabled()
+{
+	return enabled;
+}
+
 sf::Vector2f Button::getPos()
 {
 	return position;
@@ -75,9 +102,19 @@ std::string Button::getId()
 	return id;
 }
 
+std::string Button::getType()
+{
+	return type;
+}
+
 std::string Button::handleClick(int mouseX, int mouseY)
 {
 	highlight(isMouseHover(mouseX, mouseY));
+
+	if (!enabled)
+	{
+		return "";
+	}
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && !isMouseHover(mouseX, mouseY))
 	{

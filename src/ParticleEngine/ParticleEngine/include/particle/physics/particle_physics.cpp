@@ -1,5 +1,6 @@
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
+
 #include "tools/tools.h"
 
 void updateParticleWorld(ParticleWorld* particleWorld)
@@ -63,6 +64,9 @@ void updateParticle(ParticleWorld* particleWorld, int row, int col)
 		break;
 	case ParticleWorld::PhysicsType::Explosive:
 		calculate_explosive(row, col, particleWorld);
+		break;
+	case ParticleWorld::PhysicsType::Nuke:
+		calculate_nuke(row, col, particleWorld);
 		break;
 	}
 }

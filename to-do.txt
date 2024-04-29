@@ -2,3 +2,5 @@
 - Add rain
 - Add growing seaweed
 - Fix swamp object generator
+- Add fuse
+- Add wires (electronics, logic gates, etc.)
