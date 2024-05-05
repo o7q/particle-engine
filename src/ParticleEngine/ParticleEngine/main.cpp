@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <random>
 #include <chrono>
 #include <unordered_set>
 
@@ -23,12 +25,11 @@ const unsigned int titleBarHeight = 25; // in pixels
 
 const sf::Vector2u uiSize(1550, 750);
 
-const sf::Vector2i uiOffsetInital(10, 10);
+const sf::Vector2i uiOffsetInital(10, 10 + titleBarHeight);
 sf::Vector2i uiOffset = uiOffsetInital;
 
-const unsigned int pixelSize = 2; // size of each pixel
-const unsigned int rowSize = (uiSize.y - uiOffset.y * 2) / pixelSize - 100 / pixelSize;
-const unsigned int colSize = (uiSize.x - uiOffset.x * 2) / pixelSize;
+const unsigned int rowSize = 600; // amount of particle pixels for row
+const unsigned int colSize = 1200; // amount of particle pixels for column
 
 const unsigned int simSpeed = 3; // how many physics steps will be performed each frame
 const unsigned int maxFps = 0; // max fps (set to 0 for no limit, as defined in: sf::Window::setFrameRateLimit())
@@ -43,9 +44,9 @@ int main()
 	ParticleWorld* particleWorld = new ParticleWorld(rowSize, colSize);
 	particleWorld->freeze();
 
-	// pre-initialize the VertexArray for the particle renderer
-	sf::VertexArray quadClump(sf::Quads);
-	quadClump.resize(particleWorld->getColSize() * particleWorld->getRowSize() * 4); // * 4 for each uint8 value (a, r, g, b)
+	ParticleRenderer* particleRenderer = new ParticleRenderer(sf::Vector2u(uiSize.x - uiOffset.x * 2, uiSize.y - 100));
+
+	//particleRenderer->setTranslate(sf::Vector2i(-1550 / 6, -750 / 6));
 
 	// init sound engine
 	SoundEngine::init();
@@ -75,7 +76,10 @@ int main()
 	std::vector<sf::Music*> mainMenu_music = mainMenu_getMusic();
 
 	// define and get the buttons for the sandbox
-	std::vector<Button*> sandboxMenu_buttons = sandboxMenu_getButtons(rowSize, pixelSize, titleBarHeight, uiOffset, baseFont);
+	std::vector<Button*> sandboxMenu_buttons = sandboxMenu_getButtons(uiSize.y - 120, titleBarHeight, uiOffset, baseFont);
+
+	std::cout << uiSize.y << " " << uiSize.y - 100 << std::endl;
+
 	// initialize the drawingParticle/tool
 	ParticleWorld::DrawingParticle sandbox_drawingParticle;
 	// create the set for the unlocked material buttons, this will store the ids for unlocked buttons
@@ -239,13 +243,12 @@ int main()
 				// the hideous mass (enjoy! ^w^)
 				currentMenu = sandboxMenu_run(
 					renderWindow,
-					pixelSize,
+					particleRenderer,
 					particleWorld,
 					sandboxMenu_buttons,
 					sandbox_drawingParticle,
 					localMousePos,
 					uiOffset,
-					titleBarHeight,
 					sandbox_unlockedMaterialButtons
 				);
 				if (currentMenu != Menu::Sandbox)
@@ -270,7 +273,7 @@ int main()
 			std::uniform_int_distribution<int> menuChangeSoundsDist(0, menuChangeSounds.size() - 1);
 
 			menuChangeSound.setBuffer(menuChangeSounds[menuChangeSoundsDist(gen)]);
-			menuChangeSound.play();
+			//menuChangeSound.play();
 		}
 
 		if (!particleWorld->isFrozen())
@@ -281,7 +284,32 @@ int main()
 			}
 		}
 
-		int particleCount = renderParticleWorld(particleWorld, renderWindow, quadClump, uiOffset, titleBarHeight, pixelSize);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		{
+			particleRenderer->translate(ParticleRenderer::Direction::UP);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		{
+			particleRenderer->translate(ParticleRenderer::Direction::DOWN);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		{
+			particleRenderer->translate(ParticleRenderer::Direction::LEFT);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		{
+			particleRenderer->translate(ParticleRenderer::Direction::RIGHT);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+		{
+			particleRenderer->zoom(0.1f);
+		}
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+		{
+			particleRenderer->zoom(-0.1f);
+		}
+
+		int particleCount = particleRenderer->render(particleWorld, renderWindow, uiOffset);
 
 		titleBarPanel->draw(renderWindow);
 		renderWindow.draw(titleBarText);

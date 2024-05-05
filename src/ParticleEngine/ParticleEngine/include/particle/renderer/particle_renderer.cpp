@@ -1,21 +1,99 @@
+#include <iostream>
+
 #include "particle/particle_world.h"
 #include "particle/particle_renderer.h"
 
 #include "tools/tools.h"
 
-int renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderWindow, sf::VertexArray& quadClump, sf::Vector2i uiOffset, int titlebarHeight, int pixelSize)
+ParticleRenderer::ParticleRenderer(sf::Vector2u size)
+{
+	this->size = size;
+	this->zoomLevel = 1;
+	quadClump = sf::VertexArray(sf::Quads);
+	resizeQuadClump();
+}
+
+void ParticleRenderer::zoom(float zoomAmount)
+{
+	zoomLevel += zoomAmount;
+	zoomLevel = std::max(zoomLevel, 1.0f);
+
+	resizeQuadClump();
+}
+
+float ParticleRenderer::getZoom()
+{
+	return this->zoomLevel;
+}
+
+sf::Vector2u ParticleRenderer::getSize()
+{
+	return this->size;
+}
+
+void ParticleRenderer::translate(Direction direction)
+{
+	switch (direction)
+	{
+	case Direction::UP:
+		position.y -= 5.0f / this->zoomLevel;
+		break;
+	case Direction::DOWN:
+		position.y += 5.0f / this->zoomLevel;
+		break;
+	case Direction::RIGHT:
+		position.x += 5.0f / this->zoomLevel;
+		break;
+	case Direction::LEFT:
+		position.x -= 5.0f / this->zoomLevel;
+		break;
+	}
+}
+
+sf::Vector2f ParticleRenderer::getTranslate()
+{
+	return this->position;
+}
+
+void ParticleRenderer::setTranslate(sf::Vector2f position)
+{
+	this->position = position;
+}
+
+void ParticleRenderer::resizeQuadClump()
+{
+	quadClump.clear();
+	quadClump.resize(((size.x * size.y) / zoomLevel) * 4);
+}
+
+int ParticleRenderer::render(ParticleWorld* particleWorld, sf::RenderWindow& renderWindow, sf::Vector2i uiOffset)
 {
 	int particleCount = 0;
 	int quadClumpIndex = 0;
 
-	for (int row = 0; row < particleWorld->getRowSize(); ++row)
+
+	int minRow = size.y / 2 - size.y / 2 / zoomLevel;
+	int maxRow = size.y / 2 + size.y / 2 / zoomLevel;
+
+	int minCol = size.x / 2 - size.x / 2 / zoomLevel;
+	int maxCol = size.x / 2 + size.x / 2 / zoomLevel;
+
+	int nRows = maxRow - minRow;
+	int nCols = maxCol - minCol;
+
+	//for (int row = 0; row < size.y / zoomLevel; ++row)
+	for (int row = minRow; row < maxRow; ++row)
 	{
-		for (int col = 0; col < particleWorld->getColSize(); ++col)
+		//for (int col = 0; col < size.x / zoomLevel; ++col)
+		for (int col = minCol; col < maxCol; ++col)
 		{
-			ParticleWorld::ParticleInstance currentParticle = particleWorld->getParticle(row, col);
+			int newRow = row + position.y;
+			int newCol = col + position.x;
+
+			ParticleWorld::ParticleInstance currentParticle = particleWorld->getParticle(newRow, newCol);
 
 			float brightnessColor = currentParticle.brightnessMultiplier;
-			float brightnessColor2 = brightnessColor == 1 ? 1 : 0.99;
+			float brightnessColor2 = brightnessColor == 1 ? 1 : 0.99f;
 			float wetnessColor = currentParticle.wetnessMultiplier;
 			bool overrideColor = currentParticle.overrideColor;
 
@@ -228,10 +306,25 @@ int renderParticleWorld(ParticleWorld* particleWorld, sf::RenderWindow& renderWi
 				}
 			}
 
-			quadClump[quadClumpIndex].position = sf::Vector2f(col * pixelSize + uiOffset.x, row * pixelSize + uiOffset.y + titlebarHeight);
-			quadClump[quadClumpIndex + 1].position = sf::Vector2f(col * pixelSize + pixelSize + uiOffset.x, row * pixelSize + uiOffset.y + titlebarHeight);
-			quadClump[quadClumpIndex + 2].position = sf::Vector2f(col * pixelSize + pixelSize + uiOffset.x, row * pixelSize + pixelSize + uiOffset.y + titlebarHeight);
-			quadClump[quadClumpIndex + 3].position = sf::Vector2f(col * pixelSize + uiOffset.x, row * pixelSize + pixelSize + uiOffset.y + titlebarHeight);
+			quadClump[quadClumpIndex].position = sf::Vector2f(
+				(col - nCols / 2 - minCol) * zoomLevel + uiOffset.x + size.x / 2,
+				(row - nRows / 2 - minRow) * zoomLevel + uiOffset.y + size.y / 2
+			);
+
+			quadClump[quadClumpIndex + 1].position = sf::Vector2f(
+				std::min(((col - nCols / 2 - minCol) + 1) * zoomLevel + uiOffset.x + size.x / 2, static_cast<float>(size.x)),
+				(row - nRows / 2 - minRow) * zoomLevel + uiOffset.y + size.y / 2
+			);
+
+			quadClump[quadClumpIndex + 2].position = sf::Vector2f(
+				std::min(((col - nCols / 2 - minCol) + 1) * zoomLevel + uiOffset.x + size.x / 2, static_cast<float>(size.x)),
+				std::min(((row - nRows / 2 - minRow) + 1) * zoomLevel + uiOffset.y + size.y / 2, static_cast<float>(size.y))
+			);
+
+			quadClump[quadClumpIndex + 3].position = sf::Vector2f(
+				(col - nCols / 2 - minCol) * zoomLevel + uiOffset.x + size.x / 2,
+				std::min(((row - nRows / 2 - minRow) + 1) * zoomLevel + uiOffset.y + size.y / 2, static_cast<float>(size.y))
+			);
 
 			for (int i = 0; i < 4; i++)
 			{

@@ -9,13 +9,12 @@
 
 Menu sandboxMenu_run(
 	sf::RenderWindow& renderWindow,
-	int pixelSize,
+	ParticleRenderer* particleRenderer,
 	ParticleWorld* particleWorld,
 	std::vector<Button*> sandboxButtons,
 	ParticleWorld::DrawingParticle& drawingParticle,
 	sf::Vector2i localMousePos,
 	sf::Vector2i uiOffset,
-	int titleBarHeight,
 	std::unordered_set<std::string>& unlockedButtons
 )
 {
@@ -54,8 +53,8 @@ Menu sandboxMenu_run(
 		if (drawingParticle.toolMode == "inspect")
 			switch (
 				particleWorld->getParticle(
-					(localMousePos.y - uiOffset.y - titleBarHeight) / pixelSize,
-					(localMousePos.x - uiOffset.x) / pixelSize).material
+					(localMousePos.y - uiOffset.y)/* / pixelSize*/,
+					(localMousePos.x - uiOffset.x)/* / pixelSize*/).material
 				)
 			{
 			case ParticleWorld::Material::Stone:
@@ -259,7 +258,7 @@ Menu sandboxMenu_run(
 
 		if (drawingParticle.toolMode == "draw")
 		{
-			particleWorld->paintParticles((localMousePos.y - uiOffset.y - titleBarHeight) / pixelSize, (localMousePos.x - uiOffset.x) / pixelSize, 6, drawingParticle.particleInstance, ParticleWorld::Shape::Circle);
+			particleWorld->paintParticles((localMousePos.y - uiOffset.y - particleRenderer->getSize().y) / particleRenderer->getZoom() + particleRenderer->getTranslate().y, (localMousePos.x - uiOffset.x - particleRenderer->getSize().x) / particleRenderer->getZoom() + particleRenderer->getTranslate().x, 6, drawingParticle.particleInstance, ParticleWorld::Shape::Circle);
 		}
 	}
 
