@@ -20,6 +20,8 @@ Menu sandboxMenu_run(
 {
 	std::string hoveredButtonId = "";
 
+	sf::Vector2f mouseWorldCoords = particleRenderer->mouseToWorldCoordinates(localMousePos);
+
 	for (int i = 0; i < sandboxButtons.size(); ++i)
 	{
 		hoveredButtonId = sandboxButtons[i]->handleClick(localMousePos.x, localMousePos.y);
@@ -258,7 +260,7 @@ Menu sandboxMenu_run(
 
 		if (drawingParticle.toolMode == "draw")
 		{
-			particleWorld->paintParticles((localMousePos.y - uiOffset.y - particleRenderer->getSize().y) / particleRenderer->getZoom() + particleRenderer->getTranslate().y, (localMousePos.x - uiOffset.x - particleRenderer->getSize().x) / particleRenderer->getZoom() + particleRenderer->getTranslate().x, 6, drawingParticle.particleInstance, ParticleWorld::Shape::Circle);
+			particleWorld->paintParticles(mouseWorldCoords.y, mouseWorldCoords.x, 6, drawingParticle.particleInstance, ParticleWorld::Shape::Circle);
 		}
 	}
 

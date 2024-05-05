@@ -22,11 +22,9 @@ public:
 		ZOOM_OUT
 	};
 
-	ParticleRenderer(sf::Vector2u);
+	ParticleRenderer(sf::Vector2u, sf::RenderWindow&);
 
-	void resizeQuadClump();
-
-	int render(ParticleWorld*, sf::RenderWindow&, sf::Vector2i);
+	int render(ParticleWorld*);
 	void zoom(float);
 	float getZoom();
 	void translate(Direction);
@@ -34,17 +32,21 @@ public:
 	void setTranslate(sf::Vector2f);
 
 	sf::Vector2u getSize();
+	void setUIOffset(sf::Vector2i);
+
+	sf::Vector2f windowToRenderCoordinates(sf::Vector2f);
+	sf::Vector2f renderToWorldCoordinates(sf::Vector2f);
+	sf::Vector2f mouseToWorldCoordinates(sf::Vector2i);
 
 private:
 	sf::Vector2u size;
 
-	sf::VertexArray quadClump;
+	sf::RenderWindow& renderWindow;
+
+	sf::Vector2i uiOffset;
+
 	sf::Vector2f position;
 	float zoomLevel;
-
-	int pixelSize;
 };
-
-//int renderParticleWorld(ParticleWorld*, sf::RenderWindow&, sf::VertexArray&, sf::Vector2i, int, int);
 
 #endif

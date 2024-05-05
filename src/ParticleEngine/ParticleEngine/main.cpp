@@ -44,9 +44,8 @@ int main()
 	ParticleWorld* particleWorld = new ParticleWorld(rowSize, colSize);
 	particleWorld->freeze();
 
-	ParticleRenderer* particleRenderer = new ParticleRenderer(sf::Vector2u(uiSize.x - uiOffset.x * 2, uiSize.y - 100));
-
-	//particleRenderer->setTranslate(sf::Vector2i(-1550 / 6, -750 / 6));
+	ParticleRenderer* particleRenderer = new ParticleRenderer(sf::Vector2u(uiSize.x - uiOffset.x * 2, uiSize.y - 100), renderWindow);
+	particleRenderer->setUIOffset(uiOffset);
 
 	// init sound engine
 	SoundEngine::init();
@@ -284,32 +283,35 @@ int main()
 			}
 		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		if (windowInFocus)
 		{
-			particleRenderer->translate(ParticleRenderer::Direction::UP);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-		{
-			particleRenderer->translate(ParticleRenderer::Direction::DOWN);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-		{
-			particleRenderer->translate(ParticleRenderer::Direction::LEFT);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-		{
-			particleRenderer->translate(ParticleRenderer::Direction::RIGHT);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-		{
-			particleRenderer->zoom(0.1f);
-		}
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
-		{
-			particleRenderer->zoom(-0.1f);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+			{
+				particleRenderer->translate(ParticleRenderer::Direction::UP);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+			{
+				particleRenderer->translate(ParticleRenderer::Direction::DOWN);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+			{
+				particleRenderer->translate(ParticleRenderer::Direction::LEFT);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+			{
+				particleRenderer->translate(ParticleRenderer::Direction::RIGHT);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+			{
+				particleRenderer->zoom(0.1f);
+			}
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+			{
+				particleRenderer->zoom(-0.1f);
+			}
 		}
 
-		int particleCount = particleRenderer->render(particleWorld, renderWindow, uiOffset);
+		int particleCount = particleRenderer->render(particleWorld);
 
 		titleBarPanel->draw(renderWindow);
 		renderWindow.draw(titleBarText);
