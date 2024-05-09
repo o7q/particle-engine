@@ -5,8 +5,12 @@
 
 #include "world/world_generator.h"
 
+#include "tools/logger.h"
+
 std::vector<sf::Image> ocean_getObjects()
 {
+	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Loading ocean objects");
+
 	std::vector<sf::Image> ocean_objects;
 
 	sf::Image temp;
@@ -32,7 +36,7 @@ std::vector<sf::Image> ocean_getObjects()
 	{
 		if (!temp.loadFromFile(oceanObjectPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load oceanObjects!");
 		}
 		ocean_objects.push_back(temp);
 	}

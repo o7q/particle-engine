@@ -14,9 +14,14 @@
 
 #include "init.h"
 
-#include "menus/menus.h"
+#include "menu/menu.h"
 
-#include "tools/menu/button.h"
+#include "menu/controls/button.h"
+
+#include "effects/effects.h"
+
+#include "tools/random.h"
+#include "tools/logger.h"
 
 const std::string version = "v1.0.0";
 const std::string windowTitle = "particle engine " + version;
@@ -25,11 +30,10 @@ const unsigned int titleBarHeight = 25; // in pixels
 
 const sf::Vector2u uiSize(1550, 750);
 
-const sf::Vector2i uiOffsetInital(10, 10 + titleBarHeight);
-sf::Vector2i uiOffset = uiOffsetInital;
+const sf::Vector2i uiOffset(10, 10 + titleBarHeight);
 
-const unsigned int rowSize = 600; // amount of particle pixels for row
-const unsigned int colSize = 1200; // amount of particle pixels for column
+const unsigned int rowSize = 300; // amount of particle pixels for row
+const unsigned int colSize = 400; // amount of particle pixels for column
 
 const unsigned int simSpeed = 3; // how many physics steps will be performed each frame
 const unsigned int maxFps = 0; // max fps (set to 0 for no limit, as defined in: sf::Window::setFrameRateLimit())
@@ -40,25 +44,32 @@ int main()
 	sf::RenderWindow renderWindow(sf::VideoMode(uiSize.x, uiSize.y), windowTitle, sf::Style::None);
 	renderWindow.setFramerateLimit(maxFps);
 
+	sf::Vector2i renderWindowUserPosition(renderWindow.getPosition());
+
 	// init particle world and freeze physics
 	ParticleWorld* particleWorld = new ParticleWorld(rowSize, colSize);
 	particleWorld->freeze();
 
-	ParticleRenderer* particleRenderer = new ParticleRenderer(sf::Vector2u(uiSize.x - uiOffset.x * 2, uiSize.y - 100), renderWindow);
+	sf::Vector2u particleRendererSize(uiSize.x - uiOffset.x * 2, uiSize.y - 100);
+	ParticleRenderer* particleRenderer = new ParticleRenderer(particleRendererSize, renderWindow);
 	particleRenderer->setUIOffset(uiOffset);
 
+	// init random
+	Random::init();
 	// init sound engine
 	SoundEngine::init();
 
 	// specify startup menu
-	Menu currentMenu = Menu::Main;
-
-	// init rand
-	std::random_device rd;
-	std::mt19937 gen(rd());
+	MenuType currentMenu = MenuType::MAIN_MENU;
 
 	// get base font
 	sf::Font baseFont = Init::getBaseFont();
+
+	MainMenu* mainMenu = new MainMenu(renderWindow, particleWorld);
+
+	SandboxMenu* sandboxMenu = new SandboxMenu(renderWindow, particleWorld, particleRenderer);
+	std::vector<Button*> sandboxMenu_buttons = sandboxMenu->getDefaultButtons(renderWindow, baseFont, uiOffset, particleRendererSize);
+	sandboxMenu->setButtons(sandboxMenu_buttons);
 
 	// configure main overlay texts
 	sf::Text titleBarText = Init::configureText(baseFont, windowTitle, 16, sf::Color(100, 100, 100), sf::Vector2f(6, 2));
@@ -68,19 +79,16 @@ int main()
 	std::string fpsString = "FPS: 0";
 
 	// configure main buttons
-	Button* titleBarPanel = new Button(sf::Vector2f(0, 0), sf::Vector2f(uiSize.x, titleBarHeight), sf::Color(20, 20, 20), sf::Color(0, 0, 0), "", 0, baseFont, "titleBarPanel", "ui");
-	Button* closeButton = new Button(sf::Vector2f(uiSize.x - titleBarHeight, 0), sf::Vector2f(titleBarHeight, titleBarHeight), sf::Color(100, 20, 20), sf::Color(0, 0, 0), "", 0, baseFont, "closeButton", "ui");
+	Button* titleBarPanel = new Button(renderWindow, baseFont);
+	titleBarPanel->setSize(sf::Vector2f(uiSize.x, titleBarHeight));
+	titleBarPanel->setColor(sf::Color(20, 20, 20));
+	titleBarPanel->setHighlightMode(Button::HighlightMode::NONE);
 
-	// get the music for the main menu
-	std::vector<sf::Music*> mainMenu_music = mainMenu_getMusic();
+	Button* closeButton = new Button(renderWindow, baseFont);
+	closeButton->setPosition(sf::Vector2f(uiSize.x - titleBarHeight, 0));
+	closeButton->setSize(sf::Vector2f(titleBarHeight, titleBarHeight));
+	closeButton->setColor(sf::Color(100, 20, 20));
 
-	// define and get the buttons for the sandbox
-	std::vector<Button*> sandboxMenu_buttons = sandboxMenu_getButtons(uiSize.y - 120, titleBarHeight, uiOffset, baseFont);
-
-	std::cout << uiSize.y << " " << uiSize.y - 100 << std::endl;
-
-	// initialize the drawingParticle/tool
-	ParticleWorld::DrawingParticle sandbox_drawingParticle;
 	// create the set for the unlocked material buttons, this will store the ids for unlocked buttons
 	std::unordered_set<std::string> sandbox_unlockedMaterialButtons;
 
@@ -89,10 +97,6 @@ int main()
 	sf::Vector2i windowInitialGlobalPos(0, 0);
 	// distribution for min/max shake
 	std::uniform_int_distribution<int> shakeDist(0, 10);
-	sf::Vector2i shakeInitialPos(renderWindow.getPosition().x, renderWindow.getPosition().y);
-
-	// this will be used to create a delay between menu changes
-	int menuTransitionCountdown = 0;
 
 	// global vars that are used by the window
 	bool exitProgram = false;
@@ -101,62 +105,14 @@ int main()
 	bool clickedOnTitlebar = false;
 	bool windowInFocus = true;
 
-	// the current hoveredButtonId in the main window
-	std::string hoveredButtonId = "";
-	//
-
-	// menu_impact sound loader
-	// sound that will play when the menu changes
-	sf::Sound menuChangeSound;
-
-	// read the menu change sounds (menu_impact)
-	const std::string menuChangeSoundPaths[] = {
-		"data\\sounds\\menu_impact\\menu_impact1.ogg",
-		"data\\sounds\\menu_impact\\menu_impact2.ogg",
-		"data\\sounds\\menu_impact\\menu_impact3.ogg",
-		"data\\sounds\\menu_impact\\menu_impact4.ogg",
-		"data\\sounds\\menu_impact\\menu_impact5.ogg",
-		"data\\sounds\\menu_impact\\menu_impact6.ogg",
-		"data\\sounds\\menu_impact\\menu_impact7.ogg"
-	};
-
-	// initialize buffer for menu_impacts
-	std::vector<sf::SoundBuffer> menuChangeSounds;
-
-	// load sounds into the buffer
-	sf::SoundBuffer temp;
-	for (int i = 0; i < 7; i++)
-	{
-		if (!temp.loadFromFile(menuChangeSoundPaths[i]))
-		{
-			// error
-		}
-		menuChangeSounds.push_back(temp);
-	}
-	//
+	ShakeEffect* shakeEffect = new ShakeEffect(renderWindow, particleWorld, renderWindowUserPosition);
 
 	while (renderWindow.isOpen())
 	{
+		shakeEffect->tick();
+
 		// start clock for fps measurer
 		clock_t start = clock();
-
-		int shakeCountdown = particleWorld->getShakeCountdown();
-		if (particleWorld->getShakeCountdown() > 0)
-		{
-			renderWindow.setPosition(
-				sf::Vector2i(
-					shakeInitialPos.x + 10 * shakeDist(gen) * std::sqrt(shakeCountdown) / 10.0f,
-					shakeInitialPos.y + 10 * shakeDist(gen) * std::sqrt(shakeCountdown) / 10.0f
-				)
-			);
-
-			particleWorld->setShakeCountdown(shakeCountdown - 1);
-
-			if (shakeCountdown <= 1)
-			{
-				renderWindow.setPosition(shakeInitialPos);
-			}
-		}
 
 		sf::Event event;
 		while (renderWindow.pollEvent(event))
@@ -181,27 +137,22 @@ int main()
 
 		bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 
-		// handle close button
-		hoveredButtonId = closeButton->handleClick(localMousePos.x, localMousePos.y);
-
-		if (mouseDown && !titleBarPanel->isMouseHover(localMousePos.x, localMousePos.y))
+		if (mouseDown && !titleBarPanel->isMouseHover())
 		{
 			clickedOnTitlebar = false;
 		}
 
-		if (mouseDown)
-		{
-			if (hoveredButtonId == "closeButton")
-			{
-				exitProgram = true;
-			}
-		}
-		else
+		if (!mouseDown)
 		{
 			clickedOnTitlebar = true;
 		}
 
-		if (mouseDown && titleBarPanel->isMouseHover(localMousePos.x, localMousePos.y) && clickedOnTitlebar)
+		if (closeButton->hasMouseClicked())
+		{
+			exitProgram = true;
+		}
+
+		if (mouseDown && titleBarPanel->isMouseHover() && clickedOnTitlebar)
 		{
 			renderWindow.setPosition(
 				sf::Vector2i(
@@ -210,7 +161,7 @@ int main()
 				)
 			);
 
-			shakeInitialPos = renderWindow.getPosition();
+			renderWindowUserPosition = renderWindow.getPosition();
 			// skip particle processing to improve dragging performance
 			continue;
 		}
@@ -222,56 +173,21 @@ int main()
 
 		renderWindow.clear();
 
-		if (menuTransitionCountdown < 1)
+		switch (currentMenu)
 		{
-			switch (currentMenu)
-			{
-			case Menu::Main:
-				currentMenu = mainMenu_run(renderWindow, particleWorld, mainMenu_music, menuChange);
-				if (currentMenu != Menu::Main)
-				{
-					menuChange = true;
-					menuTransitionCountdown = 0;
-				}
-				else
-				{
-					menuChange = false;
-				}
-				break;
-			case Menu::Sandbox:
-				// the hideous mass (enjoy! ^w^)
-				currentMenu = sandboxMenu_run(
-					renderWindow,
-					particleRenderer,
-					particleWorld,
-					sandboxMenu_buttons,
-					sandbox_drawingParticle,
-					localMousePos,
-					uiOffset,
-					sandbox_unlockedMaterialButtons
-				);
-				if (currentMenu != Menu::Sandbox)
-				{
-					menuChange = true;
-					menuTransitionCountdown = 0;
-				}
-				else
-				{
-					menuChange = false;
-				}
-				break;
-			}
-		}
-		else
-		{
-			menuTransitionCountdown--;
+		case MenuType::MAIN_MENU:
+			currentMenu = mainMenu->tick();
+			menuChange = currentMenu != MenuType::MAIN_MENU;
+			break;
+		case MenuType::SANDBOX_MENU:
+			currentMenu = sandboxMenu->tick();
+			menuChange = currentMenu != MenuType::SANDBOX_MENU;
+			break;
 		}
 
 		if (menuChange)
 		{
-			std::uniform_int_distribution<int> menuChangeSoundsDist(0, menuChangeSounds.size() - 1);
-
-			menuChangeSound.setBuffer(menuChangeSounds[menuChangeSoundsDist(gen)]);
+			shakeEffect->setShakeLength(10);
 			//menuChangeSound.play();
 		}
 
@@ -279,44 +195,46 @@ int main()
 		{
 			for (int i = 0; i < simSpeed; ++i)
 			{
-				updateParticleWorld(particleWorld);
+				updateParticleWorld(particleWorld, particleRenderer);
 			}
 		}
 
 		if (windowInFocus)
 		{
+			float translateSpeed = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ? 5.0f : 1.0f;
+
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 			{
-				particleRenderer->translate(ParticleRenderer::Direction::UP);
+				particleRenderer->translate(ParticleRenderer::Direction::UP, translateSpeed);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
-				particleRenderer->translate(ParticleRenderer::Direction::DOWN);
+				particleRenderer->translate(ParticleRenderer::Direction::DOWN, translateSpeed);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
-				particleRenderer->translate(ParticleRenderer::Direction::LEFT);
+				particleRenderer->translate(ParticleRenderer::Direction::LEFT, translateSpeed);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
-				particleRenderer->translate(ParticleRenderer::Direction::RIGHT);
+				particleRenderer->translate(ParticleRenderer::Direction::RIGHT, translateSpeed);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 			{
-				particleRenderer->zoom(0.1f);
+				particleRenderer->zoom(0.1f * translateSpeed);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 			{
-				particleRenderer->zoom(-0.1f);
+				particleRenderer->zoom(-0.1f * translateSpeed);
 			}
 		}
 
 		int particleCount = particleRenderer->render(particleWorld);
 
-		titleBarPanel->draw(renderWindow);
+		titleBarPanel->draw();
 		renderWindow.draw(titleBarText);
 
-		closeButton->draw(renderWindow);
+		closeButton->draw();
 
 		particleCountText.setString("Particles: " + std::to_string(particleCount));
 		renderWindow.draw(particleCountText);
@@ -332,18 +250,14 @@ int main()
 		fpsString = "FPS: " + std::to_string(fps);
 	}
 
-	for (Button* button : sandboxMenu_buttons) {
-		delete button;
-	}
-
-	for (sf::Music* music : mainMenu_music) {
-		delete music;
-	}
+	delete mainMenu;
+	delete sandboxMenu;
 
 	delete titleBarPanel;
 	delete closeButton;
 
 	delete particleWorld;
+	delete particleRenderer;
 
 	return 0;
 }

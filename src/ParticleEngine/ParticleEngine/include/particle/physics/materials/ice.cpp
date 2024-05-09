@@ -5,6 +5,7 @@
 #include "particle/particle_sounds.h"
 
 #include "tools/tools.h"
+#include "tools/random.h"
 
 void calculate_ice(int row, int col, ParticleWorld* particleWorld)
 {
@@ -14,8 +15,7 @@ void calculate_ice(int row, int col, ParticleWorld* particleWorld)
 	ParticleWorld::ParticleInstance self = selfInitial;;
 
 	// define random melt chance
-	std::uniform_int_distribution<int> dist(0, 3);
-	int meltValue = dist(particleWorld->gen);
+	int meltValue = Random::genInt(0, 3);
 
 	if (particleWorld->canDown(row))
 	{

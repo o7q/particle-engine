@@ -27,16 +27,18 @@ public:
 	int render(ParticleWorld*);
 	void zoom(float);
 	float getZoom();
-	void translate(Direction);
+	void translate(Direction, float);
 	sf::Vector2f getTranslate();
 	void setTranslate(sf::Vector2f);
 
 	sf::Vector2u getSize();
 	void setUIOffset(sf::Vector2i);
+	sf::Vector2i getUIOffset();
 
 	sf::Vector2f windowToRenderCoordinates(sf::Vector2f);
 	sf::Vector2f renderToWorldCoordinates(sf::Vector2f);
-	sf::Vector2f mouseToWorldCoordinates(sf::Vector2i);
+	sf::Vector2f windowToWorldCoordinates(sf::Vector2i);
+	sf::Vector2f staticWorldToWorldCoordinates(sf::Vector2i);
 
 private:
 	sf::Vector2u size;

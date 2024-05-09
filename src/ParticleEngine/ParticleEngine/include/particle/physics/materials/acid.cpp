@@ -5,6 +5,7 @@
 #include "particle/particle_sounds.h"
 
 #include "tools/tools.h"
+#include "tools/random.h"
 
 void calculate_acid(int row, int col, ParticleWorld* particleWorld)
 {
@@ -27,8 +28,7 @@ void calculate_acid(int row, int col, ParticleWorld* particleWorld)
 		}
 	}
 
-	std::uniform_int_distribution<int> eatDist(0, 25);
-	int eatChance = eatDist(particleWorld->gen);
+	int eatChance = Random::genInt(0, 25);
 
 	ParticleWorld::ParticleInstance acidSmoke;
 	acidSmoke.material = ParticleWorld::Material::AcidGas;

@@ -7,6 +7,9 @@
 
 #include "particle/particle_sounds.h"
 
+#include "tools/random.h"
+#include "tools/logger.h"
+
 std::vector<sf::SoundBuffer> SoundEngine::liquidDripSounds;
 std::vector<sf::SoundBuffer> SoundEngine::bubbleSounds;
 std::vector<sf::SoundBuffer> SoundEngine::sizzleSounds;
@@ -16,9 +19,6 @@ std::vector<sf::SoundBuffer> SoundEngine::dynamiteExplosionSounds;
 std::vector<sf::SoundBuffer> SoundEngine::nukeExplosionSounds;
 
 std::vector<sf::Sound> SoundEngine::globalSounds;
-
-std::random_device SoundEngine::rd;
-std::mt19937 SoundEngine::gen(SoundEngine::rd());
 
 std::unordered_map<SoundEngine::SoundType, std::chrono::steady_clock::time_point> SoundEngine::lastPlayedTime;
 std::chrono::milliseconds SoundEngine::minInterval(50);
@@ -38,7 +38,7 @@ void SoundEngine::init()
 	{
 		if (!temp.loadFromFile(liquidDripSoundPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load liquidDripSounds!");
 		}
 		liquidDripSounds.push_back(temp);
 	}
@@ -54,7 +54,7 @@ void SoundEngine::init()
 	{
 		if (!temp.loadFromFile(bubbleSoundPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load bubbleSounds!");
 		}
 		bubbleSounds.push_back(temp);
 	}
@@ -69,7 +69,7 @@ void SoundEngine::init()
 	{
 		if (!temp.loadFromFile(sizzleSoundPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load sizzleSounds!");
 		}
 		sizzleSounds.push_back(temp);
 	}
@@ -84,7 +84,7 @@ void SoundEngine::init()
 	{
 		if (!temp.loadFromFile(fireSoundPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load fireSounds!");
 		}
 		fireSounds.push_back(temp);
 	}
@@ -102,7 +102,7 @@ void SoundEngine::init()
 	{
 		if (!temp.loadFromFile(menuImpactSoundPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load menuImpactSounds!");
 		}
 		menuImpactSounds.push_back(temp);
 	}
@@ -115,7 +115,7 @@ void SoundEngine::init()
 	{
 		if (!temp.loadFromFile(dynamiteSoundPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load dynamiteSounds!");
 		}
 		dynamiteExplosionSounds.push_back(temp);
 	}
@@ -128,7 +128,7 @@ void SoundEngine::init()
 	{
 		if (!temp.loadFromFile(nukeSoundPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load nukeSounds!");
 		}
 		nukeExplosionSounds.push_back(temp);
 	}
@@ -151,10 +151,8 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 	case SoundType::LiquidDrip:
 		if (!liquidDripSounds.empty())
 		{
-			std::uniform_int_distribution<int> randomLiquidDrip(0, liquidDripSounds.size() - 1);
-			std::uniform_int_distribution<int> randomLiquidDripPitch(80, 100);
 			sf::Sound sound;
-			configureSound(sound, liquidDripSounds[randomLiquidDrip(gen)], sf::Vector3f(location, 0.f, 1.f), randomLiquidDripPitch(gen));
+			configureSound(sound, liquidDripSounds[Random::genInt(0, liquidDripSounds.size() - 1)], sf::Vector3f(location, 0.f, 1.f), Random::genInt(80, 100));
 			globalSounds.push_back(sound);
 			globalSounds.back().play();
 			lastPlayedTime[soundType] = now;
@@ -163,10 +161,8 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 	case SoundType::Bubble:
 		if (!bubbleSounds.empty())
 		{
-			std::uniform_int_distribution<int> randomBubble(0, bubbleSounds.size() - 1);
-			std::uniform_int_distribution<int> randomBubblePitch(80, 100);
 			sf::Sound sound;
-			configureSound(sound, bubbleSounds[randomBubble(gen)], sf::Vector3f(location, 0.f, 1.f), randomBubblePitch(gen));
+			configureSound(sound, bubbleSounds[Random::genInt(0, bubbleSounds.size() - 1)], sf::Vector3f(location, 0.f, 1.f), Random::genInt(80, 100));
 			globalSounds.push_back(sound);
 			globalSounds.back().play();
 			lastPlayedTime[soundType] = now;
@@ -175,10 +171,8 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 	case SoundType::Sizzle:
 		if (!sizzleSounds.empty())
 		{
-			std::uniform_int_distribution<int> randomSizzle(0, sizzleSounds.size() - 1);
-			std::uniform_int_distribution<int> randomSizzlePitch(80, 100);
 			sf::Sound sound;
-			configureSound(sound, sizzleSounds[randomSizzle(gen)], sf::Vector3f(location, 0.f, 1.f), randomSizzlePitch(gen));
+			configureSound(sound, sizzleSounds[Random::genInt(0, sizzleSounds.size() - 1)], sf::Vector3f(location, 0.f, 1.f), Random::genInt(80, 100));
 			globalSounds.push_back(sound);
 			globalSounds.back().play();
 			lastPlayedTime[soundType] = now;
@@ -187,10 +181,8 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 	case SoundType::Fire:
 		if (!fireSounds.empty())
 		{
-			std::uniform_int_distribution<int> randomFire(0, fireSounds.size() - 1);
-			std::uniform_int_distribution<int> randomFirePitch(80, 100);
 			sf::Sound sound;
-			configureSound(sound, fireSounds[randomFire(gen)], sf::Vector3f(location, 0.f, 1.f), randomFirePitch(gen));
+			configureSound(sound, fireSounds[Random::genInt(0, fireSounds.size() - 1)], sf::Vector3f(location, 0.f, 1.f), Random::genInt(80, 100));
 			globalSounds.push_back(sound);
 			globalSounds.back().play();
 			lastPlayedTime[soundType] = now;
@@ -199,10 +191,8 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 	case SoundType::MenuImpact:
 		if (!menuImpactSounds.empty())
 		{
-			std::uniform_int_distribution<int> randomMenuImpact(0, menuImpactSounds.size() - 1);
-			std::uniform_int_distribution<int> randomMenuImpactPitch(80, 100);
 			sf::Sound sound;
-			configureSound(sound, menuImpactSounds[randomMenuImpact(gen)], sf::Vector3f(0.f, 0.f, 0.f), randomMenuImpactPitch(gen));
+			configureSound(sound, menuImpactSounds[Random::genInt(0, menuImpactSounds.size() - 1)], sf::Vector3f(0.f, 0.f, 0.f), Random::genInt(80, 100));
 			globalSounds.push_back(sound);
 			globalSounds.back().play();
 			lastPlayedTime[soundType] = now;
@@ -211,10 +201,8 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 	case SoundType::DynamiteExplosion:
 		if (!dynamiteExplosionSounds.empty())
 		{
-			std::uniform_int_distribution<int> randomDynamiteExplosion(0, dynamiteExplosionSounds.size() - 1);
-			std::uniform_int_distribution<int> randomDynamiteExplosionPitch(80, 100);
 			sf::Sound sound;
-			configureSound(sound, dynamiteExplosionSounds[randomDynamiteExplosion(gen)], sf::Vector3f(location, 0.f, 1.f), randomDynamiteExplosionPitch(gen));
+			configureSound(sound, dynamiteExplosionSounds[Random::genInt(0, dynamiteExplosionSounds.size() - 1)], sf::Vector3f(location, 0.f, 1.f), Random::genInt(80, 100));
 			globalSounds.push_back(sound);
 			globalSounds.back().play();
 			lastPlayedTime[soundType] = now;
@@ -223,10 +211,8 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 	case SoundType::NukeExplosion:
 		if (!nukeExplosionSounds.empty())
 		{
-			std::uniform_int_distribution<int> randomNukeExplosion(0, nukeExplosionSounds.size() - 1);
-			std::uniform_int_distribution<int> randomNukeExplosionPitch(80, 100);
 			sf::Sound sound;
-			configureSound(sound, nukeExplosionSounds[randomNukeExplosion(gen)], sf::Vector3f(0.f, 0.f, 1.f), randomNukeExplosionPitch(gen));
+			configureSound(sound, nukeExplosionSounds[Random::genInt(0, nukeExplosionSounds.size() - 1)], sf::Vector3f(0.f, 0.f, 1.f), Random::genInt(80, 100));
 			globalSounds.push_back(sound);
 			globalSounds.back().play();
 			lastPlayedTime[soundType] = now;
@@ -249,7 +235,7 @@ void SoundEngine::configureSound(sf::Sound& sound, sf::SoundBuffer& soundBuffer,
 
 void SoundEngine::purgeSounds()
 {
-	std::cout << "Purging sounds (" << globalSounds.size() << ")" << std::endl;
+	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Purging sounds (" + std::to_string(globalSounds.size()) + ")");
 
 	// remove sounds that have finished playing
 	globalSounds.erase(std::remove_if(globalSounds.begin(), globalSounds.end(),

@@ -5,6 +5,7 @@
 #include "particle/particle_sounds.h"
 
 #include "tools/tools.h"
+#include "tools/random.h"
 
 void calculate_nuke(int row, int col, ParticleWorld* particleWorld)
 {
@@ -55,24 +56,24 @@ void calculate_nuke(int row, int col, ParticleWorld* particleWorld)
 		}
 	}
 
-	std::uniform_int_distribution<int> explosionChanceDist(0, 50);
-	if (explode && explosionChanceDist(particleWorld->gen) == 0)
+	// 50, chance to explode from ignition
+	if (explode && Random::genInt(0, 50) == 0)
 	{
 		ParticleWorld::ParticleInstance smokeExplosion;
 		smokeExplosion.material = ParticleWorld::Material::Smoke;
 		smokeExplosion.materialType = ParticleWorld::MaterialType::Gas;
 		smokeExplosion.physicsType = ParticleWorld::PhysicsType::Smoke;
 
-		std::uniform_int_distribution<int> nukeMushroomCloudDist(0, 1);
-		particleWorld->imageToParticles(row - 100, col, particleWorld->nukeMushroomCloudPatterns[nukeMushroomCloudDist(particleWorld->gen)], smokeExplosion, false);
+		int randNukeMushroomCloud = Random::genInt(0, particleWorld->nukeMushroomCloudPatterns.size() - 1);
+		particleWorld->imageToParticles(row - 100, col, particleWorld->nukeMushroomCloudPatterns[randNukeMushroomCloud], smokeExplosion, false);
 
 		ParticleWorld::ParticleInstance nukeExplosion;
 		nukeExplosion.material = ParticleWorld::Material::Fire;
 		nukeExplosion.materialType = ParticleWorld::MaterialType::Liquid;
 		nukeExplosion.physicsType = ParticleWorld::PhysicsType::Fire;
 
-		std::uniform_int_distribution<int> nukeExplosionPatternDist(0, 2);
-		particleWorld->imageToParticles(row, col, particleWorld->nukeExplosionPatterns[nukeExplosionPatternDist(particleWorld->gen)], nukeExplosion, false);
+		int randNukeExplosion = Random::genInt(0, particleWorld->nukeExplosionPatterns.size() - 1);
+		particleWorld->imageToParticles(row, col, particleWorld->nukeExplosionPatterns[randNukeExplosion], nukeExplosion, false);
 
 
 		SoundEngine::playSound(SoundEngine::SoundType::NukeExplosion, col, particleWorld->getColSize());

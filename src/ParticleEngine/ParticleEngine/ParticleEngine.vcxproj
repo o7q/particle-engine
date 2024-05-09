@@ -19,11 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="include\effects\effector.cpp" />
+    <ClCompile Include="include\effects\shake.cpp" />
     <ClCompile Include="include\init\text.cpp" />
-    <ClCompile Include="include\menus\main_menu_intro\controls\main_menu_music.cpp" />
-    <ClCompile Include="include\menus\main_menu_intro\main_menu.cpp" />
-    <ClCompile Include="include\menus\sandbox\controls\sandbox_menu_buttons.cpp" />
-    <ClCompile Include="include\menus\sandbox\sandbox_menu.cpp" />
+    <ClCompile Include="include\menu\controls\button.cpp" />
+    <ClCompile Include="include\menu\menu.cpp" />
+    <ClCompile Include="include\menu\menus\menu_main.cpp" />
+    <ClCompile Include="include\menu\menus\menu_sandbox.cpp" />
     <ClCompile Include="include\particle\particle_world\particle_world.cpp" />
     <ClCompile Include="include\particle\particle_world\tools\bounds.cpp" />
     <ClCompile Include="include\particle\particle_world\tools\image.cpp" />
@@ -44,9 +46,10 @@
     <ClCompile Include="include\particle\sounds\particle_sounds.cpp" />
     <ClCompile Include="include\tools\arrays.cpp" />
     <ClCompile Include="include\tools\color.cpp" />
-    <ClCompile Include="include\tools\menu\button.cpp" />
+    <ClCompile Include="include\tools\logger.cpp" />
     <ClCompile Include="include\tools\num2d\double2d.cpp" />
     <ClCompile Include="include\tools\num2d\int2d.cpp" />
+    <ClCompile Include="include\tools\random.cpp" />
     <ClCompile Include="include\world\generators\ocean\ocean.cpp" />
     <ClCompile Include="include\world\generators\ocean\ocean_objects.cpp" />
     <ClCompile Include="include\world\generators\swamp\swamp.cpp" />
@@ -57,14 +60,17 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="headers\effects\effects.h" />
     <ClInclude Include="headers\init.h" />
-    <ClInclude Include="headers\menus\menus.h" />
+    <ClInclude Include="headers\menu\controls\button.h" />
+    <ClInclude Include="headers\menu\menu.h" />
     <ClInclude Include="headers\particle\particle_physics.h" />
     <ClInclude Include="headers\particle\particle_renderer.h" />
     <ClInclude Include="headers\particle\particle_sounds.h" />
     <ClInclude Include="headers\particle\particle_world.h" />
-    <ClInclude Include="headers\tools\menu\button.h" />
+    <ClInclude Include="headers\tools\logger.h" />
     <ClInclude Include="headers\tools\num2d.h" />
+    <ClInclude Include="headers\tools\random.h" />
     <ClInclude Include="headers\tools\tools.h" />
     <ClInclude Include="headers\world\world_generator.h" />
   </ItemGroup>

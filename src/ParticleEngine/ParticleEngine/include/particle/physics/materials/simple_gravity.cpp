@@ -5,6 +5,7 @@
 #include "particle/particle_sounds.h"
 
 #include "tools/tools.h"
+#include "tools/random.h"
 
 void calculate_simpleGravity(int row, int col, ParticleWorld* particleWorld)
 {

@@ -5,12 +5,12 @@
 #include "particle/particle_sounds.h"
 
 #include "tools/tools.h"
+#include "tools/random.h"
 
 void calculate_fire(int row, int col, ParticleWorld* particleWorld)
 {
 	// define randomBurnout value (0, 2), 2 means higher chance to burnout
-	std::uniform_int_distribution<int> dist(0, 2);
-	int randomBurnout = dist(particleWorld->gen);
+	int randomBurnout = Random::genInt(0, 2);
 
 	particleWorld->particles[get1DIndex(row, col, particleWorld->getColSize())].intValue += randomBurnout;
 	if (particleWorld->getParticle(row, col).intValue > 200)

@@ -4,6 +4,7 @@
 #include "particle/particle_renderer.h"
 
 #include "tools/tools.h"
+#include "tools/random.h"
 
 ParticleRenderer::ParticleRenderer(sf::Vector2u size, sf::RenderWindow& renderWindow) : renderWindow(renderWindow)
 {
@@ -22,6 +23,11 @@ void ParticleRenderer::setUIOffset(sf::Vector2i uiOffset)
 	this->uiOffset = uiOffset;
 }
 
+sf::Vector2i ParticleRenderer::getUIOffset()
+{
+	return uiOffset;
+}
+
 float ParticleRenderer::getZoom()
 {
 	return this->zoomLevel;
@@ -32,21 +38,21 @@ sf::Vector2u ParticleRenderer::getSize()
 	return this->size;
 }
 
-void ParticleRenderer::translate(Direction direction)
+void ParticleRenderer::translate(Direction direction, float speed)
 {
 	switch (direction)
 	{
 	case Direction::UP:
-		position.y -= 5.0f / this->zoomLevel;
+		position.y -= (5.0f / this->zoomLevel) * speed;
 		break;
 	case Direction::DOWN:
-		position.y += 5.0f / this->zoomLevel;
+		position.y += (5.0f / this->zoomLevel) * speed;
 		break;
 	case Direction::RIGHT:
-		position.x += 5.0f / this->zoomLevel;
+		position.x += (5.0f / this->zoomLevel) * speed;
 		break;
 	case Direction::LEFT:
-		position.x -= 5.0f / this->zoomLevel;
+		position.x -= (5.0f / this->zoomLevel) * speed;
 		break;
 	}
 }
@@ -228,8 +234,7 @@ int ParticleRenderer::render(ParticleWorld* particleWorld)
 					break;
 				}
 				case ParticleWorld::Material::Fire: {
-					std::uniform_int_distribution<int> dist(0, 2);
-					double fireFlicker = dist(particleWorld->gen) / 2.0;
+					double fireFlicker = Random::genDouble(0.0, 1.0);
 					pixelColor.r = 255;
 					pixelColor.g = static_cast<sf::Uint8>(191 * fireFlicker);
 					pixelColor.b = 0;
@@ -359,19 +364,33 @@ sf::Vector2f ParticleRenderer::renderToWorldCoordinates(sf::Vector2f renderCoord
 	return renderCoords * zoomLevel + offset;
 }
 
-sf::Vector2f ParticleRenderer::mouseToWorldCoordinates(sf::Vector2i mouseCoords)
+sf::Vector2f ParticleRenderer::windowToWorldCoordinates(sf::Vector2i windowCoords)
 {
-	sf::Vector2f mouseCoordsF = (sf::Vector2f)mouseCoords;
+	sf::Vector2f windowCoordsF = (sf::Vector2f)windowCoords;
 	sf::Vector2f uiOffsetF = (sf::Vector2f)uiOffset;
 	sf::Vector2f sizeF = (sf::Vector2f)size;
-	// sf::Vector2f offset = sf::Vector2f(uiOffset.x + size.x / 2, uiOffset.y + size.y / 2);
 	
-	auto coords = mouseCoordsF;
-	coords -= uiOffsetF;
-	coords -= sizeF / 2.f;
-	coords /= zoomLevel;
-	coords += sizeF / 2.f;
-	coords += position;
+	sf::Vector2f worldCoords = windowCoordsF;
+	worldCoords -= uiOffsetF;
+	worldCoords -= sizeF / 2.f;
+	worldCoords /= zoomLevel;
+	worldCoords += sizeF / 2.f;
+	worldCoords += position;
 	
-	return coords;
+	return worldCoords;
+}
+
+sf::Vector2f ParticleRenderer::staticWorldToWorldCoordinates(sf::Vector2i particleCoords)
+{
+	sf::Vector2f particleCoordsF = (sf::Vector2f)particleCoords;
+	sf::Vector2f uiOffsetF = (sf::Vector2f)uiOffset;
+	sf::Vector2f sizeF = (sf::Vector2f)size;
+
+	sf::Vector2f worldCoords = particleCoordsF * zoomLevel;
+	worldCoords -= sizeF / 2.f;
+	worldCoords /= zoomLevel;
+	worldCoords += sizeF / 2.f;
+	worldCoords += position;
+
+	return worldCoords;
 }

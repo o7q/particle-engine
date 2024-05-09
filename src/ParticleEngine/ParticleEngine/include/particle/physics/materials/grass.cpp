@@ -5,6 +5,7 @@
 #include "particle/particle_sounds.h"
 
 #include "tools/tools.h"
+#include "tools/random.h"
 
 void calculate_grass(int row, int col, ParticleWorld* particleWorld)
 {
@@ -13,9 +14,8 @@ void calculate_grass(int row, int col, ParticleWorld* particleWorld)
 	const ParticleWorld::ParticleInstance selfInitial = particleWorld->getParticle(row, col);
 	ParticleWorld::ParticleInstance self = selfInitial;
 
-	// generate random int for growing chance of floweres
-	std::uniform_int_distribution<int> dist(0, 10000000);
-	int growFlowerChance = dist(particleWorld->gen);
+	// generate random int for growing chance of flowers
+	int growFlowerChance = Random::genInt(0, 10000000);
 
 	if (particleWorld->canUp(row))
 	{

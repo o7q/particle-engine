@@ -5,25 +5,27 @@
 #include "particle/particle_world.h"
 
 #include "tools/num2d.h"
+#include "tools/random.h"
+
+#include "tools/logger.h"
 
 void generateOcean(ParticleWorld* particleWorld)
 {
-	// random number gen
-	std::random_device rd;
-	std::mt19937 gen(rd());
-
 	int rowSize = particleWorld->getRowSize();
 	int colSize = particleWorld->getColSize();
 
 	// LAYER 1
+	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 1 noise");
 	Double2D* layer1_kernel = generate2DKernel(15, 15, 0.005);
 	Int2D* layer1_convolutedWorld = generateNoiseBase(rowSize, colSize, layer1_kernel, 0, 255);
 
+	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 1 noise (convolution)");
 	int layer1_groundHeightKernelSize = 10;
 	double* layer1_groundHeightsKernel = generate1DKernel(layer1_groundHeightKernelSize, 0.05);
 
 	// 1.575f is derived from 315/200 (315 is the height of pixelSize 2, 200 is what the height value should be for pixelSize 2, doing this division guarentees no invalid numbers are generated)
 	// 3.15f is derived from 315/100 (same applies for this, but instead its for topOffset)
+	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 1 ground layer");
 	int* layer1_convolutedGroundHeights = generateGroundLayer(rowSize, colSize, rowSize / 1.575f, rowSize, rowSize / 3.15f, layer1_groundHeightsKernel, layer1_groundHeightKernelSize);
 
 	for (int col = 0; col < colSize; ++col)
@@ -48,9 +50,7 @@ void generateOcean(ParticleWorld* particleWorld)
 
 	std::vector<sf::Image> ocean_objects = ocean_getObjects();
 
-	// random dist for brightness
-	std::uniform_int_distribution<int> colorPatternDist(9, 10);
-
+	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Painting world");
 	for (int row = 0; row < rowSize; ++row)
 	{
 		for (int col = 0; col < colSize; ++col)
@@ -87,12 +87,13 @@ void generateOcean(ParticleWorld* particleWorld)
 				temp.physicsType = ParticleWorld::PhysicsType::NoGravity;
 				break;
 			}
-			temp.brightnessMultiplier = colorPatternDist(gen) / 10.f;
+			temp.brightnessMultiplier = Random::genDouble(0.9, 1.0);
 			particleWorld->setParticle(row, col, temp);
 		}
 	}
 
 	// place random seaweed
+	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Populating world (foliage)");
 	ParticleWorld::ParticleInstance seaweedMaterial;
 	seaweedMaterial.material = ParticleWorld::Material::Grass;
 	seaweedMaterial.materialType = ParticleWorld::MaterialType::Solid;
@@ -101,10 +102,9 @@ void generateOcean(ParticleWorld* particleWorld)
 	{
 		std::uniform_int_distribution<int> genChance(0, 1);
 
-		if (genChance(gen) == 0 && particleWorld->getParticle(layer1_convolutedGroundHeights[i] - 1, i).materialType != ParticleWorld::MaterialType::Gas)
+		if (Random::genInt(0, 1) == 0 && particleWorld->getParticle(layer1_convolutedGroundHeights[i] - 1, i).materialType != ParticleWorld::MaterialType::Gas)
 		{
-			std::uniform_int_distribution<int> randweed(0, ocean_objects.size() - 1);
-			sf::Image randimage(ocean_objects[randweed(gen)]);
+			sf::Image randimage(ocean_objects[Random::genInt(0, ocean_objects.size() - 1)]);
 			particleWorld->imageToParticles(layer1_convolutedGroundHeights[i] - randimage.getSize().y, i, randimage, seaweedMaterial, true);
 		}
 	}
@@ -113,4 +113,6 @@ void generateOcean(ParticleWorld* particleWorld)
 	delete layer1_convolutedWorld;
 	delete[] layer1_groundHeightsKernel;
 	delete[] layer1_convolutedGroundHeights;
+
+	Logger::log(Logger::LogType::SUCCESS, __func__, __LINE__, "Ocean generation finished!");
 }

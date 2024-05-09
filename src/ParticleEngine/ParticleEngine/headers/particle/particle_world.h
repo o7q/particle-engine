@@ -95,9 +95,6 @@ public:
 
 	ParticleInstance* particles;
 
-	static std::random_device rd;
-	static std::mt19937 gen;
-
 	ParticleWorld(int, int);
 	~ParticleWorld();
 

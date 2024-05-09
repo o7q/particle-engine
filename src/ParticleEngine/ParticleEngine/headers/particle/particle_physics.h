@@ -4,8 +4,9 @@
 #define PARTICLE_PHYSICS_H
 
 #include "particle/particle_world.h"
+#include "particle/particle_renderer.h"
 
-void updateParticleWorld(ParticleWorld*);
+void updateParticleWorld(ParticleWorld*, ParticleRenderer*);
 void updateParticle(ParticleWorld*, int, int);
 
 void calculate_sand(int, int, ParticleWorld*);

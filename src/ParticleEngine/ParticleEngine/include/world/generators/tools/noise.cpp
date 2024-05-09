@@ -3,16 +3,10 @@
 #include "world/world_generator.h"
 
 #include "tools/num2d.h"
+#include "tools/random.h"
 
 Int2D* generateNoiseBase(int rowSize, int colSize, Double2D* kernel, int minBrightness, int maxBrightness)
 {
-	// random number gen
-	std::random_device rd;
-	std::mt19937 gen(rd());
-
-	// random height value (0 - 255 because it will be used as a color)
-	std::uniform_int_distribution<int> dist(0, 255);
-
 	Int2D* noisyWorld = new Int2D(rowSize, colSize);
 	Int2D* convolutedWorld = new Int2D(rowSize, colSize);
 
@@ -20,7 +14,8 @@ Int2D* generateNoiseBase(int rowSize, int colSize, Double2D* kernel, int minBrig
 	{
 		for (int col = 0; col < colSize; ++col)
 		{
-			noisyWorld->set(row, col, dist(gen));
+			// random height value (0 - 255 because it will be used as a color)
+			noisyWorld->set(row, col, Random::genInt(0, 255));
 		}
 	}
 
@@ -60,18 +55,13 @@ Int2D* generateNoiseBase(int rowSize, int colSize, Double2D* kernel, int minBrig
 
 int* generateGroundLayer(int rowSize, int colSize, int noisyCutStartMin, int noisyCutEndMax, int topOffset, double* kernel, int kernelSize)
 {
-	// random number gen
-	std::random_device rd;
-	std::mt19937 gen(rd());
-
 	int* groundHeights = new int[colSize];
 	int* convolutedGroundHeights = new int[colSize];
 
-	// create range for ground heights
-	std::uniform_int_distribution<int> groundHeightRange(noisyCutStartMin, noisyCutEndMax);
 	for (int col = 0; col < colSize; ++col)
 	{
-		groundHeights[col] = groundHeightRange(gen);
+		// create range for ground heights
+		groundHeights[col] = Random::genInt(noisyCutStartMin, noisyCutEndMax);
 	}
 
 	for (int col = 0; col < colSize; ++col)

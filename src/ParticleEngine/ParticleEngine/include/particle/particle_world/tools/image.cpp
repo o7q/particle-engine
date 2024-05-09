@@ -1,9 +1,9 @@
 #include "particle/particle_world.h"
 
+#include "tools/random.h"
+
 void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::ParticleInstance particleInstance, ParticleWorld::Shape shape)
 {
-	std::uniform_int_distribution<int> dist(9, 10);
-
 	switch (shape)
 	{
 	case ParticleWorld::Shape::Square:
@@ -28,7 +28,7 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 					colSize - 1
 				);
 
-				particleInstance.brightnessMultiplier = dist(gen) / 10.f;
+				particleInstance.brightnessMultiplier = Random::genDouble(0.9, 1.0);
 				particleInstance.wetnessMultiplier = 1.0f;
 				particleInstance.intValue = 0;
 
@@ -57,7 +57,7 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 						colSize - 1
 					);
 
-					particleInstance.brightnessMultiplier = dist(gen) / 10.f;
+					particleInstance.brightnessMultiplier = Random::genDouble(0.9, 1.0);
 					particleInstance.wetnessMultiplier = 1.0f;
 					particleInstance.intValue = 0;
 

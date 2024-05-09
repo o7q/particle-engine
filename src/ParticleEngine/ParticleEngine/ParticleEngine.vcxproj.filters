@@ -25,32 +25,14 @@
     <Filter Include="Header Files\tools">
       <UniqueIdentifier>{e323ee75-c0c9-4fb3-ba47-7579ce110ac6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\tools\menu">
-      <UniqueIdentifier>{9681d9f1-9cc5-4506-9aab-2a2a16767950}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\particle">
       <UniqueIdentifier>{8a748ae8-16d6-4d98-b24f-f0fdc30d03de}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\tools">
       <UniqueIdentifier>{76cded1f-d1a4-4473-bae5-0383a532a617}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\tools\menu">
-      <UniqueIdentifier>{909037a4-5c33-4ec8-8c33-c3c6242a7d46}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\particle\physics\materials">
       <UniqueIdentifier>{e2695efc-5fb7-4bf1-9162-0971d50aba7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\menus">
-      <UniqueIdentifier>{b56db570-f5fb-4c1f-8ee9-db66ef4454f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\menus">
-      <UniqueIdentifier>{1a7d5b5f-b4c2-4fdf-9ce6-c33bc5eba333}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\menus\sandbox_menu">
-      <UniqueIdentifier>{c1324fb8-fa06-4523-b51a-192bab4ac742}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\menus\sandbox_menu\controls">
-      <UniqueIdentifier>{070db78e-dad7-40dc-aa8e-607521cdac46}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\world">
       <UniqueIdentifier>{2a1dcd14-146a-4444-8770-5af06902d0f3}</UniqueIdentifier>
@@ -63,12 +45,6 @@
     </Filter>
     <Filter Include="Source Files\tools\num2d">
       <UniqueIdentifier>{be7fdbfe-c9b2-4a7c-8bb5-327c4d95c212}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\menus\main_menu">
-      <UniqueIdentifier>{40a84606-c4e8-4a86-a15e-07bd4e03f4cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\menus\main_menu\controls">
-      <UniqueIdentifier>{1112c4a0-6eb3-43da-b176-7e964e59a4d4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\particle\sounds">
       <UniqueIdentifier>{ab113409-04bf-42e4-a7d5-5041b1c6102c}</UniqueIdentifier>
@@ -90,6 +66,30 @@
     </Filter>
     <Filter Include="Source Files\init">
       <UniqueIdentifier>{aaa26297-4d50-4dc8-865f-0b37faba5396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\menu">
+      <UniqueIdentifier>{1a7d5b5f-b4c2-4fdf-9ce6-c33bc5eba333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menu">
+      <UniqueIdentifier>{909037a4-5c33-4ec8-8c33-c3c6242a7d46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menu\controls">
+      <UniqueIdentifier>{a16aeeb2-9ede-49b9-976a-35a554b97f12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\menu\controls">
+      <UniqueIdentifier>{bdb9ebca-9be8-40bb-9aa8-b2c64738ad41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menu\menus">
+      <UniqueIdentifier>{624ec143-4f0c-42a7-9a1c-37ac831640fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\menu\controls\button">
+      <UniqueIdentifier>{488de7b1-47fd-4ca9-b0f8-f37c71fa50e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\effects">
+      <UniqueIdentifier>{49e9b2ab-74df-42c4-aa87-751a1203058c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\effects">
+      <UniqueIdentifier>{7293ce84-a73d-4e36-90dd-533ee3a64ae8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -126,20 +126,8 @@
     <ClCompile Include="include\particle\physics\materials\fire.cpp">
       <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
-    <ClCompile Include="include\tools\menu\button.cpp">
-      <Filter>Source Files\tools\menu</Filter>
-    </ClCompile>
     <ClCompile Include="include\tools\arrays.cpp">
       <Filter>Source Files\tools</Filter>
-    </ClCompile>
-    <ClCompile Include="include\menus\main_menu_intro\main_menu.cpp">
-      <Filter>Source Files\menus\main_menu</Filter>
-    </ClCompile>
-    <ClCompile Include="include\menus\main_menu_intro\controls\main_menu_music.cpp">
-      <Filter>Source Files\menus\main_menu\controls</Filter>
-    </ClCompile>
-    <ClCompile Include="include\menus\sandbox\sandbox_menu.cpp">
-      <Filter>Source Files\menus\sandbox_menu</Filter>
     </ClCompile>
     <ClCompile Include="include\world\world_generator.cpp">
       <Filter>Source Files\world</Filter>
@@ -195,17 +183,35 @@
     <ClCompile Include="include\init\text.cpp">
       <Filter>Source Files\init</Filter>
     </ClCompile>
-    <ClCompile Include="include\menus\sandbox\controls\sandbox_menu_buttons.cpp">
-      <Filter>Source Files\menus\sandbox_menu\controls</Filter>
-    </ClCompile>
     <ClCompile Include="include\particle\particle_world\tools\image.cpp">
       <Filter>Source Files\particle\particle_world\tools</Filter>
     </ClCompile>
+    <ClCompile Include="include\menu\controls\button.cpp">
+      <Filter>Source Files\menu\controls\button</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tools\random.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="include\effects\effector.cpp">
+      <Filter>Source Files\effects</Filter>
+    </ClCompile>
+    <ClCompile Include="include\effects\shake.cpp">
+      <Filter>Source Files\effects</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tools\logger.cpp">
+      <Filter>Source Files\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="include\menu\menu.cpp">
+      <Filter>Source Files\menu</Filter>
+    </ClCompile>
+    <ClCompile Include="include\menu\menus\menu_main.cpp">
+      <Filter>Source Files\menu\menus</Filter>
+    </ClCompile>
+    <ClCompile Include="include\menu\menus\menu_sandbox.cpp">
+      <Filter>Source Files\menu\menus</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\tools\menu\button.h">
-      <Filter>Header Files\tools\menu</Filter>
-    </ClInclude>
     <ClInclude Include="headers\tools\tools.h">
       <Filter>Header Files\tools</Filter>
     </ClInclude>
@@ -218,9 +224,6 @@
     <ClInclude Include="headers\particle\particle_world.h">
       <Filter>Header Files\particle</Filter>
     </ClInclude>
-    <ClInclude Include="headers\menus\menus.h">
-      <Filter>Header Files\menus</Filter>
-    </ClInclude>
     <ClInclude Include="headers\world\world_generator.h">
       <Filter>Header Files\world</Filter>
     </ClInclude>
@@ -232,6 +235,21 @@
     </ClInclude>
     <ClInclude Include="headers\init.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\menu\menu.h">
+      <Filter>Header Files\menu</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\menu\controls\button.h">
+      <Filter>Header Files\menu\controls</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\tools\random.h">
+      <Filter>Header Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\tools\logger.h">
+      <Filter>Header Files\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\effects\effects.h">
+      <Filter>Header Files\effects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

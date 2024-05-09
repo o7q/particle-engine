@@ -5,6 +5,7 @@
 #include "particle/particle_sounds.h"
 
 #include "tools/tools.h"
+#include "tools/random.h"
 
 void calculate_smoke(int row, int col, ParticleWorld* particleWorld)
 {
@@ -14,8 +15,7 @@ void calculate_smoke(int row, int col, ParticleWorld* particleWorld)
 	ParticleWorld::ParticleInstance self = selfInitial;
 
 	// define distribution for randomJitter, randomJitter is used to add randomness to unstable materials, such as: gas
-	std::uniform_int_distribution<int> randomJitterDist(0, 1);
-	int randomJitter = randomJitterDist(particleWorld->gen);
+	int randomJitter = Random::genInt(0, 1);
 
 	if (particleWorld->canUp(row))
 	{

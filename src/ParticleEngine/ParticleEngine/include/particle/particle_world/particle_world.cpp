@@ -5,11 +5,7 @@
 
 #include "particle/particle_world.h"
 #include "tools/tools.h"
-
-// configure Mersenne Twister pseudo-random number generator
-std::random_device ParticleWorld::rd;
-std::mt19937 ParticleWorld::gen(ParticleWorld::rd());
-//
+#include "tools/logger.h"
 
 ParticleWorld::ParticleWorld(int rowSize, int colSize)
 {
@@ -45,7 +41,7 @@ ParticleWorld::ParticleWorld(int rowSize, int colSize)
 	{
 		if (!temp.loadFromFile(explosionPatternPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load explosionPatterns!");
 		}
 		explosionPatterns.push_back(temp);
 	}
@@ -59,7 +55,7 @@ ParticleWorld::ParticleWorld(int rowSize, int colSize)
 	{
 		if (!temp.loadFromFile(nukeExplosionPatternPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load nukeExplosionPatterns!");
 		}
 		nukeExplosionPatterns.push_back(temp);
 	}
@@ -71,7 +67,7 @@ ParticleWorld::ParticleWorld(int rowSize, int colSize)
 	{
 		if (!temp.loadFromFile(nukeMushroomCloudPaths[i]))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load mushroomCloudPatterns!");
 		}
 		nukeMushroomCloudPatterns.push_back(temp);
 	}

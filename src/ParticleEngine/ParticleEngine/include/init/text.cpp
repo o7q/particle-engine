@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "init.h"
+#include "tools/logger.h"
 
 namespace Init {
 	sf::Font getBaseFont()
@@ -10,7 +11,7 @@ namespace Init {
 		sf::Font baseFont;
 		if (!baseFont.loadFromFile("data\\fonts\\alagard.ttf"))
 		{
-			// error
+			Logger::log(Logger::LogType::ERROR, __func__, __LINE__, "Unable to load baseFont!");
 		}
 		return baseFont;
 	}

@@ -23,8 +23,6 @@ public:
 	};
 
 	static sf::Sound sound;
-	static std::random_device rd;
-	static std::mt19937 gen;
 
 	static void init();
 	static void playSound(SoundType soundType, int, int);

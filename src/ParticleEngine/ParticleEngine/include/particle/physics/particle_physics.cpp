@@ -1,29 +1,39 @@
 #include "particle/particle_world.h"
 #include "particle/particle_physics.h"
+#include "particle/particle_renderer.h"
 
 #include "tools/tools.h"
+#include "tools/random.h"
 
-void updateParticleWorld(ParticleWorld* particleWorld)
+void updateParticleWorld(ParticleWorld* particleWorld, ParticleRenderer* particleRenderer)
 {
-	std::uniform_int_distribution<int> dist(0, 1);
+	int xPadding = 20;
+	int yPadding = 200;
 
-	for (int row = particleWorld->getRowSize() - 1; row >= 0; --row)
+	sf::Vector2i particleRendererPosition = particleRenderer->getUIOffset();
+	sf::Vector2u particleRendererSize = particleRenderer->getSize();
+	float zoomLevel = particleRenderer->getZoom();
+
+	for (int row = particleRendererSize.y / zoomLevel + yPadding; row >= -1 - yPadding; --row)
 	{
-		int updateDirection = dist(particleWorld->gen);
+		int updateDirection = Random::genInt(0, 1);
 
-		if (updateDirection == 0)
+		switch (updateDirection)
 		{
-			for (int col = particleWorld->getColSize() - 1; col >= 0; --col)
+		case 0:
+			for (int col = particleRendererSize.x / zoomLevel + xPadding; col >= -1 - xPadding; --col)
 			{
-				updateParticle(particleWorld, row, col);
+				sf::Vector2i worldCoord(particleRenderer->staticWorldToWorldCoordinates(sf::Vector2i(col, row)));
+				updateParticle(particleWorld, worldCoord.y, worldCoord.x);
 			}
-		}
-		else
-		{
-			for (int col = 0; col < particleWorld->getColSize(); ++col)
+			break;
+		case 1:
+			for (int col = 0 - xPadding; col < particleRendererSize.x / zoomLevel + xPadding; ++col)
 			{
-				updateParticle(particleWorld, row, col);
+				sf::Vector2i worldCoord(particleRenderer->staticWorldToWorldCoordinates(sf::Vector2i(col, row)));
+				updateParticle(particleWorld, worldCoord.y, worldCoord.x);
 			}
+			break;
 		}
 	}
 }

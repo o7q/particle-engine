@@ -5,6 +5,7 @@
 #include "particle/particle_sounds.h"
 
 #include "tools/tools.h"
+#include "tools/random.h"
 
 void calculate_explosive(int row, int col, ParticleWorld* particleWorld)
 {
@@ -55,8 +56,8 @@ void calculate_explosive(int row, int col, ParticleWorld* particleWorld)
 		}
 	}
 
-	std::uniform_int_distribution<int> explosionChanceDist(0, 50);
-	if (explode && explosionChanceDist(particleWorld->gen) == 0)
+	// 50, chance to explode from ignition
+	if (explode && Random::genInt(0, 50) == 0)
 	{
 		ParticleWorld::ParticleInstance smokeExplosion;
 		smokeExplosion.material = ParticleWorld::Material::Smoke;
@@ -70,9 +71,9 @@ void calculate_explosive(int row, int col, ParticleWorld* particleWorld)
 		fireExplosion.materialType = ParticleWorld::MaterialType::Liquid;
 		fireExplosion.physicsType = ParticleWorld::PhysicsType::Fire;
 
-		std::uniform_int_distribution<int> explosionPatternDist(0, 12);
+		int randExplosionPattern = Random::genInt(0, particleWorld->explosionPatterns.size() - 1);
 
-		particleWorld->imageToParticles(row, col, particleWorld->explosionPatterns[explosionPatternDist(particleWorld->gen)], fireExplosion, false);
+		particleWorld->imageToParticles(row, col, particleWorld->explosionPatterns[randExplosionPattern], fireExplosion, false);
 
 
 		SoundEngine::playSound(SoundEngine::SoundType::DynamiteExplosion, col, particleWorld->getColSize());
