@@ -67,7 +67,7 @@ private:
 	ParticleWorld* particleWorld;
 	ParticleRenderer* particleRenderer;
 
-	ParticleWorld::ParticleInstance drawingParticle;
+	ParticleWorld::Particle drawingParticle;
 };
 
 #endif

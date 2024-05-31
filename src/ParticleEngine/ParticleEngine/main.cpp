@@ -8,7 +8,6 @@
 #include <SFML/Audio.hpp>
 
 #include "particle/particle_world.h"
-#include "particle/particle_physics.h"
 #include "particle/particle_renderer.h"
 #include "particle/particle_sounds.h"
 
@@ -32,8 +31,8 @@ const sf::Vector2u uiSize(1550, 750);
 
 const sf::Vector2i uiOffset(10, 10 + titleBarHeight);
 
-const unsigned int rowSize = 300; // amount of particle pixels for row
-const unsigned int colSize = 400; // amount of particle pixels for column
+const unsigned int rowSize = 300*2; // amount of particle pixels for row
+const unsigned int colSize = 400*2; // amount of particle pixels for column
 
 const unsigned int simSpeed = 3; // how many physics steps will be performed each frame
 const unsigned int maxFps = 0; // max fps (set to 0 for no limit, as defined in: sf::Window::setFrameRateLimit())
@@ -195,7 +194,7 @@ int main()
 		{
 			for (int i = 0; i < simSpeed; ++i)
 			{
-				updateParticleWorld(particleWorld, particleRenderer);
+				particleWorld->update();
 			}
 		}
 

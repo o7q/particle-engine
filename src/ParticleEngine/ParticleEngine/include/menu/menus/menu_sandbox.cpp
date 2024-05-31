@@ -159,6 +159,17 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
+		else if (clickedButtonId == "pauseButton")
+		{
+			if (particleWorld->isFrozen())
+			{
+				particleWorld->unfreeze();
+			}
+			else
+			{
+				particleWorld->freeze();
+			}
+		}
 
 		if (MOUSE_DOWN)
 		{
@@ -277,6 +288,16 @@ std::vector<Button*> SandboxMenu::getDefaultButtons(sf::RenderWindow& renderWind
 	nukeButton->setColor(sf::Color(63, 107, 49));
 	nukeButton->setId("nukeButton");
 	sandboxMenu_materialButtons.push_back(nukeButton);
+
+	Button* pauseButton = new Button(renderWindow, font);
+	pauseButton->setPosition(sf::Vector2f(400, renderWindowSize.y + uiOffset.y + 20));
+	pauseButton->setSize(sf::Vector2f(80, 25));
+	pauseButton->setColor(sf::Color(63, 107, 49));
+	pauseButton->setId("pauseButton");
+	pauseButton->setTextString("Pause");
+	pauseButton->setTextColor(sf::Color(255, 0, 0));
+	pauseButton->setColor(sf::Color(0, 0, 0));
+	sandboxMenu_materialButtons.push_back(pauseButton);
 
 	return sandboxMenu_materialButtons;
 }

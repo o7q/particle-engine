@@ -100,14 +100,14 @@ int ParticleRenderer::render(ParticleWorld* particleWorld)
 			int particleRow = row + position.y;
 			int particleCol = col + position.x;
 
-			ParticleWorld::ParticleInstance currentParticle = particleWorld->getParticle(particleRow, particleCol);
+			ParticleWorld::Particle currentParticle = particleWorld->getParticle(particleRow, particleCol);
 
 			float brightnessColor = currentParticle.brightnessMultiplier;
 			float brightnessColor2 = brightnessColor == 1 ? 1 : 0.99f;
 			float wetnessColor = currentParticle.wetnessMultiplier;
 			bool overrideColor = currentParticle.overrideColor;
 
-			sf::Color pixelColor(currentParticle.color);
+			sf::Color pixelColor(currentParticle.overriddenColor);
 
 			// decide if to render the current particle, if its air, do not render
 			int renderParticle = currentParticle.material != ParticleWorld::Material::Air;

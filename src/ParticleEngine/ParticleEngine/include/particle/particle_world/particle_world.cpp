@@ -11,7 +11,7 @@ ParticleWorld::ParticleWorld(int rowSize, int colSize)
 {
 	this->rowSize = rowSize;
 	this->colSize = colSize;
-	particles = new ParticleInstance[rowSize * colSize];
+	particles = new Particle[rowSize * colSize];
 
 	for (int row = 0; row < rowSize; ++row)
 	{
@@ -103,7 +103,7 @@ int ParticleWorld::getColSize()
 	return colSize;
 }
 
-ParticleWorld::ParticleInstance ParticleWorld::getParticle(int row, int col)
+ParticleWorld::Particle ParticleWorld::getParticle(int row, int col)
 {
 	if (row >= 0 && row < rowSize && col >= 0 && col < colSize)
 	{
@@ -111,32 +111,16 @@ ParticleWorld::ParticleInstance ParticleWorld::getParticle(int row, int col)
 	}
 	else
 	{
-		return ParticleInstance();
+		return Particle();
 	}
 }
 
-void ParticleWorld::setParticle(int row, int col, ParticleWorld::ParticleInstance particleInstance)
+void ParticleWorld::setParticle(int row, int col, ParticleWorld::Particle particle)
 {
-	*(particles + get1DIndex(row, col, colSize)) = particleInstance;
-}
-
-void ParticleWorld::setShakeCountdown(int value)
-{
-	shakeCountdown = value;
-}
-
-int ParticleWorld::getShakeCountdown()
-{
-	return shakeCountdown;
+	*(particles + get1DIndex(row, col, colSize)) = particle;
 }
 
 void ParticleWorld::resetParticle(int row, int col)
 {
-	setParticle(row, col, getDefaultInstance());
-}
-
-ParticleWorld::ParticleInstance ParticleWorld::getDefaultInstance()
-{
-	ParticleInstance temp;
-	return temp;
+	setParticle(row, col, Particle());
 }

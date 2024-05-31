@@ -5,3 +5,4 @@
 - Add fuse
 - Add wires (electronics, logic gates, etc.)
 - Make ambient music (similar to the Rain World filtered drum sounds)
+- DELETE verify256Range() function IMMEDIATELY (use std::clamp INSTEAD)

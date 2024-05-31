@@ -142,7 +142,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 	{
 		for (int col = 0; col < colSize; ++col)
 		{
-			ParticleWorld::ParticleInstance temp;
+			ParticleWorld::Particle temp;
 			int closestIndex = quantizeValue(convolutedWorld->get(row, col), quantizedValueMap, 7);
 
 			switch (quantizedValueMap[closestIndex])
@@ -191,7 +191,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 	}
 
 	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Populating world (foliage)");
-	ParticleWorld::ParticleInstance grass_instance;
+	ParticleWorld::Particle grass_instance;
 	grass_instance.material = ParticleWorld::Material::Grass;
 	grass_instance.materialType = ParticleWorld::MaterialType::Solid;
 	grass_instance.physicsType = ParticleWorld::PhysicsType::NoGravity;

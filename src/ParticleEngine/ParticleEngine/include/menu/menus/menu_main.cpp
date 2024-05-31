@@ -27,8 +27,8 @@ MenuType MainMenu::tick()
 
 		int random_world = Random::genInt(0, 1);
 
-		ParticleWorld::ParticleInstance titleParticle;
-		ParticleWorld::ParticleInstance subTitleParticle;
+		ParticleWorld::Particle titleParticle;
+		ParticleWorld::Particle subTitleParticle;
 
 		switch (random_world)
 		{

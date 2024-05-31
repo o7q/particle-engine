@@ -55,7 +55,7 @@ void generateOcean(ParticleWorld* particleWorld)
 	{
 		for (int col = 0; col < colSize; ++col)
 		{
-			ParticleWorld::ParticleInstance temp;
+			ParticleWorld::Particle temp;
 			int closestIndex = quantizeValue(layer1_convolutedWorld->get(row, col), quantizedValueMap, 6);
 
 			switch (quantizedValueMap[closestIndex])
@@ -94,7 +94,7 @@ void generateOcean(ParticleWorld* particleWorld)
 
 	// place random seaweed
 	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Populating world (foliage)");
-	ParticleWorld::ParticleInstance seaweedMaterial;
+	ParticleWorld::Particle seaweedMaterial;
 	seaweedMaterial.material = ParticleWorld::Material::Grass;
 	seaweedMaterial.materialType = ParticleWorld::MaterialType::Solid;
 	seaweedMaterial.physicsType = ParticleWorld::PhysicsType::SimpleGravity;

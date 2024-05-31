@@ -16,9 +16,6 @@
     <Filter Include="Source Files\particle">
       <UniqueIdentifier>{1c4b6837-fe00-41af-8352-9cd64c36d144}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\particle\physics">
-      <UniqueIdentifier>{1db0175c-5aba-4f1d-9b46-63a46a9d2e99}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\particle\rendering">
       <UniqueIdentifier>{9be69bf4-f825-47ad-aed2-6bd31350c3d8}</UniqueIdentifier>
     </Filter>
@@ -30,9 +27,6 @@
     </Filter>
     <Filter Include="Source Files\tools">
       <UniqueIdentifier>{76cded1f-d1a4-4473-bae5-0383a532a617}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\particle\physics\materials">
-      <UniqueIdentifier>{e2695efc-5fb7-4bf1-9162-0971d50aba7a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\world">
       <UniqueIdentifier>{2a1dcd14-146a-4444-8770-5af06902d0f3}</UniqueIdentifier>
@@ -91,40 +85,19 @@
     <Filter Include="Header Files\effects">
       <UniqueIdentifier>{7293ce84-a73d-4e36-90dd-533ee3a64ae8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\particle\particle_world\physics">
+      <UniqueIdentifier>{1db0175c-5aba-4f1d-9b46-63a46a9d2e99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\particle\particle_world\physics\materials">
+      <UniqueIdentifier>{e2695efc-5fb7-4bf1-9162-0971d50aba7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="include\particle\physics\materials\sand.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\smoke.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\water.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\particle_physics.cpp">
-      <Filter>Source Files\particle\physics</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="include\particle\renderer\particle_renderer.cpp">
       <Filter>Source Files\particle\rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\dirt.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\grass.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\ice.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\simple_gravity.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\fire.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
     <ClCompile Include="include\tools\arrays.cpp">
       <Filter>Source Files\tools</Filter>
@@ -153,17 +126,8 @@
     <ClCompile Include="include\particle\sounds\particle_sounds.cpp">
       <Filter>Source Files\particle\sounds</Filter>
     </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\acid.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\acid_smoke.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
-    </ClCompile>
     <ClCompile Include="include\world\generators\swamp\swamp.cpp">
       <Filter>Source Files\world\generators\swamp</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\particle_world\tools\bounds.cpp">
-      <Filter>Source Files\particle\particle_world\tools</Filter>
     </ClCompile>
     <ClCompile Include="include\world\generators\ocean\ocean_objects.cpp">
       <Filter>Source Files\world\generators\ocean</Filter>
@@ -173,12 +137,6 @@
     </ClCompile>
     <ClCompile Include="include\particle\particle_world\particle_world.cpp">
       <Filter>Source Files\particle\particle_world</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\explosive.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
-    </ClCompile>
-    <ClCompile Include="include\particle\physics\materials\nuke.cpp">
-      <Filter>Source Files\particle\physics\materials</Filter>
     </ClCompile>
     <ClCompile Include="include\init\text.cpp">
       <Filter>Source Files\init</Filter>
@@ -210,13 +168,49 @@
     <ClCompile Include="include\menu\menus\menu_sandbox.cpp">
       <Filter>Source Files\menu\menus</Filter>
     </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\particle_physics.cpp">
+      <Filter>Source Files\particle\particle_world\physics</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\acid.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\acid_smoke.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\dirt.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\explosive.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\fire.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\grass.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\ice.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\nuke.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\sand.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\simple_gravity.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\smoke.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="include\particle\particle_world\physics\materials\water.cpp">
+      <Filter>Source Files\particle\particle_world\physics\materials</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\tools\tools.h">
       <Filter>Header Files\tools</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\particle\particle_physics.h">
-      <Filter>Header Files\particle</Filter>
     </ClInclude>
     <ClInclude Include="headers\particle\particle_renderer.h">
       <Filter>Header Files\particle</Filter>

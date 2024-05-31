@@ -2,7 +2,7 @@
 
 #include "tools/random.h"
 
-void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::ParticleInstance particleInstance, ParticleWorld::Shape shape)
+void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Particle particle, ParticleWorld::Shape shape)
 {
 	switch (shape)
 	{
@@ -28,11 +28,11 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 					colSize - 1
 				);
 
-				particleInstance.brightnessMultiplier = Random::genDouble(0.9, 1.0);
-				particleInstance.wetnessMultiplier = 1.0f;
-				particleInstance.intValue = 0;
+				particle.brightnessMultiplier = Random::genDouble(0.9, 1.0);
+				particle.wetnessMultiplier = 1.0f;
+				particle.intValue = 0;
 
-				setParticle(r2, c2, particleInstance);
+				setParticle(r2, c2, particle);
 			}
 		}
 		break;
@@ -57,11 +57,11 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 						colSize - 1
 					);
 
-					particleInstance.brightnessMultiplier = Random::genDouble(0.9, 1.0);
-					particleInstance.wetnessMultiplier = 1.0f;
-					particleInstance.intValue = 0;
+					particle.brightnessMultiplier = Random::genDouble(0.9, 1.0);
+					particle.wetnessMultiplier = 1.0f;
+					particle.intValue = 0;
 
-					setParticle(r, c, particleInstance);
+					setParticle(r, c, particle);
 				}
 			}
 		}
@@ -69,7 +69,7 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 	}
 }
 
-void ParticleWorld::imageToParticles(int row, int col, sf::Image& image, ParticleWorld::ParticleInstance particleInstance, bool useImageColors)
+void ParticleWorld::imageToParticles(int row, int col, sf::Image& image, ParticleWorld::Particle particle, bool useImageColors)
 {
 	sf::Vector2u imageSize = image.getSize();
 	for (int rowIndex = 0; rowIndex < imageSize.y; ++rowIndex)
@@ -82,8 +82,8 @@ void ParticleWorld::imageToParticles(int row, int col, sf::Image& image, Particl
 			{
 				if (useImageColors)
 				{
-					particleInstance.color = pixelColor;
-					particleInstance.overrideColor = true;
+					particle.overrideColor = true;
+					particle.overriddenColor = pixelColor;
 				}
 
 				int r = std::min(
@@ -95,7 +95,7 @@ void ParticleWorld::imageToParticles(int row, int col, sf::Image& image, Particl
 					colSize - 1
 				);
 
-				setParticle(r, c, particleInstance);
+				setParticle(r, c, particle);
 			}
 		}
 	}
