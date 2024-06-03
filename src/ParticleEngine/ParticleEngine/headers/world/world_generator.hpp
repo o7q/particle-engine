@@ -1,11 +1,8 @@
 #pragma once
 
-#ifndef WORLD_GENERATOR_H
-#define WORLD_GENERATOR_H
+#include "particle/particle_world.hpp"
 
-#include "particle/particle_world.h"
-
-#include "tools/num2d.h"
+#include "tools/num2d.hpp"
 
 enum WorldType {
 	Ocean,
@@ -29,5 +26,3 @@ Double2D* generate2DKernel(int, int, double);
 
 // quantize
 int quantizeValue(int, int*, int);
-
-#endif

@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef INT2D_H
-#define INT2D_H
-
 class Int2D {
 private:
 	int* arr;
@@ -34,5 +31,3 @@ public:
 	int getRowSize();
 	int getColSize();
 };
-
-#endif

@@ -4,10 +4,8 @@
 
 #include "SFML/Graphics.hpp"
 
-#include "particle/particle_world.h"
+#include "particle/particle_world.hpp"
 
-#ifndef EFFECTS_H
-#define EFFECTS_H
 
 class Effector {
 public:
@@ -33,5 +31,3 @@ private:
 	int shakeLength = 0;
 	sf::Vector2i shakeInitialPos;
 };
-
-#endif

@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "tools/random.h"
-#include "tools/logger.h"
+#include "tools/random.hpp"
+#include "tools/logger.hpp"
 
 // configure Mersenne Twister pseudo-random number generator
 std::random_device Random::rd;

@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "menu/controls/button.h"
-#include "tools/tools.h"
+#include "menu/controls/button.hpp"
+#include "tools/tools.hpp"
 
 Button::Button(sf::RenderWindow& renderWindow, sf::Font& textFont) : renderWindow(renderWindow), textFont(textFont)
 {
@@ -142,14 +142,14 @@ void Button::highlight(bool highlight)
 
 	if (highlight && highlightMode == HighlightMode::HIGHLIGHT)
 	{
-		r = verify256Range(r * 1.75);
-		g = verify256Range(g * 1.75);
-		b = verify256Range(b * 1.75);
+		r = static_cast<int>(std::clamp(r * 1.75, 0.0, 255.0));
+		g = static_cast<int>(std::clamp(g * 1.75, 0.0, 255.0));
+		b = static_cast<int>(std::clamp(b * 1.75, 0.0, 255.0));
 		buttonShape.setFillColor(sf::Color(r, g, b));
 
-		r_text = verify256Range(r_text * 1.75);
-		g_text = verify256Range(g_text * 1.75);
-		b_text = verify256Range(b_text * 1.75);
+		r_text = static_cast<int>(std::clamp(r_text * 1.75, 0.0, 255.0));
+		g_text = static_cast<int>(std::clamp(g_text * 1.75, 0.0, 255.0));
+		b_text = static_cast<int>(std::clamp(b_text * 1.75, 0.0, 255.0));
 		buttonText.setFillColor(sf::Color(r_text, g_text, b_text));
 	}
 	else

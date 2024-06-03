@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "tools/logger.h"
+#include "tools/logger.hpp"
 
 void Logger::log(LogType logType, std::string function, int line, std::string log)
 {

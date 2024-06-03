@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "world/world_generator.h"
+#include "world/world_generator.hpp"
 
-#include "tools/num2d.h"
-#include "tools/random.h"
+#include "tools/num2d.hpp"
+#include "tools/random.hpp"
 
 Int2D* generateNoiseBase(int rowSize, int colSize, Double2D* kernel, int minBrightness, int maxBrightness)
 {

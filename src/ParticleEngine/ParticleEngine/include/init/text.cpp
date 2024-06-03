@@ -2,8 +2,8 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "init.h"
-#include "tools/logger.h"
+#include "init.hpp"
+#include "tools/logger.hpp"
 
 namespace Init {
 	sf::Font getBaseFont()

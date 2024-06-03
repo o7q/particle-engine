@@ -1,8 +1,6 @@
 #pragma once
-#include <random>
 
-#ifndef PARTICLE_WORLD_H
-#define PARTICLE_WORLD_H
+#include <random>
 
 #include <SFML/Graphics.hpp>
 
@@ -144,5 +142,3 @@ private:
 	void calculate_explosive(int, int, Ruleset);
 	void calculate_nuke(int, int, Ruleset);
 };
-
-#endif

@@ -1,17 +1,14 @@
 #pragma once
 
-#ifndef MENUS_H
-#define MENUS_H
-
 #include <unordered_set>
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-#include "particle/particle_world.h"
-#include "particle/particle_renderer.h"
+#include "particle/particle_world.hpp"
+#include "particle/particle_renderer.hpp"
 
-#include "menu/controls/button.h"
+#include "menu/controls/button.hpp"
 
 enum MenuType {
 	MAIN_MENU,
@@ -34,6 +31,7 @@ protected:
 	bool update();
 
 	sf::Vector2i LOCAL_MOUSE_POSITION;
+	std::string CLICKED_BUTTON_ID = "";
 	bool MOUSE_DOWN = false;
 
 	sf::Vector2i uiOffset;
@@ -69,5 +67,3 @@ private:
 
 	ParticleWorld::Particle drawingParticle;
 };
-
-#endif

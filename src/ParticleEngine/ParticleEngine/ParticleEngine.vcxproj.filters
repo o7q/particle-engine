@@ -120,9 +120,6 @@
     <ClCompile Include="include\world\generators\tools\quantize.cpp">
       <Filter>Source Files\world\tools</Filter>
     </ClCompile>
-    <ClCompile Include="include\tools\color.cpp">
-      <Filter>Source Files\tools</Filter>
-    </ClCompile>
     <ClCompile Include="include\particle\sounds\particle_sounds.cpp">
       <Filter>Source Files\particle\sounds</Filter>
     </ClCompile>
@@ -209,40 +206,40 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\tools\tools.h">
+    <ClInclude Include="headers\tools\tools.hpp">
       <Filter>Header Files\tools</Filter>
     </ClInclude>
-    <ClInclude Include="headers\particle\particle_renderer.h">
+    <ClInclude Include="headers\particle\particle_renderer.hpp">
       <Filter>Header Files\particle</Filter>
     </ClInclude>
-    <ClInclude Include="headers\particle\particle_world.h">
+    <ClInclude Include="headers\particle\particle_world.hpp">
       <Filter>Header Files\particle</Filter>
     </ClInclude>
-    <ClInclude Include="headers\world\world_generator.h">
+    <ClInclude Include="headers\world\world_generator.hpp">
       <Filter>Header Files\world</Filter>
     </ClInclude>
-    <ClInclude Include="headers\tools\num2d.h">
+    <ClInclude Include="headers\tools\num2d.hpp">
       <Filter>Header Files\tools</Filter>
     </ClInclude>
-    <ClInclude Include="headers\particle\particle_sounds.h">
+    <ClInclude Include="headers\particle\particle_sounds.hpp">
       <Filter>Header Files\particle</Filter>
     </ClInclude>
-    <ClInclude Include="headers\init.h">
+    <ClInclude Include="headers\init.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="headers\menu\menu.h">
+    <ClInclude Include="headers\menu\menu.hpp">
       <Filter>Header Files\menu</Filter>
     </ClInclude>
-    <ClInclude Include="headers\menu\controls\button.h">
+    <ClInclude Include="headers\menu\controls\button.hpp">
       <Filter>Header Files\menu\controls</Filter>
     </ClInclude>
-    <ClInclude Include="headers\tools\random.h">
+    <ClInclude Include="headers\tools\random.hpp">
       <Filter>Header Files\tools</Filter>
     </ClInclude>
-    <ClInclude Include="headers\tools\logger.h">
+    <ClInclude Include="headers\tools\logger.hpp">
       <Filter>Header Files\tools</Filter>
     </ClInclude>
-    <ClInclude Include="headers\effects\effects.h">
+    <ClInclude Include="headers\effects\effects.hpp">
       <Filter>Header Files\effects</Filter>
     </ClInclude>
   </ItemGroup>

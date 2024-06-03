@@ -1,13 +1,10 @@
 #pragma once
 
-#ifndef MENU_BUTTON_H
-#define MENU_BUTTON_H
-
 #include <iostream>
 
 #include <SFML/Graphics.hpp>
 
-#include "particle/particle_world.h"
+#include "particle/particle_world.hpp"
 
 class Button {
 
@@ -73,5 +70,3 @@ private:
 
 	void highlight(bool);
 };
-
-#endif

@@ -1,9 +1,7 @@
+
 #pragma once
 
 #include <random>
-
-#ifndef RANDOM_H
-#define RANDOM_H
 
 class Random {
 public:
@@ -15,5 +13,3 @@ public:
 	static int genInt(int, int);
 	static double genDouble(double, double);
 };
-
-#endif

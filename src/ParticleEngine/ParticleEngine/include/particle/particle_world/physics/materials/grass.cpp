@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "particle/particle_world.h"
-#include "particle/particle_sounds.h"
+#include "particle/particle_world.hpp"
+#include "particle/particle_sounds.hpp"
 
-#include "tools/tools.h"
-#include "tools/random.h"
+#include "tools/tools.hpp"
+#include "tools/random.hpp"
 
 void ParticleWorld::calculate_grass(int row, int col, Ruleset ruleset)
 {

@@ -2,9 +2,6 @@
 
 #include <iostream>
 
-#ifndef LOGGER_H
-#define LOGGER_H
-
 #define GRAY     "\033[37m"
 #define GREEN    "\033[92m"
 #define YELLOW   "\033[93m"
@@ -25,5 +22,3 @@ public:
 
 	static void log(LogType, std::string, int, std::string);
 };
-
-#endif

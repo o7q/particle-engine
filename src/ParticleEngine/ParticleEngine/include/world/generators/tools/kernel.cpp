@@ -1,6 +1,6 @@
-#include "world/world_generator.h"
+#include "world/world_generator.hpp"
 
-#include "tools/num2d.h"
+#include "tools/num2d.hpp"
 
 double* generate1DKernel(int colSize, double value)
 {

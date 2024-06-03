@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "particle/particle_world.h"
-#include "particle/particle_renderer.h"
+#include "particle/particle_world.hpp"
+#include "particle/particle_renderer.hpp"
 
-#include "tools/tools.h"
-#include "tools/random.h"
+#include "tools/tools.hpp"
+#include "tools/random.hpp"
 
 ParticleRenderer::ParticleRenderer(sf::Vector2u size, sf::RenderWindow& renderWindow) : renderWindow(renderWindow)
 {

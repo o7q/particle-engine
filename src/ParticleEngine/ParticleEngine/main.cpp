@@ -7,20 +7,20 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-#include "particle/particle_world.h"
-#include "particle/particle_renderer.h"
-#include "particle/particle_sounds.h"
+#include "particle/particle_world.hpp"
+#include "particle/particle_renderer.hpp"
+#include "particle/particle_sounds.hpp"
 
-#include "init.h"
+#include "init.hpp"
 
-#include "menu/menu.h"
+#include "menu/menu.hpp"
 
-#include "menu/controls/button.h"
+#include "menu/controls/button.hpp"
 
-#include "effects/effects.h"
+#include "effects/effects.hpp"
 
-#include "tools/random.h"
-#include "tools/logger.h"
+#include "tools/random.hpp"
+#include "tools/logger.hpp"
 
 const std::string version = "v1.0.0";
 const std::string windowTitle = "particle engine " + version;
@@ -31,8 +31,8 @@ const sf::Vector2u uiSize(1550, 750);
 
 const sf::Vector2i uiOffset(10, 10 + titleBarHeight);
 
-const unsigned int rowSize = 300*2; // amount of particle pixels for row
-const unsigned int colSize = 400*2; // amount of particle pixels for column
+const unsigned int rowSize = 300*4; // amount of particle pixels for row
+const unsigned int colSize = 400*4; // amount of particle pixels for column
 
 const unsigned int simSpeed = 3; // how many physics steps will be performed each frame
 const unsigned int maxFps = 0; // max fps (set to 0 for no limit, as defined in: sf::Window::setFrameRateLimit())

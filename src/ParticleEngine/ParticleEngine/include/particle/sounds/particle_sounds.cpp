@@ -5,10 +5,10 @@
 
 #include <SFML/Audio.hpp>
 
-#include "particle/particle_sounds.h"
+#include "particle/particle_sounds.hpp"
 
-#include "tools/random.h"
-#include "tools/logger.h"
+#include "tools/random.hpp"
+#include "tools/logger.hpp"
 
 std::vector<sf::SoundBuffer> SoundEngine::liquidDripSounds;
 std::vector<sf::SoundBuffer> SoundEngine::bubbleSounds;

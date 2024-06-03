@@ -1,8 +1,9 @@
-#include "menu/menu.h"
-#include "world/world_generator.h"
+#include "menu/menu.hpp"
+#include "world/world_generator.hpp"
 
 SandboxMenu::SandboxMenu(sf::RenderWindow& renderWindow, ParticleWorld* particleWorld, ParticleRenderer* particleRenderer) : Menu(renderWindow), particleWorld(particleWorld), particleRenderer(particleRenderer)
 {
+
 }
 
 MenuType SandboxMenu::tick()
@@ -16,17 +17,7 @@ MenuType SandboxMenu::tick()
 	{
 		sf::Vector2f mouseWorldCoords = particleRenderer->windowToWorldCoordinates(LOCAL_MOUSE_POSITION);
 
-		std::string clickedButtonId = "";
-
-		for (Button* button : buttons)
-		{
-			if (button->hasMouseClicked())
-			{
-				clickedButtonId = button->getId();
-			}
-		}
-
-		if (clickedButtonId == "stoneButton")
+		if (CLICKED_BUTTON_ID == "stoneButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Stone;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
@@ -34,7 +25,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.flammable = false;
 			drawingParticle.createsSteam = false;
 		}
-		else if (clickedButtonId == "sandButton")
+		else if (CLICKED_BUTTON_ID == "sandButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Sand;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
@@ -42,7 +33,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.flammable = false;
 			drawingParticle.createsSteam = false;
 		}
-		else if (clickedButtonId == "dirtButton")
+		else if (CLICKED_BUTTON_ID == "dirtButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Dirt;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
@@ -51,7 +42,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "grassButton")
+		else if (CLICKED_BUTTON_ID == "grassButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Grass;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
@@ -60,7 +51,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "waterButton")
+		else if (CLICKED_BUTTON_ID == "waterButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Water;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Liquid;
@@ -69,7 +60,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = true;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "iceButton")
+		else if (CLICKED_BUTTON_ID == "iceButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Ice;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
@@ -78,7 +69,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "fireButton")
+		else if (CLICKED_BUTTON_ID == "fireButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Fire;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Liquid;
@@ -87,7 +78,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "gasolineButton")
+		else if (CLICKED_BUTTON_ID == "gasolineButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Gasoline;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Liquid;
@@ -96,7 +87,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "smokeButton")
+		else if (CLICKED_BUTTON_ID == "smokeButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Smoke;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Gas;
@@ -105,7 +96,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "acidGasButton")
+		else if (CLICKED_BUTTON_ID == "acidGasButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::AcidGas;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Gas;
@@ -114,7 +105,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "flammableGasButton")
+		else if (CLICKED_BUTTON_ID == "flammableGasButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::FlammableGas;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Gas;
@@ -123,7 +114,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "airButton")
+		else if (CLICKED_BUTTON_ID == "airButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Air;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Gas;
@@ -132,7 +123,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "acidButton")
+		else if (CLICKED_BUTTON_ID == "acidButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Acid;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Liquid;
@@ -141,7 +132,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "dynamiteButton")
+		else if (CLICKED_BUTTON_ID == "dynamiteButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Dynamite;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
@@ -150,7 +141,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "nukeButton")
+		else if (CLICKED_BUTTON_ID == "nukeButton")
 		{
 			drawingParticle.material = ParticleWorld::Material::Nuke;
 			drawingParticle.materialType = ParticleWorld::MaterialType::Solid;
@@ -159,7 +150,7 @@ MenuType SandboxMenu::tick()
 			drawingParticle.createsSteam = false;
 			// drawingParticle.toolMode = "draw";
 		}
-		else if (clickedButtonId == "pauseButton")
+		else if (CLICKED_BUTTON_ID == "pauseButton")
 		{
 			if (particleWorld->isFrozen())
 			{

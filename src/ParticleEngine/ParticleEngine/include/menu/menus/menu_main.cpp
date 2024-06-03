@@ -1,9 +1,9 @@
-#include "menu/menu.h"
+#include "menu/menu.hpp"
 
-#include "world/world_generator.h"
+#include "world/world_generator.hpp"
 
-#include "tools/random.h"
-#include "tools/logger.h"
+#include "tools/random.hpp"
+#include "tools/logger.hpp"
 
 MainMenu::MainMenu(sf::RenderWindow& renderWindow, ParticleWorld* particleWorld) : Menu(renderWindow), particleWorld(particleWorld)
 {

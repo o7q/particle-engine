@@ -1,6 +1,6 @@
-#include "particle/particle_world.h"
+#include "particle/particle_world.hpp"
 
-#include "tools/random.h"
+#include "tools/random.hpp"
 
 void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Particle particle, ParticleWorld::Shape shape)
 {

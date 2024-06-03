@@ -1,10 +1,8 @@
-#pragma once
-
 #include <iostream>
 #include <algorithm>
 
-#include "tools/num2d.h"
-#include "tools/tools.h"
+#include "tools/num2d.hpp"
+#include "tools/tools.hpp"
 
 Int2D::Int2D(int rowSize, int colSize)
 {

@@ -3,9 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "particle/particle_world.h"
-#include "tools/tools.h"
-#include "tools/logger.h"
+#include "particle/particle_world.hpp"
+#include "tools/tools.hpp"
+#include "tools/logger.hpp"
 
 ParticleWorld::ParticleWorld(int rowSize, int colSize)
 {

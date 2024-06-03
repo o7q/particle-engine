@@ -1,8 +1,5 @@
 #pragma once
 
-#ifndef PARTICLE_SOUNDS_H
-#define PARTICLE_SOUNDS_H
-
 #include <iostream>
 #include <random>
 #include <chrono>
@@ -44,5 +41,3 @@ private:
 	static std::vector<sf::SoundBuffer> dynamiteExplosionSounds;
 	static std::vector<sf::SoundBuffer> nukeExplosionSounds;
 };
-
-#endif

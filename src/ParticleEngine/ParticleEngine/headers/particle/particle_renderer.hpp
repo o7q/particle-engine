@@ -1,11 +1,8 @@
 #pragma once
 
-#ifndef PARTICLE_RENDERER_H
-#define PARTICLE_RENDERER_H
-
 #include <SFML/Graphics.hpp>
 
-#include "particle/particle_world.h"
+#include "particle/particle_world.hpp"
 
 class ParticleRenderer {
 public:
@@ -50,5 +47,3 @@ private:
 	sf::Vector2f position;
 	float zoomLevel;
 };
-
-#endif

@@ -1,6 +1,6 @@
-#include "effects/effects.h"
+#include "effects/effects.hpp"
 
-#include "tools/random.h"
+#include "tools/random.hpp"
 
 ShakeEffect::ShakeEffect(sf::RenderWindow& renderWindow, ParticleWorld* particleWorld, sf::Vector2i& renderWindowUserPosition) : Effector(renderWindow, particleWorld), renderWindowUserPosition(renderWindowUserPosition)
 {

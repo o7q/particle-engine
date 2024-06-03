@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "menu/menu.h"
+#include "menu/menu.hpp"
 
 Menu::Menu(sf::RenderWindow& renderWindow) : renderWindow(renderWindow)
 {
@@ -28,6 +28,16 @@ bool Menu::update()
 {
 	LOCAL_MOUSE_POSITION = sf::Mouse::getPosition(renderWindow);
 	MOUSE_DOWN = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+
+	CLICKED_BUTTON_ID = "";
+
+	for (Button* button : buttons)
+	{
+		if (button->hasMouseClicked())
+		{
+			CLICKED_BUTTON_ID = button->getId();
+		}
+	}
 
 	for (Button* button : buttons)
 	{

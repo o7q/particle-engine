@@ -44,7 +44,6 @@
     <ClCompile Include="include\particle\renderer\particle_renderer.cpp" />
     <ClCompile Include="include\particle\sounds\particle_sounds.cpp" />
     <ClCompile Include="include\tools\arrays.cpp" />
-    <ClCompile Include="include\tools\color.cpp" />
     <ClCompile Include="include\tools\logger.cpp" />
     <ClCompile Include="include\tools\num2d\double2d.cpp" />
     <ClCompile Include="include\tools\num2d\int2d.cpp" />
@@ -59,18 +58,18 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\effects\effects.h" />
-    <ClInclude Include="headers\init.h" />
-    <ClInclude Include="headers\menu\controls\button.h" />
-    <ClInclude Include="headers\menu\menu.h" />
-    <ClInclude Include="headers\particle\particle_renderer.h" />
-    <ClInclude Include="headers\particle\particle_sounds.h" />
-    <ClInclude Include="headers\particle\particle_world.h" />
-    <ClInclude Include="headers\tools\logger.h" />
-    <ClInclude Include="headers\tools\num2d.h" />
-    <ClInclude Include="headers\tools\random.h" />
-    <ClInclude Include="headers\tools\tools.h" />
-    <ClInclude Include="headers\world\world_generator.h" />
+    <ClInclude Include="headers\effects\effects.hpp" />
+    <ClInclude Include="headers\init.hpp" />
+    <ClInclude Include="headers\menu\controls\button.hpp" />
+    <ClInclude Include="headers\menu\menu.hpp" />
+    <ClInclude Include="headers\particle\particle_renderer.hpp" />
+    <ClInclude Include="headers\particle\particle_sounds.hpp" />
+    <ClInclude Include="headers\particle\particle_world.hpp" />
+    <ClInclude Include="headers\tools\logger.hpp" />
+    <ClInclude Include="headers\tools\num2d.hpp" />
+    <ClInclude Include="headers\tools\random.hpp" />
+    <ClInclude Include="headers\tools\tools.hpp" />
+    <ClInclude Include="headers\world\world_generator.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

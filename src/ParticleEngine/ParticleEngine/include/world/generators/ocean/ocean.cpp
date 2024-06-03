@@ -1,13 +1,13 @@
 #include <iostream>
 
-#include "world/world_generator.h"
+#include "world/world_generator.hpp"
 
-#include "particle/particle_world.h"
+#include "particle/particle_world.hpp"
 
-#include "tools/num2d.h"
-#include "tools/random.h"
+#include "tools/num2d.hpp"
+#include "tools/random.hpp"
 
-#include "tools/logger.h"
+#include "tools/logger.hpp"
 
 void generateOcean(ParticleWorld* particleWorld)
 {

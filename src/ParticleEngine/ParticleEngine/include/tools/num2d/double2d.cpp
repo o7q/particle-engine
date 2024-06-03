@@ -1,7 +1,5 @@
-#pragma once
-
-#include "tools/num2d.h"
-#include "tools/tools.h"
+#include "tools/num2d.hpp"
+#include "tools/tools.hpp"
 
 Double2D::Double2D(int rowSize, int colSize)
 {

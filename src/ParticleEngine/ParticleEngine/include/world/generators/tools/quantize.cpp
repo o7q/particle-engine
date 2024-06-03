@@ -1,7 +1,7 @@
 #include <iostream>
 #include <limits>
 
-#include "world/world_generator.h"
+#include "world/world_generator.hpp"
 
 int quantizeValue(int input, int* values, int valuesSize)
 {

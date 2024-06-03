@@ -1,8 +1,8 @@
 #include <iostream>
 
-#include "particle/particle_world.h"
+#include "particle/particle_world.hpp"
 
-#include "world/world_generator.h"
+#include "world/world_generator.hpp"
 
 void generateWorld(ParticleWorld* particleWorld, WorldType worldType)
 {

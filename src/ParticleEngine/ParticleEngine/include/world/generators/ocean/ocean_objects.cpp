@@ -3,9 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "world/world_generator.h"
+#include "world/world_generator.hpp"
 
-#include "tools/logger.h"
+#include "tools/logger.hpp"
 
 std::vector<sf::Image> ocean_getObjects()
 {
