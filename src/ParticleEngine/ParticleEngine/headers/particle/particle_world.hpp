@@ -65,13 +65,35 @@ public:
 
 	class Particle {
 	public:
+
+		//Material getMaterial();
+		//void setMaterial(Material);
+
+		//MaterialType getMaterialType();
+		//void setMaterialType(MaterialType);
+
+		//PhysicsType getPhysicsType();
+		//void setPhysicsType(PhysicsType);
+
+		//bool isFlammable();
+		//void setFlammable(bool);
+
+		//bool canCreateSteam();
+		//void setCreatesSteam(bool);
+
+		//float getWetness();
+		//void setWetness(float);
+
+		//sf::Color getOverriddenColor();
+		//void setOverridenColor(sf::Color);
+
 		Material material = Material::Air;
 		MaterialType materialType = MaterialType::Gas;
 		PhysicsType physicsType = PhysicsType::NoGravity;
 		bool flammable = false;
 		bool createsSteam = false;
 		bool overrideColor = false;
-		sf::Color overriddenColor = sf::Color(0, 0, 0);
+		sf::Color overriddenColor = sf::Color(0, 0, 0, 0);
 		float wetnessMultiplier = 1.0f;
 		float brightnessMultiplier = 1.0f;
 
@@ -79,6 +101,22 @@ public:
 		int physicsFreezeTime = 0;
 		int lastY = 0;
 		bool isFalling = false;
+
+	//private:
+	//	Material material = Material::Air;
+	//	MaterialType materialType = MaterialType::Gas;
+	//	PhysicsType physicsType = PhysicsType::NoGravity;
+	//	bool flammable = false;
+	//	bool createsSteam = false;
+	//	bool overrideColor = false;
+	//	sf::Color overriddenColor = sf::Color(0, 0, 0, 0);
+	//	float wetnessMultiplier = 1.0f;
+	//	float brightnessMultiplier = 1.0f;
+
+	//	int intValue = 0;
+	//	int physicsFreezeTime = 0;
+	//	int lastY = 0;
+	//	bool isFalling = false;
 	};
 
 	std::vector<sf::Image> explosionPatterns;
@@ -114,10 +152,20 @@ public:
 
 	void update();
 
+	sf::Uint8* getWorldPixels();
+	sf::Texture& getWorldTexture();
+	sf::Vector2u getWorldSize();
+	void updatePixels();
+
+	sf::Color determineParticleColor(Particle);
+
 private:
 	bool frozen = false;
 	int rowSize;
 	int colSize;
+
+	sf::Uint8* worldPixels;
+	sf::Texture worldTexture;
 
 	struct Ruleset {
 		bool canUp = false;

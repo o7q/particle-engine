@@ -1,35 +1,35 @@
 #include "tools/num2d.hpp"
 #include "tools/tools.hpp"
 
-Double2D::Double2D(int rowSize, int colSize)
+Int2D::Int2D(int rowSize, int colSize)
 {
-	arr = new double[rowSize * colSize];
+	arr = new int[rowSize * colSize];
 
 	this->rowSize = rowSize;
 	this->colSize = colSize;
 }
 
-Double2D::~Double2D()
+Int2D::~Int2D()
 {
 	delete[] arr;
 }
 
-double Double2D::get(int row, int col)
+int Int2D::get(int row, int col)
 {
 	return *(arr + get1DIndex(row, col, colSize));
 }
 
-void Double2D::set(int row, int col, double value)
+void Int2D::set(int row, int col, int value)
 {
 	*(arr + get1DIndex(row, col, colSize)) = value;
 }
 
-int Double2D::getRowSize()
+int Int2D::getRowSize() const
 {
 	return rowSize;
 }
 
-int Double2D::getColSize()
+int Int2D::getColSize() const
 {
 	return colSize;
 }

@@ -6,16 +6,54 @@
 #include "tools/tools.hpp"
 #include "tools/random.hpp"
 
-ParticleRenderer::ParticleRenderer(sf::Vector2u size, sf::RenderWindow& renderWindow) : renderWindow(renderWindow)
+sf::Vector2f operator/(sf::Vector2f a, sf::Vector2f b)
+{
+	return sf::Vector2f(a.x / b.x, a.y / b.y);
+}
+
+sf::Vector2f operator*(sf::Vector2f a, sf::Vector2f b)
+{
+	return sf::Vector2f(a.x * b.x, a.y * b.y);
+}
+
+ParticleRenderer::ParticleRenderer(sf::Vector2u size, ParticleWorld* particleWorld, sf::RenderWindow& renderWindow) : particleWorld(particleWorld), renderWindow(renderWindow)
 {
 	this->size = size;
-	this->zoomLevel = 3;
+	this->zoomLevel = 1.0f;
+
+	if (!shader.loadFromFile("data\\shaders\\particle\\shader.vert", "data\\shaders\\particle\\shader.frag")) {
+		std::cerr << "Failed to load shader" << std::endl;
+	}
+
+	shader.setUniform("tex", particleWorld->getWorldTexture());
+	shader.setUniform("texSize", sf::Vector2f(particleWorld->getColSize(), particleWorld->getRowSize()));
+	shader.setUniform("resolution", renderWindow.getView().getSize());
+
+	quad.resize(4);
+	quad.setPrimitiveType(sf::Quads);
+	quad[0].position = sf::Vector2f(-1, -1);
+	quad[1].position = sf::Vector2f(1, -1);
+	quad[2].position = sf::Vector2f(1, 1);
+	quad[3].position = sf::Vector2f(-1, 1);
+	quad[0].texCoords = sf::Vector2f(0, 1);
+	quad[1].texCoords = sf::Vector2f(1, 1);
+	quad[2].texCoords = sf::Vector2f(1, 0);
+	quad[3].texCoords = sf::Vector2f(0, 0);
+}
+
+void ParticleRenderer::render()
+{
+	particleWorld->updatePixels();
+
+	shader.setUniform("translation", translation);
+	shader.setUniform("zoom", zoomLevel);
+
+	renderWindow.draw(quad, &shader);
 }
 
 void ParticleRenderer::zoom(float zoomAmount)
 {
-	zoomLevel += zoomAmount;
-	zoomLevel = std::max(zoomLevel, 1.0f);
+	zoomLevel *= zoomAmount;
 }
 
 void ParticleRenderer::setUIOffset(sf::Vector2i uiOffset)
@@ -38,359 +76,45 @@ sf::Vector2u ParticleRenderer::getSize()
 	return this->size;
 }
 
-void ParticleRenderer::translate(Direction direction, float speed)
+void ParticleRenderer::translate(sf::Vector2f direction)
 {
-	switch (direction)
-	{
-	case Direction::UP:
-		position.y -= (5.0f / this->zoomLevel) * speed;
-		break;
-	case Direction::DOWN:
-		position.y += (5.0f / this->zoomLevel) * speed;
-		break;
-	case Direction::RIGHT:
-		position.x += (5.0f / this->zoomLevel) * speed;
-		break;
-	case Direction::LEFT:
-		position.x -= (5.0f / this->zoomLevel) * speed;
-		break;
-	}
+	translation += direction;
 }
 
 sf::Vector2f ParticleRenderer::getTranslate()
 {
-	return this->position;
+	return this->translation;
 }
 
 void ParticleRenderer::setTranslate(sf::Vector2f position)
 {
-	this->position = position;
+	this->translation = position;
 }
 
-int ParticleRenderer::render(ParticleWorld* particleWorld)
+sf::Vector2i ParticleRenderer::windowToWorldCoordinates(sf::Vector2i windowPosition)
 {
-	sf::VertexArray quadClump(sf::Quads);
+	sf::Vector2f windowSize = sf::Vector2f(renderWindow.getSize());
+	sf::Vector2f worldSize = sf::Vector2f(particleWorld->getWorldSize());
 
-	// min/max values, if the zoom level is 1, the minRow would be 0 (left side of render window)
-	// as zoomLevel increases the viewWindow will shrink/crop, it will then be scaled up during the VertexArray rendering process, which will give the illusion of a zoom
-	const int minRow = size.y / 2 - (size.y / 2) / zoomLevel;
-	const int maxRow = size.y / 2 + (size.y / 2) / zoomLevel;
+	// Map window to [-1, 1]
+	sf::Vector2f windowPositionNormalized = (sf::Vector2f(windowPosition) / windowSize) * 2.0f - sf::Vector2f(1, 1);
 
-	const int minCol = size.x / 2 - (size.x / 2) / zoomLevel;
-	const int maxCol = size.x / 2 + (size.x / 2) / zoomLevel;
+	windowPositionNormalized /= zoomLevel;
+	windowPositionNormalized += translation / windowSize;
 
-	// n = number, number of rows and columns
-	const int nRows = maxRow - minRow;
-	const int nCols = maxCol - minCol;
-
-	const int half_nRows = nRows / 2;
-	const int half_nCols = nCols / 2;
-
-	/*const int offsetX = uiOffset.x + size.x / 2;
-	const int offsetY = uiOffset.y + size.y / 2;*/
-
-	int renderedParticles = 0;
-
-	//for (int row = 0; row < size.y / zoomLevel; ++row)
-	for (int row = minRow; row < maxRow; ++row)
+	float aspect = (windowSize.x / windowSize.y) * (worldSize.y / worldSize.x);
+	if (aspect < 1.0)
 	{
-		//for (int col = 0; col < size.x / zoomLevel; ++col)
-		for (int col = minCol; col < maxCol; ++col)
-		{
-			int particleRow = row + position.y;
-			int particleCol = col + position.x;
-
-			ParticleWorld::Particle currentParticle = particleWorld->getParticle(particleRow, particleCol);
-
-			float brightnessColor = currentParticle.brightnessMultiplier;
-			float brightnessColor2 = brightnessColor == 1 ? 1 : 0.99f;
-			float wetnessColor = currentParticle.wetnessMultiplier;
-			bool overrideColor = currentParticle.overrideColor;
-
-			sf::Color pixelColor(currentParticle.overriddenColor);
-
-			// decide if to render the current particle, if its air, do not render
-			int renderParticle = currentParticle.material != ParticleWorld::Material::Air;
-
-			if (!overrideColor)
-			{
-				switch (currentParticle.material)
-				{
-				case ParticleWorld::Material::Stone: {
-					pixelColor.r = static_cast<sf::Uint8>(160 * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(160 * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(160 * brightnessColor);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Sand: {
-					pixelColor.r = static_cast<sf::Uint8>(245 / wetnessColor * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(228 / wetnessColor * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(118 / wetnessColor * brightnessColor);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Sandstone: {
-					pixelColor.r = static_cast<sf::Uint8>(189 / wetnessColor * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(176 / wetnessColor * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(91 / wetnessColor * brightnessColor);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Dirt: {
-					pixelColor.r = static_cast<sf::Uint8>(77 / wetnessColor * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(54 / wetnessColor * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(15 / wetnessColor * brightnessColor);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::DarkDirt: {
-					pixelColor.r = static_cast<sf::Uint8>(38 / wetnessColor * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(27 / wetnessColor * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(7 / wetnessColor * brightnessColor);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Grass: {
-					pixelColor.r = static_cast<sf::Uint8>(60 * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(110 * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(33 * brightnessColor);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::RedFlower: {
-					pixelColor.r = static_cast<sf::Uint8>(255 * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(59 * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(59 * brightnessColor);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::PinkFlower: {
-					pixelColor.r = static_cast<sf::Uint8>(246 * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(122 * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(255 * brightnessColor);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::YellowFlower: {
-					pixelColor.r = static_cast<sf::Uint8>(255 * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(222 * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(92 * brightnessColor);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::BlueFlower: {
-					pixelColor.r = static_cast<sf::Uint8>(84 * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(178 * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(255 * brightnessColor);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Water: {
-					pixelColor.r = static_cast<sf::Uint8>(34 * brightnessColor2);
-					pixelColor.g = static_cast<sf::Uint8>(152 * brightnessColor2);
-					pixelColor.b = static_cast<sf::Uint8>(218 * brightnessColor2);
-					pixelColor.a = 200;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::SwampWater: {
-					pixelColor.r = static_cast<sf::Uint8>(85 * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(92 * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(69 * brightnessColor);
-					pixelColor.a = 220;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Gasoline: {
-					pixelColor.r = 215;
-					pixelColor.g = 219;
-					pixelColor.b = 77;
-					pixelColor.a = static_cast<sf::Uint8>(230 * brightnessColor);
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Fire: {
-					double fireFlicker = Random::genDouble(0.0, 1.0);
-					pixelColor.r = 255;
-					pixelColor.g = static_cast<sf::Uint8>(191 * fireFlicker);
-					pixelColor.b = 0;
-					pixelColor.a = static_cast<sf::Uint8>(255 * fireFlicker);
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Ice: {
-					pixelColor.r = static_cast<sf::Uint8>(120 * brightnessColor);
-					pixelColor.g = static_cast<sf::Uint8>(212 * brightnessColor);
-					pixelColor.b = static_cast<sf::Uint8>(240 * brightnessColor);
-					pixelColor.a = 240;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Smoke: {
-					pixelColor.r = 120;
-					pixelColor.g = 120;
-					pixelColor.b = 120;
-					pixelColor.a = static_cast<sf::Uint8>(240 * brightnessColor);
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Steam: {
-					pixelColor.r = 220;
-					pixelColor.g = 220;
-					pixelColor.b = 220;
-					pixelColor.a = static_cast<sf::Uint8>(220 * brightnessColor);
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::AcidGas: {
-					pixelColor.r = 81;
-					pixelColor.g = 97;
-					pixelColor.b = 47;
-					pixelColor.a = static_cast<sf::Uint8>(235 * brightnessColor);
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::FlammableGas: {
-					pixelColor.r = 156;
-					pixelColor.g = 133;
-					pixelColor.b = 81;
-					pixelColor.a = static_cast<sf::Uint8>(235 * brightnessColor);
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Acid: {
-					pixelColor.r = static_cast<sf::Uint8>(225 * brightnessColor2);
-					pixelColor.g = static_cast<sf::Uint8>(255 * brightnessColor2);
-					pixelColor.b = static_cast<sf::Uint8>(125 * brightnessColor2);
-					pixelColor.a = 200;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Dynamite: {
-					pixelColor.r = static_cast<sf::Uint8>(110 * brightnessColor2);
-					pixelColor.g = static_cast<sf::Uint8>(33 * brightnessColor2);
-					pixelColor.b = static_cast<sf::Uint8>(29 * brightnessColor2);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				case ParticleWorld::Material::Nuke: {
-					pixelColor.r = static_cast<sf::Uint8>(63 * brightnessColor2);
-					pixelColor.g = static_cast<sf::Uint8>(107 * brightnessColor2);
-					pixelColor.b = static_cast<sf::Uint8>(49 * brightnessColor2);
-					pixelColor.a = 255;
-
-					renderedParticles++;
-					break;
-				}
-				}
-			}
-
-			if (renderParticle)
-			{
-				sf::Vertex topLeft(
-					renderToWorldCoordinates(sf::Vector2f(col - half_nCols - minCol, row - half_nRows - minRow)),
-					pixelColor
-				);
-
-				sf::Vertex topRight(
-					renderToWorldCoordinates(sf::Vector2f(col - half_nCols - minCol + 1, row - half_nRows - minRow)),
-					pixelColor
-				);
-
-				sf::Vertex bottomRight(
-					renderToWorldCoordinates(sf::Vector2f(col - half_nCols - minCol + 1, row - half_nRows - minRow + 1)),
-					pixelColor
-				);
-
-				sf::Vertex bottomLeft(
-					renderToWorldCoordinates(sf::Vector2f(col - half_nCols - minCol, row - half_nRows - minRow + 1)),
-					pixelColor
-				);
-
-				quadClump.append(topLeft);
-				quadClump.append(topRight);
-				quadClump.append(bottomRight);
-				quadClump.append(bottomLeft);
-			}
-		}
+		windowPositionNormalized = windowPositionNormalized * sf::Vector2f(1.0, 1.0 / aspect);
+	}
+	else
+	{
+		windowPositionNormalized = windowPositionNormalized * sf::Vector2f(aspect, 1.0);
 	}
 
-	renderWindow.draw(quadClump);
+	windowPositionNormalized = (windowPositionNormalized + sf::Vector2f(1, 1)) / 2.0f;
 
-	return renderedParticles;
-}
+	windowPositionNormalized = windowPositionNormalized * worldSize;
 
-sf::Vector2f ParticleRenderer::windowToRenderCoordinates(sf::Vector2f windowCoords)
-{
-	return windowCoords - static_cast<sf::Vector2f>(uiOffset);
-}
-
-sf::Vector2f ParticleRenderer::renderToWorldCoordinates(sf::Vector2f renderCoords)
-{
-	sf::Vector2f offset = sf::Vector2f(uiOffset.x + size.x / 2, uiOffset.y + size.y / 2);
-	return renderCoords * zoomLevel + offset;
-}
-
-sf::Vector2f ParticleRenderer::windowToWorldCoordinates(sf::Vector2i windowCoords)
-{
-	sf::Vector2f windowCoordsF = (sf::Vector2f)windowCoords;
-	sf::Vector2f uiOffsetF = (sf::Vector2f)uiOffset;
-	sf::Vector2f sizeF = (sf::Vector2f)size;
-	
-	sf::Vector2f worldCoords = windowCoordsF;
-	worldCoords -= uiOffsetF;
-	worldCoords -= sizeF / 2.f;
-	worldCoords /= zoomLevel;
-	worldCoords += sizeF / 2.f;
-	worldCoords += position;
-	
-	return worldCoords;
-}
-
-sf::Vector2f ParticleRenderer::staticWorldToWorldCoordinates(sf::Vector2i particleCoords)
-{
-	sf::Vector2f particleCoordsF = (sf::Vector2f)particleCoords;
-	sf::Vector2f uiOffsetF = (sf::Vector2f)uiOffset;
-	sf::Vector2f sizeF = (sf::Vector2f)size;
-
-	sf::Vector2f worldCoords = particleCoordsF * zoomLevel;
-	worldCoords -= sizeF / 2.f;
-	worldCoords /= zoomLevel;
-	worldCoords += sizeF / 2.f;
-	worldCoords += position;
-
-	return worldCoords;
+	return sf::Vector2i(windowPositionNormalized);
 }

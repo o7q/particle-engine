@@ -66,12 +66,13 @@ MenuType MainMenu::tick()
 
 		if (anyKeyPressed)
 		{
-			particleWorld->unfreeze();
+			//particleWorld->unfreeze();
 			//for (int i = 0; i < mainMenu_music.size(); ++i)
 			//{
 			//	mainMenu_music[i]->stop();
 			//}
 
+			particleWorld->unfreeze();
 			return MenuType::SANDBOX_MENU;
 		}
 	}

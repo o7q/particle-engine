@@ -26,8 +26,8 @@ int Random::genInt(int min, int max)
 	return dist(gen);
 }
 
-double Random::genDouble(double min, double max)
+float Random::genFloat(float min, float max)
 {
-	std::uniform_real_distribution<double> dist(min, max);
+	std::uniform_real_distribution<float> dist(min, max);
 	return dist(gen);
 }

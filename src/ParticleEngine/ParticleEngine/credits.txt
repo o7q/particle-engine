@@ -1,0 +1,37 @@
+particle engine // Credits & Thanks
+                // Updated 6/6/2024
+
+====================================================================================+
+
+Development
+   James Vought    [alias: jame, o7q]        | Lead Programmer & Designer
+   Emmett Jaakkola [alias: Emmennater, MN8R] | Render Engine & Optimization Help
+
+Playtesters
+
+
+Special Thanks
+
+====================================================================================+
+
+Tools Used
+   Visual Studio
+      https://visualstudio.microsoft.com
+   Visual Studio Code
+      https://code.visualstudio.com
+	  https://github.com/microsoft/vscode
+   paint.net
+      https://www.getpaint.net
+   Aseprite
+      https://aseprite.org
+	  https://github.com/aseprite
+   FL Studio
+      https://www.image-line.com
+   Audacity
+      https://www.audacityteam.org
+	  https://github.com/audacity
+	
+Libraries Used
+   SFML
+      https://www.sfml-dev.org
+	  https://github.com/SFML/SFML

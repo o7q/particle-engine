@@ -12,22 +12,22 @@ public:
 
 	int get(int, int);
 	void set(int, int, int);
-	int getRowSize();
-	int getColSize();
+	int getRowSize() const;
+	int getColSize() const;
 };
 
-class Double2D {
+class Float2D {
 private:
-	double* arr;
+	float* arr;
 	int rowSize;
 	int colSize;
 
 public:
-	Double2D(int, int);
-	~Double2D();
+	Float2D(int, int);
+	~Float2D();
 
-	double get(int, int);
-	void set(int, int, double);
-	int getRowSize();
-	int getColSize();
+	float get(int, int);
+	void set(int, int, float);
+	int getRowSize() const;
+	int getColSize() const;
 };

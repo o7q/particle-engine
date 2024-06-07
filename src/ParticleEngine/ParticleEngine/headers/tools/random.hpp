@@ -11,5 +11,5 @@ public:
 	static void init();
 	static void reseed();
 	static int genInt(int, int);
-	static double genDouble(double, double);
+	static float genFloat(float, float);
 };

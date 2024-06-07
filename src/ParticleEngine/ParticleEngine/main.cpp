@@ -31,8 +31,8 @@ const sf::Vector2u uiSize(1550, 750);
 
 const sf::Vector2i uiOffset(10, 10 + titleBarHeight);
 
-const unsigned int rowSize = 300*4; // amount of particle pixels for row
-const unsigned int colSize = 400*4; // amount of particle pixels for column
+const unsigned int rowSize = 400; // amount of particle pixels for row
+const unsigned int colSize = 500; // amount of particle pixels for column
 
 const unsigned int simSpeed = 3; // how many physics steps will be performed each frame
 const unsigned int maxFps = 0; // max fps (set to 0 for no limit, as defined in: sf::Window::setFrameRateLimit())
@@ -50,7 +50,7 @@ int main()
 	particleWorld->freeze();
 
 	sf::Vector2u particleRendererSize(uiSize.x - uiOffset.x * 2, uiSize.y - 100);
-	ParticleRenderer* particleRenderer = new ParticleRenderer(particleRendererSize, renderWindow);
+	ParticleRenderer* particleRenderer = new ParticleRenderer(particleRendererSize, particleWorld, renderWindow);
 	particleRenderer->setUIOffset(uiOffset);
 
 	// init random
@@ -172,6 +172,8 @@ int main()
 
 		renderWindow.clear();
 
+		int particleCount = particleRenderer->render();
+
 		switch (currentMenu)
 		{
 		case MenuType::MAIN_MENU:
@@ -200,35 +202,34 @@ int main()
 
 		if (windowInFocus)
 		{
-			float translateSpeed = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ? 5.0f : 1.0f;
+			float translateSpeed = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ? 30.0f : 10.0f;
+			float zoomSpeed = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ? 1.1f : 1.0f;
 
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 			{
-				particleRenderer->translate(ParticleRenderer::Direction::UP, translateSpeed);
+				particleRenderer->translate(sf::Vector2f(0.0f * translateSpeed, -1.0f * translateSpeed));
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
 			{
-				particleRenderer->translate(ParticleRenderer::Direction::DOWN, translateSpeed);
+				particleRenderer->translate(sf::Vector2f(0.0f * translateSpeed, 1.0f * translateSpeed));
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 			{
-				particleRenderer->translate(ParticleRenderer::Direction::LEFT, translateSpeed);
+				particleRenderer->translate(sf::Vector2f(-1.0f * translateSpeed, 0.0f * translateSpeed));
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 			{
-				particleRenderer->translate(ParticleRenderer::Direction::RIGHT, translateSpeed);
+				particleRenderer->translate(sf::Vector2f(1.0f * translateSpeed, 0.0f * translateSpeed));
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
 			{
-				particleRenderer->zoom(0.1f * translateSpeed);
+				particleRenderer->zoom(1.01 * zoomSpeed);
 			}
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
 			{
-				particleRenderer->zoom(-0.1f * translateSpeed);
+				particleRenderer->zoom(0.99 / zoomSpeed);
 			}
 		}
-
-		int particleCount = particleRenderer->render(particleWorld);
 
 		titleBarPanel->draw();
 		renderWindow.draw(titleBarText);

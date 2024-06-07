@@ -16,12 +16,12 @@ void generateOcean(ParticleWorld* particleWorld)
 
 	// LAYER 1
 	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 1 noise");
-	Double2D* layer1_kernel = generate2DKernel(15, 15, 0.005);
+	Float2D* layer1_kernel = generate2DKernel(15, 15, 0.005);
 	Int2D* layer1_convolutedWorld = generateNoiseBase(rowSize, colSize, layer1_kernel, 0, 255);
 
 	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 1 noise (convolution)");
 	int layer1_groundHeightKernelSize = 10;
-	double* layer1_groundHeightsKernel = generate1DKernel(layer1_groundHeightKernelSize, 0.05);
+	float* layer1_groundHeightsKernel = generate1DKernel(layer1_groundHeightKernelSize, 0.05);
 
 	// 1.575f is derived from 315/200 (315 is the height of pixelSize 2, 200 is what the height value should be for pixelSize 2, doing this division guarentees no invalid numbers are generated)
 	// 3.15f is derived from 315/100 (same applies for this, but instead its for topOffset)
@@ -87,7 +87,7 @@ void generateOcean(ParticleWorld* particleWorld)
 				temp.physicsType = ParticleWorld::PhysicsType::NoGravity;
 				break;
 			}
-			temp.brightnessMultiplier = Random::genDouble(0.9, 1.0);
+			temp.brightnessMultiplier = Random::genFloat(0.9, 1.0);
 			particleWorld->setParticle(row, col, temp);
 		}
 	}

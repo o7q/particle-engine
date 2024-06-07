@@ -28,7 +28,7 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 					colSize - 1
 				);
 
-				particle.brightnessMultiplier = Random::genDouble(0.9, 1.0);
+				particle.brightnessMultiplier = Random::genFloat(0.9, 1.0);
 				particle.wetnessMultiplier = 1.0f;
 				particle.intValue = 0;
 
@@ -57,7 +57,7 @@ void ParticleWorld::paintParticles(int row, int col, int size, ParticleWorld::Pa
 						colSize - 1
 					);
 
-					particle.brightnessMultiplier = Random::genDouble(0.9, 1.0);
+					particle.brightnessMultiplier = Random::genFloat(0.9, 1.0);
 					particle.wetnessMultiplier = 1.0f;
 					particle.intValue = 0;
 

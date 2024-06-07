@@ -1,38 +1,35 @@
-#include <iostream>
-#include <algorithm>
-
 #include "tools/num2d.hpp"
 #include "tools/tools.hpp"
 
-Int2D::Int2D(int rowSize, int colSize)
+Float2D::Float2D(int rowSize, int colSize)
 {
-	arr = new int[rowSize * colSize];
+	arr = new float[rowSize * colSize];
 
 	this->rowSize = rowSize;
 	this->colSize = colSize;
 }
 
-Int2D::~Int2D()
+Float2D::~Float2D()
 {
 	delete[] arr;
 }
 
-int Int2D::get(int row, int col)
+float Float2D::get(int row, int col)
 {
 	return *(arr + get1DIndex(row, col, colSize));
 }
 
-void Int2D::set(int row, int col, int value)
+void Float2D::set(int row, int col, float value)
 {
 	*(arr + get1DIndex(row, col, colSize)) = value;
 }
 
-int Int2D::getRowSize()
+int Float2D::getRowSize() const
 {
 	return rowSize;
 }
 
-int Int2D::getColSize()
+int Float2D::getColSize() const
 {
 	return colSize;
 }

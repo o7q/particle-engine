@@ -143,7 +143,7 @@ void SoundEngine::playSound(SoundType soundType, int col, int colSize)
 		return;
 	}
 
-	double centeredValue = col - (colSize / 2.0);
+	float centeredValue = col - (colSize / 2.0);
 	float location = (centeredValue / (colSize / 2.0)) / 10;
 
 	switch (soundType)

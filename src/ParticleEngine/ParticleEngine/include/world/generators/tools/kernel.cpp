@@ -2,9 +2,9 @@
 
 #include "tools/num2d.hpp"
 
-double* generate1DKernel(int colSize, double value)
+float* generate1DKernel(int colSize, float value)
 {
-	double* kernel = new double[colSize];
+	float* kernel = new float[colSize];
 	for (int col = 0; col < colSize; ++col)
 	{
 		kernel[col] = value;
@@ -13,9 +13,9 @@ double* generate1DKernel(int colSize, double value)
 	return kernel;
 }
 
-Double2D* generate2DKernel(int rowSize, int colSize, double value)
+Float2D* generate2DKernel(int rowSize, int colSize, float value)
 {
-	Double2D* kernel = new Double2D(rowSize, colSize);
+	Float2D* kernel = new Float2D(rowSize, colSize);
 	for (int row = 0; row < rowSize; ++row)
 	{
 		for (int col = 0; col < colSize; ++col)

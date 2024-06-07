@@ -37,9 +37,6 @@
     <Filter Include="Source Files\world\generators">
       <UniqueIdentifier>{0bd079f6-bbb9-4530-b761-442aad4d40da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\tools\num2d">
-      <UniqueIdentifier>{be7fdbfe-c9b2-4a7c-8bb5-327c4d95c212}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\particle\sounds">
       <UniqueIdentifier>{ab113409-04bf-42e4-a7d5-5041b1c6102c}</UniqueIdentifier>
     </Filter>
@@ -91,6 +88,12 @@
     <Filter Include="Source Files\particle\particle_world\physics\materials">
       <UniqueIdentifier>{e2695efc-5fb7-4bf1-9162-0971d50aba7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\particle\rendering\shaders">
+      <UniqueIdentifier>{50cb1b2e-7b11-4ea8-a3df-42c88cbcb81e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\tools\num2d">
+      <UniqueIdentifier>{be7fdbfe-c9b2-4a7c-8bb5-327c4d95c212}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -107,12 +110,6 @@
     </ClCompile>
     <ClCompile Include="include\world\generators\tools\noise.cpp">
       <Filter>Source Files\world\tools</Filter>
-    </ClCompile>
-    <ClCompile Include="include\tools\num2d\double2d.cpp">
-      <Filter>Source Files\tools\num2d</Filter>
-    </ClCompile>
-    <ClCompile Include="include\tools\num2d\int2d.cpp">
-      <Filter>Source Files\tools\num2d</Filter>
     </ClCompile>
     <ClCompile Include="include\world\generators\tools\kernel.cpp">
       <Filter>Source Files\world\tools</Filter>
@@ -204,6 +201,12 @@
     <ClCompile Include="include\particle\particle_world\physics\materials\water.cpp">
       <Filter>Source Files\particle\particle_world\physics\materials</Filter>
     </ClCompile>
+    <ClCompile Include="include\tools\num\float2d.cpp">
+      <Filter>Source Files\tools\num2d</Filter>
+    </ClCompile>
+    <ClCompile Include="include\tools\num\int2d.cpp">
+      <Filter>Source Files\tools\num2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\tools\tools.hpp">
@@ -242,5 +245,13 @@
     <ClInclude Include="headers\effects\effects.hpp">
       <Filter>Header Files\effects</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shaders\particle\shader.frag">
+      <Filter>Source Files\particle\rendering\shaders</Filter>
+    </None>
+    <None Include="data\shaders\particle\shader.vert">
+      <Filter>Source Files\particle\rendering\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

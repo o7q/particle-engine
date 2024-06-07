@@ -19,12 +19,12 @@ public:
 		ZOOM_OUT
 	};
 
-	ParticleRenderer(sf::Vector2u, sf::RenderWindow&);
+	ParticleRenderer(sf::Vector2u, ParticleWorld*, sf::RenderWindow&);
 
-	int render(ParticleWorld*);
+	void render();
 	void zoom(float);
 	float getZoom();
-	void translate(Direction, float);
+	void translate(sf::Vector2f);
 	sf::Vector2f getTranslate();
 	void setTranslate(sf::Vector2f);
 
@@ -32,18 +32,19 @@ public:
 	void setUIOffset(sf::Vector2i);
 	sf::Vector2i getUIOffset();
 
-	sf::Vector2f windowToRenderCoordinates(sf::Vector2f);
-	sf::Vector2f renderToWorldCoordinates(sf::Vector2f);
-	sf::Vector2f windowToWorldCoordinates(sf::Vector2i);
-	sf::Vector2f staticWorldToWorldCoordinates(sf::Vector2i);
+	sf::Vector2i windowToWorldCoordinates(sf::Vector2i);
 
 private:
 	sf::Vector2u size;
 
+	ParticleWorld* particleWorld;
 	sf::RenderWindow& renderWindow;
+
+	sf::Shader shader;
+	sf::VertexArray quad;
 
 	sf::Vector2i uiOffset;
 
-	sf::Vector2f position;
+	sf::Vector2f translation;
 	float zoomLevel;
 };

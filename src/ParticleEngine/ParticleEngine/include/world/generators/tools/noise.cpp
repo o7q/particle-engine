@@ -5,7 +5,7 @@
 #include "tools/num2d.hpp"
 #include "tools/random.hpp"
 
-Int2D* generateNoiseBase(int rowSize, int colSize, Double2D* kernel, int minBrightness, int maxBrightness)
+Int2D* generateNoiseBase(int rowSize, int colSize, Float2D* kernel, int minBrightness, int maxBrightness)
 {
 	Int2D* noisyWorld = new Int2D(rowSize, colSize);
 	Int2D* convolutedWorld = new Int2D(rowSize, colSize);
@@ -26,7 +26,7 @@ Int2D* generateNoiseBase(int rowSize, int colSize, Double2D* kernel, int minBrig
 			int kernel_rowSize = kernel->getRowSize();
 			int kernel_colSize = kernel->getColSize();
 
-			double worldSmoothConvolution = 0;
+			float worldSmoothConvolution = 0;
 			for (int kernel_row = 0; kernel_row < kernel_rowSize; ++kernel_row)
 			{
 				for (int kernel_col = 0; kernel_col < kernel_colSize; ++kernel_col)
@@ -53,7 +53,7 @@ Int2D* generateNoiseBase(int rowSize, int colSize, Double2D* kernel, int minBrig
 	return convolutedWorld;
 }
 
-int* generateGroundLayer(int rowSize, int colSize, int noisyCutStartMin, int noisyCutEndMax, int topOffset, double* kernel, int kernelSize)
+int* generateGroundLayer(int rowSize, int colSize, int noisyCutStartMin, int noisyCutEndMax, int topOffset, float* kernel, int kernelSize)
 {
 	int* groundHeights = new int[colSize];
 	int* convolutedGroundHeights = new int[colSize];
@@ -66,7 +66,7 @@ int* generateGroundLayer(int rowSize, int colSize, int noisyCutStartMin, int noi
 
 	for (int col = 0; col < colSize; ++col)
 	{
-		double groundLayerConvolution = 0;
+		float groundLayerConvolution = 0;
 
 		for (int kernel_col = 0; kernel_col < kernelSize; ++kernel_col)
 		{

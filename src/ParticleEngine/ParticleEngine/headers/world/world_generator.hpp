@@ -17,12 +17,12 @@ std::vector<sf::Image> ocean_getObjects();
 void generateSwamp(ParticleWorld*);
 
 // noise
-Int2D* generateNoiseBase(int, int, Double2D*, int, int);
-int* generateGroundLayer(int, int, int, int, int, double*, int);
+Int2D* generateNoiseBase(int, int, Float2D*, int, int);
+int* generateGroundLayer(int, int, int, int, int, float*, int);
 
 // kernel
-double* generate1DKernel(int, double);
-Double2D* generate2DKernel(int, int, double);
+float* generate1DKernel(int, float);
+Float2D* generate2DKernel(int, int, float);
 
 // quantize
 int quantizeValue(int, int*, int);

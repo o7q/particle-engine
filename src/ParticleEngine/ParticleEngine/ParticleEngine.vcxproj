@@ -45,8 +45,8 @@
     <ClCompile Include="include\particle\sounds\particle_sounds.cpp" />
     <ClCompile Include="include\tools\arrays.cpp" />
     <ClCompile Include="include\tools\logger.cpp" />
-    <ClCompile Include="include\tools\num2d\double2d.cpp" />
-    <ClCompile Include="include\tools\num2d\int2d.cpp" />
+    <ClCompile Include="include\tools\num\float2d.cpp" />
+    <ClCompile Include="include\tools\num\int2d.cpp" />
     <ClCompile Include="include\tools\random.cpp" />
     <ClCompile Include="include\world\generators\ocean\ocean.cpp" />
     <ClCompile Include="include\world\generators\ocean\ocean_objects.cpp" />
@@ -70,6 +70,10 @@
     <ClInclude Include="headers\tools\random.hpp" />
     <ClInclude Include="headers\tools\tools.hpp" />
     <ClInclude Include="headers\world\world_generator.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shaders\particle\shader.frag" />
+    <None Include="data\shaders\particle\shader.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

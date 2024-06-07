@@ -15,12 +15,12 @@ void generateSwamp(ParticleWorld* particleWorld)
 
 	// LAYER 3
 	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 3 noise");
-	Double2D* layer3_kernel = generate2DKernel(15, 15, 0.01);
+	Float2D* layer3_kernel = generate2DKernel(15, 15, 0.01);
 	Int2D* layer3_convolutedWorld = generateNoiseBase(rowSize, colSize, layer3_kernel, 0, 255);
 
 	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 3 noise (convolution)");
 	int layer3_groundHeightKernelSize = 40;
-	double* layer3_groundHeightsKernel = generate1DKernel(layer3_groundHeightKernelSize, 0.05);
+	float* layer3_groundHeightsKernel = generate1DKernel(layer3_groundHeightKernelSize, 0.05);
 
 	// 1.575f is derived from 315/200 (315 is the height of pixelSize 2, 200 is what the height value should be for pixelSize 2, doing this division guarentees no invalid numbers are generated)
 	// -1.40625f is derived from 315/-224 (same applies for this, but instead its for topOffset)
@@ -38,12 +38,12 @@ void generateSwamp(ParticleWorld* particleWorld)
 
 	// LAYER 2
 	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 2 noise");
-	Double2D* layer2_kernel = generate2DKernel(20, 20, 0.01);
+	Float2D* layer2_kernel = generate2DKernel(20, 20, 0.01);
 	Int2D* layer2_convolutedWorld = generateNoiseBase(rowSize, colSize, layer2_kernel, 0, 240);
 
 	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 2 noise (convolution)");
 	int layer2_groundHeightKernelSize = 40;
-	double* layer2_groundHeightsKernel = generate1DKernel(layer2_groundHeightKernelSize, 0.05);
+	float* layer2_groundHeightsKernel = generate1DKernel(layer2_groundHeightKernelSize, 0.05);
 
 	// 1.575f is derived from 315/200 (guarentees swamp level does not generate invalid values, read above comments for context)
 	// -1.05f is derived from 315/-300 (guarentees swamp level does not generate invalid values, read above comments for context)
@@ -61,12 +61,12 @@ void generateSwamp(ParticleWorld* particleWorld)
 
 	// LAYER 1
 	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 1 noise");
-	Double2D* layer1_kernel = generate2DKernel(20, 20, 0.01);
+	Float2D* layer1_kernel = generate2DKernel(20, 20, 0.01);
 	Int2D* layer1_convolutedWorld = generateNoiseBase(rowSize, colSize, layer1_kernel, 0, 200);
 
 	Logger::log(Logger::LogType::INFO, __func__, __LINE__, "Generating LAYER 1 noise (convolution)");
 	int layer1_groundHeightKernelSize = 40;
-	double* layer1_groundHeightsKernel = generate1DKernel(layer1_groundHeightKernelSize, 0.05);
+	float* layer1_groundHeightsKernel = generate1DKernel(layer1_groundHeightKernelSize, 0.05);
 
 	// 1.575f is derived from 315/200 (guarentees swamp level does not generate invalid values, read above comments for context)
 	// -0.984375f is derived from 315/-320 (guarentees swamp level does not generate invalid values, read above comments for context)
@@ -132,7 +132,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 	}
 
 	// values for quantized map, each value corresponds to a material
-	int quantizedValueMap[] = { 255, 200, 240, 3, 69, 0 };
+	int quantizedValueMap[] = { 255, 200, 240, 10, 69/*, 0*/ };
 
 	// random dist for brightness
 	std::uniform_int_distribution<int> colorPatternDist(9, 10);
@@ -143,7 +143,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 		for (int col = 0; col < colSize; ++col)
 		{
 			ParticleWorld::Particle temp;
-			int closestIndex = quantizeValue(convolutedWorld->get(row, col), quantizedValueMap, 7);
+			int closestIndex = quantizeValue(convolutedWorld->get(row, col), quantizedValueMap, 6 /*7*/);
 
 			switch (quantizedValueMap[closestIndex])
 			{
@@ -163,7 +163,7 @@ void generateSwamp(ParticleWorld* particleWorld)
 				temp.materialType = ParticleWorld::MaterialType::Solid;
 				temp.physicsType = ParticleWorld::PhysicsType::Dirt;
 				break;
-			case 3:
+			case 10:
 				temp.material = ParticleWorld::Material::Dirt;
 				temp.materialType = ParticleWorld::MaterialType::Solid;
 				temp.physicsType = ParticleWorld::PhysicsType::Dirt;
@@ -173,13 +173,13 @@ void generateSwamp(ParticleWorld* particleWorld)
 				temp.materialType = ParticleWorld::MaterialType::Solid;
 				temp.physicsType = ParticleWorld::PhysicsType::NoGravity;
 				break;
-			case 0:
-				temp.material = ParticleWorld::Material::Air;
-				temp.materialType = ParticleWorld::MaterialType::Gas;
-				temp.physicsType = ParticleWorld::PhysicsType::NoGravity;
-				break;
+			//case 0:
+			//	temp.material = ParticleWorld::Material::Air;
+			//	temp.materialType = ParticleWorld::MaterialType::Gas;
+			//	temp.physicsType = ParticleWorld::PhysicsType::NoGravity;
+			//	break;
 			}
-			temp.brightnessMultiplier = Random::genDouble(0.9, 1.0);
+			temp.brightnessMultiplier = Random::genFloat(0.9, 1.0);
 			particleWorld->setParticle(row, col, temp);
 		}
 	}

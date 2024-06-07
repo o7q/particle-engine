@@ -5,12 +5,12 @@
 
 int quantizeValue(int input, int* values, int valuesSize)
 {
-	double closestDistance = std::numeric_limits<double>::max();
+	float closestDistance = std::numeric_limits<float>::max();
 	int closestIndex = 0;
 
 	for (int i = 0; i < valuesSize; ++i)
 	{
-		double distance = std::sqrt(std::pow(input - values[i], 2));
+		float distance = std::sqrt(std::pow(input - values[i], 2));
 
 		if (distance < closestDistance)
 		{

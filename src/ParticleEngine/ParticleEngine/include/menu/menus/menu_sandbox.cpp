@@ -15,7 +15,8 @@ MenuType SandboxMenu::tick()
 
 	if (update())
 	{
-		sf::Vector2f mouseWorldCoords = particleRenderer->windowToWorldCoordinates(LOCAL_MOUSE_POSITION);
+
+		sf::Vector2i mouseWorldCoords = particleRenderer->windowToWorldCoordinates(LOCAL_MOUSE_POSITION);
 
 		if (CLICKED_BUTTON_ID == "stoneButton")
 		{
@@ -164,7 +165,7 @@ MenuType SandboxMenu::tick()
 
 		if (MOUSE_DOWN)
 		{
-			particleWorld->paintParticles(mouseWorldCoords.y, mouseWorldCoords.x, 6, drawingParticle, ParticleWorld::Shape::Circle);
+			particleWorld->paintParticles(mouseWorldCoords.y, mouseWorldCoords.x, 3, drawingParticle, ParticleWorld::Shape::Circle);
 		}
 	}
 
