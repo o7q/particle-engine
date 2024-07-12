@@ -94,6 +94,15 @@
     <Filter Include="Source Files\tools\num2d">
       <UniqueIdentifier>{be7fdbfe-c9b2-4a7c-8bb5-327c4d95c212}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\game">
+      <UniqueIdentifier>{ec6bea4a-6da8-4803-bb74-2eb933afde75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game">
+      <UniqueIdentifier>{672df267-cfc5-48b7-9047-801ccad8d9bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\window">
+      <UniqueIdentifier>{3d86448c-1d92-4e07-b8dd-02e4ce189cc2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -207,6 +216,12 @@
     <ClCompile Include="include\tools\num\int2d.cpp">
       <Filter>Source Files\tools\num2d</Filter>
     </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="window.cpp">
+      <Filter>Source Files\game\window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\tools\tools.hpp">
@@ -244,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="headers\effects\effects.hpp">
       <Filter>Header Files\effects</Filter>
+    </ClInclude>
+    <ClInclude Include="game.hpp">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

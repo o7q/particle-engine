@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="include\effects\effector.cpp" />
     <ClCompile Include="include\effects\shake.cpp" />
     <ClCompile Include="include\init\text.cpp" />
@@ -56,8 +57,10 @@
     <ClCompile Include="include\world\generators\tools\quantize.cpp" />
     <ClCompile Include="include\world\world_generator.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="game.hpp" />
     <ClInclude Include="headers\effects\effects.hpp" />
     <ClInclude Include="headers\init.hpp" />
     <ClInclude Include="headers\menu\controls\button.hpp" />

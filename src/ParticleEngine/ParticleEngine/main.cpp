@@ -106,149 +106,149 @@ int main()
 
 	ShakeEffect* shakeEffect = new ShakeEffect(renderWindow, particleWorld, renderWindowUserPosition);
 
-	while (renderWindow.isOpen())
-	{
-		shakeEffect->tick();
+	//while (renderWindow.isOpen())
+	//{
+	//	shakeEffect->tick();
 
-		// start clock for fps measurer
-		clock_t start = clock();
+	//	// start clock for fps measurer
+	//	clock_t start = clock();
 
-		sf::Event event;
-		while (renderWindow.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed || exitProgram)
-			{
-				renderWindow.close();
-			}
-			else if (event.type == sf::Event::GainedFocus)
-			{
-				windowInFocus = true;
-			}
-			else if (event.type == sf::Event::LostFocus)
-			{
-				windowInFocus = false;
-			}
-		}
+	//	sf::Event event;
+	//	while (renderWindow.pollEvent(event))
+	//	{
+	//		if (event.type == sf::Event::Closed || exitProgram)
+	//		{
+	//			renderWindow.close();
+	//		}
+	//		else if (event.type == sf::Event::GainedFocus)
+	//		{
+	//			windowInFocus = true;
+	//		}
+	//		else if (event.type == sf::Event::LostFocus)
+	//		{
+	//			windowInFocus = false;
+	//		}
+	//	}
 
-		sf::Vector2i localMousePos = sf::Mouse::getPosition(renderWindow);
-		sf::Vector2i globalMousePos = sf::Mouse::getPosition();
-		sf::Vector2i windowGlobalPosition = renderWindow.getPosition();
+	//	sf::Vector2i localMousePos = sf::Mouse::getPosition(renderWindow);
+	//	sf::Vector2i globalMousePos = sf::Mouse::getPosition();
+	//	sf::Vector2i windowGlobalPosition = renderWindow.getPosition();
 
-		bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left);
+	//	bool mouseDown = sf::Mouse::isButtonPressed(sf::Mouse::Left);
 
-		if (mouseDown && !titleBarPanel->isMouseHover())
-		{
-			clickedOnTitlebar = false;
-		}
+	//	if (mouseDown && !titleBarPanel->isMouseHover())
+	//	{
+	//		clickedOnTitlebar = false;
+	//	}
 
-		if (!mouseDown)
-		{
-			clickedOnTitlebar = true;
-		}
+	//	if (!mouseDown)
+	//	{
+	//		clickedOnTitlebar = true;
+	//	}
 
-		if (closeButton->hasMouseClicked())
-		{
-			exitProgram = true;
-		}
+	//	if (closeButton->hasMouseClicked())
+	//	{
+	//		exitProgram = true;
+	//	}
 
-		if (mouseDown && titleBarPanel->isMouseHover() && clickedOnTitlebar)
-		{
-			renderWindow.setPosition(
-				sf::Vector2i(
-					windowInitialGlobalPos.x + globalMousePos.x - mouseInitialGlobalPos.x,
-					windowInitialGlobalPos.y + globalMousePos.y - mouseInitialGlobalPos.y
-				)
-			);
+	//	if (mouseDown && titleBarPanel->isMouseHover() && clickedOnTitlebar)
+	//	{
+	//		renderWindow.setPosition(
+	//			sf::Vector2i(
+	//				windowInitialGlobalPos.x + globalMousePos.x - mouseInitialGlobalPos.x,
+	//				windowInitialGlobalPos.y + globalMousePos.y - mouseInitialGlobalPos.y
+	//			)
+	//		);
 
-			renderWindowUserPosition = renderWindow.getPosition();
-			// skip particle processing to improve dragging performance
-			continue;
-		}
-		else
-		{
-			mouseInitialGlobalPos = globalMousePos;
-			windowInitialGlobalPos = windowGlobalPosition;
-		}
+	//		renderWindowUserPosition = renderWindow.getPosition();
+	//		// skip particle processing to improve dragging performance
+	//		continue;
+	//	}
+	//	else
+	//	{
+	//		mouseInitialGlobalPos = globalMousePos;
+	//		windowInitialGlobalPos = windowGlobalPosition;
+	//	}
 
-		renderWindow.clear();
+	//	renderWindow.clear();
 
-		int particleCount = particleRenderer->render();
+	//	particleRenderer->render();
 
-		switch (currentMenu)
-		{
-		case MenuType::MAIN_MENU:
-			currentMenu = mainMenu->tick();
-			menuChange = currentMenu != MenuType::MAIN_MENU;
-			break;
-		case MenuType::SANDBOX_MENU:
-			currentMenu = sandboxMenu->tick();
-			menuChange = currentMenu != MenuType::SANDBOX_MENU;
-			break;
-		}
+	//	switch (currentMenu)
+	//	{
+	//	case MenuType::MAIN_MENU:
+	//		currentMenu = mainMenu->tick();
+	//		menuChange = currentMenu != MenuType::MAIN_MENU;
+	//		break;
+	//	case MenuType::SANDBOX_MENU:
+	//		currentMenu = sandboxMenu->tick();
+	//		menuChange = currentMenu != MenuType::SANDBOX_MENU;
+	//		break;
+	//	}
 
-		if (menuChange)
-		{
-			shakeEffect->setShakeLength(10);
-			//menuChangeSound.play();
-		}
+	//	if (menuChange)
+	//	{
+	//		shakeEffect->setShakeLength(10);
+	//		//menuChangeSound.play();
+	//	}
 
-		if (!particleWorld->isFrozen())
-		{
-			for (int i = 0; i < simSpeed; ++i)
-			{
-				particleWorld->update();
-			}
-		}
+	//	if (!particleWorld->isFrozen())
+	//	{
+	//		for (int i = 0; i < simSpeed; ++i)
+	//		{
+	//			particleWorld->update();
+	//		}
+	//	}
 
-		if (windowInFocus)
-		{
-			float translateSpeed = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ? 30.0f : 10.0f;
-			float zoomSpeed = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ? 1.1f : 1.0f;
+	//	if (windowInFocus)
+	//	{
+	//		float translateSpeed = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ? 30.0f : 10.0f;
+	//		float zoomSpeed = sf::Keyboard::isKeyPressed(sf::Keyboard::LShift) ? 1.1f : 1.0f;
 
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-			{
-				particleRenderer->translate(sf::Vector2f(0.0f * translateSpeed, -1.0f * translateSpeed));
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-			{
-				particleRenderer->translate(sf::Vector2f(0.0f * translateSpeed, 1.0f * translateSpeed));
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-			{
-				particleRenderer->translate(sf::Vector2f(-1.0f * translateSpeed, 0.0f * translateSpeed));
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-			{
-				particleRenderer->translate(sf::Vector2f(1.0f * translateSpeed, 0.0f * translateSpeed));
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-			{
-				particleRenderer->zoom(1.01 * zoomSpeed);
-			}
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
-			{
-				particleRenderer->zoom(0.99 / zoomSpeed);
-			}
-		}
+	//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	//		{
+	//			particleRenderer->translate(sf::Vector2f(0.0f * translateSpeed, -1.0f * translateSpeed));
+	//		}
+	//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+	//		{
+	//			particleRenderer->translate(sf::Vector2f(0.0f * translateSpeed, 1.0f * translateSpeed));
+	//		}
+	//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+	//		{
+	//			particleRenderer->translate(sf::Vector2f(-1.0f * translateSpeed, 0.0f * translateSpeed));
+	//		}
+	//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+	//		{
+	//			particleRenderer->translate(sf::Vector2f(1.0f * translateSpeed, 0.0f * translateSpeed));
+	//		}
+	//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+	//		{
+	//			particleRenderer->zoom(1.01 * zoomSpeed);
+	//		}
+	//		if (sf::Keyboard::isKeyPressed(sf::Keyboard::X))
+	//		{
+	//			particleRenderer->zoom(0.99 / zoomSpeed);
+	//		}
+	//	}
 
-		titleBarPanel->draw();
-		renderWindow.draw(titleBarText);
+	//	titleBarPanel->draw();
+	//	renderWindow.draw(titleBarText);
 
-		closeButton->draw();
+	//	closeButton->draw();
 
-		particleCountText.setString("Particles: " + std::to_string(particleCount));
-		renderWindow.draw(particleCountText);
+	//	particleCountText.setString("Particles: " + std::to_string(0));
+	//	renderWindow.draw(particleCountText);
 
-		fpsText.setString(fpsString);
-		renderWindow.draw(fpsText);
+	//	fpsText.setString(fpsString);
+	//	renderWindow.draw(fpsText);
 
-		renderWindow.display();
+	//	renderWindow.display();
 
-		clock_t end = clock();
-		double elapsed_time = double(end - start) / CLOCKS_PER_SEC;
-		int fps = static_cast<int>(std::round(1 / elapsed_time));
-		fpsString = "FPS: " + std::to_string(fps);
-	}
+	//	clock_t end = clock();
+	//	double elapsed_time = double(end - start) / CLOCKS_PER_SEC;
+	//	int fps = static_cast<int>(std::round(1 / elapsed_time));
+	//	fpsString = "FPS: " + std::to_string(fps);
+	//}
 
 	delete mainMenu;
 	delete sandboxMenu;
