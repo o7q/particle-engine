@@ -1,3 +1,7 @@
+# This repository is no longer maintained.
+This was one of my C++ applications I made in order to learn C++. I never plan to update it.\
+<b>Last working commit</b>: https://github.com/o7q/particle-engine/commit/fcbcc1ffb2eabcd48bf691cf0bd7bd2e2d258605
+
 <img src="assets/images/banner.png">
 
 # [<b>>> Download Dev Build</b>](https://github.com/o7q/particle-engine/raw/main/assets/build/ParticleEngine.zip)
