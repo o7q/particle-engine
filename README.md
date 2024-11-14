@@ -1,6 +1,6 @@
 # This repository is no longer maintained.
-This was one of my C++ applications I made in order to learn C++. I never plan to update it.\
-<b>Last working commit</b>: https://github.com/o7q/particle-engine/commit/fcbcc1ffb2eabcd48bf691cf0bd7bd2e2d258605
+**This was one of my C++ applications I made in order to learn C++. I never plan to update it.**\
+Last working commit: https://github.com/o7q/particle-engine/tree/7d08fc1ab1cd3837d736c8e9d77680bf58087e02
 
 <img src="assets/images/banner.png">
 
